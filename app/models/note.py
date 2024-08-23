@@ -21,6 +21,7 @@ class Note(db.Model):
             'id': self.id,
             'userId': self.user_id,
             'title': self.title,
+            'content': self.content,
             'url': self.url,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
