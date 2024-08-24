@@ -1,0 +1,60 @@
+.landing-page {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    padding-left: 100px;
+    background-color: #1A2436;
+    background-size: 40px 40px, 40px 40px, 100%;
+    background-position: 0 0, 20px 20px, 0 0;
+    color: #c7c7c7;
+}
+
+.landing-card {
+    text-align: left;
+    max-width: 500px;
+    color: white;
+    position: relative;
+    z-index: 1; 
+}
+
+.gradient-line {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #a855f7, #ec4899);
+    margin-bottom: 20px;
+}
+
+.landing-name {
+    font-size: 3em;
+    background: linear-gradient(to right, #a855f7, #ec4899);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0 0 20px;
+}
+
+
+.landing-description {
+    font-size: 1em;
+    color: #c7c7c7;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+.landing-button {
+    background: linear-gradient(to right, #a855f7, #ec4899);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: background 0.3s ease;
+}
+
+.landing-button:hover {
+    background: linear-gradient(to right, #ec4899, #a855f7);
+}
