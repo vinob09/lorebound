@@ -92,7 +92,7 @@
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(70, 11, 74, 0.55);
   z-index: 1000;
-  width: 80px;
+  width: 100px;
 }
 
 .profile-dropdown li {
@@ -117,27 +117,58 @@
 }
 
 .profile-menu-item {
-  background: #344767;
+  background: linear-gradient(90deg, #006466, #065A60);
+  border: 2px solid;
   color: white;
-  border: none;
   border-radius: 20px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   text-align: center;
   display: inline-block;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background 0.5s ease, color 0.3s ease, transform 0.3s;
+  position: relative;
+  overflow: hidden;
   width: 100%;
   margin-bottom: 10px;
 }
 
+
+.profile-menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.5s ease;
+}
+
+@keyframes shiny {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
 .profile-menu-item:hover {
-  background: #144552;
+  background: linear-gradient(90deg, #1B3A4B, #4D194D);
+  border: 2px solid;
+  color: white;
   transform: scale(1.05);
 }
 
-.profile-menu-item:focus {
-  outline: none;
+.profile-menu-item:hover::before {
+  animation: shiny 0.75s forwards;
+}
+
+.profile-menu-item:active {
+  background: linear-gradient(90deg, #144552, #272640);
+  transform: scale(0.98);
 }
 
 .profile-menu-item:last-child {

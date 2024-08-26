@@ -1,3 +1,8 @@
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .bg-image {
     background-color: #006466;
     position: relative;
@@ -42,6 +47,7 @@ video {
     color: #ffffff;
     text-align: center;
     z-index: 3;
+    animation: fadeIn 2s ease-in-out;
 }
 
 .landing-card {
@@ -74,8 +80,8 @@ video {
 }
 
 .landing-button {
-    background: transparent;
-    border: 2px solid white;
+    background: linear-gradient(90deg, #006466, #065A60);
+    border: 2px solid;
     padding: 15px 30px;
     border-radius: 30px;
     color: white;
@@ -83,10 +89,89 @@ video {
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.5s ease, color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.landing-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: skewX(-25deg);
+}
+
+@keyframes shiny {
+    0% {
+        left: -75%;
+    }
+    100% {
+        left: 125%;
+    }
 }
 
 .landing-button:hover {
-    background: white;
-    color: #000;
+    background: linear-gradient(90deg, #1B3A4B, #4D194D);
+    color: white;
+    border: 2px solid;
+}
+
+.landing-button:hover::before {
+    animation: shiny 0.75s forwards;
+}
+
+.landing-button:active {
+    background: linear-gradient(90deg, #144552, #272640);
+    transform: scale(0.98); /* Slightly scale down on press */
+}
+
+
+/*TABLET MEDIA STYLING*/
+@media (max-width: 1024px) {
+    .landing-card {
+        max-width: 400px;
+        padding: 20px;
+    }
+
+    .landing-name {
+        font-size: 2.5em;
+    }
+
+    .landing-description {
+        font-size: 1em;
+    }
+
+    .landing-button {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+}
+
+/*MOBILE MEDIA STYLING*/
+@media (max-width: 768px) {
+    .landing-card {
+        max-width: 300px;
+        padding: 15px;
+    }
+
+    .landing-name {
+        font-size: 2em;
+    }
+
+    .landing-description {
+        font-size: 0.9em;
+    }
+
+    .landing-button {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+
+    .gradient-line {
+        margin-top: 30px;
+    }
 }
