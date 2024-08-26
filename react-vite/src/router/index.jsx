@@ -6,11 +6,8 @@ import Layout from './Layout';
 export const router = createBrowserRouter([
   {
     element: <Layout />,
+    path: "/",
     children: [
-      {
-        path: "/",
-        element: <h1>Welcome!</h1>,
-      },
       {
         path: "login",
         element: <LoginFormPage />,
