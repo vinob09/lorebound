@@ -1,4 +1,15 @@
 /* TODO: Add sitewide styles */
-body {
-    background: #1a1a1a;
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+header {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
 }

@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
@@ -6,9 +5,11 @@ import "./Navigation.css";
 function Navigation() {
   return (
     <nav className="navbar">
-      <ul className="nav-list">
+      <ul className="navbar-nav">
         <li className="nav-item">
-          <NavLink to="/" className="nav-link">Home</NavLink>
+          <a className="nav-link" href="#!">
+            Home
+          </a>
         </li>
         <li className="nav-item">
           <ProfileButton />
