@@ -15,17 +15,16 @@ const Header = () => {
                         loop
                     >
                         <source
-                            src="https://mdbootstrap.com/img/video/animation-intro.mp4"
+                            src="/Bookv2.mp4"
                             type="video/mp4"
                         />
                     </video>
                     <div className="mask">
                         <section className="landing-page">
                             <div className="landing-card">
-                                <h1 className="landing-name">Landing Page</h1>
+                                <h1 className="landing-name">Hello, adventurer...</h1>
                                 <p className="landing-description">
-                                    Organize Your TTRPG Adventures with Ease{" "}
-                                    <a href="#">Try a Demo</a>.
+                                    Organize Your TTRPG Adventures with Ease
                                 </p>
                                 <button className="landing-button">Button</button>
                                 <div className="gradient-line"></div>
