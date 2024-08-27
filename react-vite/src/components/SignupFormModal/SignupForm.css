@@ -1,0 +1,68 @@
+.signup-form-title {
+    color: #fff;
+}
+
+.signup-form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signup-form-modal label {
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.signup-form-modal input {
+    padding: 10px;
+    border: 1px solid #3E1F47;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.signup-form-modal input:focus {
+    outline: none;
+    border-color: #065A60;
+    background-color: #1B3A4B;
+    color: #fff;
+}
+
+.signup-form-errors {
+    color: #FF0000;
+    font-size: 0.9em;
+    margin-top: -8px;
+    margin-bottom: 8px;
+}
+
+.signup-submit {
+    background-color: #006466;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1em;
+}
+
+.signup-submit:hover {
+    background-color: #065A60;
+}
+
+.signup-submit:active {
+    background-color: #0B525B;
+}
+
+.signup-submit.disabled,
+.signup-submit:disabled {
+    background-color: #888888;
+    color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.signup-submit:not(.disabled):active {
+    background-color: #0B525B;
+}

@@ -38,52 +38,63 @@ function SignupFormModal() {
     }
   };
 
+  // clear error messages on input change
+  const handleInputChange = (field) => (e) => {
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
+    if (field === "email") setEmail(e.target.value);
+    if (field === "username") setUsername(e.target.value);
+    if (field === "password") setPassword(e.target.value);
+    if (field === "confirmPassword") setConfirmPassword(e.target.value);
+  };
+
+  // check for all fields populated
+  const isFormValid = email && username && password && confirmPassword;
+
   return (
     <>
-      <h1>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
+      <h1 className="signup-form-title">Sign Up</h1>
+      <form onSubmit={handleSubmit} className="signup-form-modal">
         <label>
           Email
           <input
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleInputChange("email")}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="signup-form-errors">{errors.email}</p>}
         <label>
           Username
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleInputChange("username")}
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className="signup-form-errors">{errors.username}</p>}
         <label>
           Password
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInputChange("password")}
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="signup-form-errors">{errors.password}</p>}
         <label>
           Confirm Password
           <input
             type="password"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={handleInputChange("confirmPassword")}
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && <p className="signup-form-errors">{errors.confirmPassword}</p>}
+        <button type="submit" className="signup-submit" disabled={!isFormValid}>Sign Up</button>
       </form>
     </>
   );
