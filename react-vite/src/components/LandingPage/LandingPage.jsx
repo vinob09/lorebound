@@ -1,7 +1,7 @@
 import Navigation from '../Navigation/Navigation';
-import './Header.css';
+import './LandingPage.css';
 
-const Header = () => {
+const LandingPage = () => {
     return (
         <header>
             <Navigation />
@@ -38,4 +38,4 @@ const Header = () => {
 
 };
 
-export default Header;
+export default LandingPage;
