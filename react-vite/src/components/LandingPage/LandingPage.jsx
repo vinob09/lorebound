@@ -1,4 +1,4 @@
-import Navigation from '../Navigation/Navigation';
+import Navigation from '../Navigation';
 import './LandingPage.css';
 
 const LandingPage = () => {

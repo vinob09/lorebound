@@ -14,7 +14,7 @@ function ProfileButton() {
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
+    setShowMenu((prevShowMenu) => !prevShowMenu);
   };
 
   useEffect(() => {
@@ -31,12 +31,11 @@ function ProfileButton() {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const closeMenu = () => setShowMenu(false);
 
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
-    closeMenu();
+    setShowMenu(false);
   };
 
   return (
@@ -59,14 +58,14 @@ function ProfileButton() {
               <li className="profile-menu-item">
                 <OpenModalMenuItem
                   itemText="Log In"
-                  onItemClick={closeMenu}
+                  onItemClick={() => setShowMenu(false)}
                   modalComponent={<LoginFormModal />}
                 />
               </li>
               <li className="profile-menu-item">
                 <OpenModalMenuItem
                   itemText="Sign Up"
-                  onItemClick={closeMenu}
+                  onItemClick={() => setShowMenu(false)}
                   modalComponent={<SignupFormModal />}
                 />
               </li>

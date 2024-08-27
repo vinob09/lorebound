@@ -1,0 +1,19 @@
+.client-page {
+    display: flex;
+    height: 100vh;
+    padding-left: 250px;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.client-info {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: transparent; 
+}
+
+.client-info h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #006466;
+}

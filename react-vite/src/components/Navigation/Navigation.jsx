@@ -2,12 +2,12 @@ import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 
-function Navigation() {
+function Navigation({ className }) {
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${className}`}>
       <ul className="navbar-nav">
         <li className="nav-item">
-          <a className="nav-link" href="#!">
+          <a className="nav-link" href="/">
             Home
           </a>
         </li>
