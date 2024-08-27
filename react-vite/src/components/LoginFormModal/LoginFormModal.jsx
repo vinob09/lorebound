@@ -38,6 +38,23 @@ function LoginFormModal() {
   // check for all fields populated
   const isFormValid = email && password;
 
+  // handle demo user
+  const handleDemo = async (e) => {
+    e.preventDefault();
+
+    try {
+      await dispatch(thunkLogin({ email: "demo@aa.io", password: "password" }));
+      closeModal();
+    } catch (res) {
+      const data = await res.json();
+      if (data && data.errors) {
+        setErrors(data.errors)
+      } else {
+        setErrors({ email: 'Unsuccessful Demo Login' })
+      }
+    }
+  }
+
   return (
     <>
       <h1 className="login-form-title">Log In</h1>
@@ -63,6 +80,7 @@ function LoginFormModal() {
         </label>
         {errors.password && <p className="login-form-errors">{errors.password}</p>}
         <button type="submit" className="login-submit" disabled={!isFormValid}>Log In</button>
+        <a href="#" className="demo-user-link" onClick={handleDemo}>Demo User</a>
       </form>
     </>
   );
