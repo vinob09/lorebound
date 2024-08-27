@@ -1,10 +1,8 @@
-import Navigation from '../Navigation/Navigation';
 import './LandingPage.css';
 
 const LandingPage = () => {
     return (
         <header>
-            <Navigation />
             <section>
                 <div id="intro" className="bg-image">
                     <video

@@ -1,6 +1,9 @@
+// action types
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
+
+// action creators
 const setUser = (user) => ({
   type: SET_USER,
   payload: user
@@ -10,6 +13,8 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
+
+// thunks
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
 	if (response.ok) {
@@ -63,6 +68,19 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
+export const thunkUserById = (userId) => async (dispatch) => {
+  const response = await fetch(`/api/users/${userId}`);
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setUser(data));
+  } else {
+    console.error("Failed to fetch user data");
+  }
+};
+
+
+// initial state and reducer
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {

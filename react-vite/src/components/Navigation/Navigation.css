@@ -3,14 +3,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
   padding: 10px 20px;
   position: fixed;
-  top: 20px;
+  top: 0;
   width: 100%;
   z-index: 1000;
   border-bottom: 1px solid rgb(113, 109, 109);
 }
+
+/*transparent style for LandingPage*/
+.transparent-nav {
+  background: transparent;
+}
+
+/*solid style for all other pages*/
+.solid-nav {
+  background-color: #1B3A4B;
+}
+
 
 .navbar-nav {
   display: flex;
@@ -19,10 +29,6 @@
   margin: 0;
   padding: 0;
   justify-content: center;
-}
-
-.nav-item {
-  margin-right: 20px;
 }
 
 .nav-link {
@@ -60,6 +66,7 @@
     width: 100%;
     padding: 10px 0;
   }
+
   .navbar-nav .nav-item {
     margin-right: 0;
     margin-bottom: 10px;
@@ -151,6 +158,7 @@
   0% {
     left: -75%;
   }
+
   100% {
     left: 125%;
   }
