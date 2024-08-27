@@ -11,17 +11,6 @@
   border-bottom: 1px solid rgb(113, 109, 109);
 }
 
-/*transparent style for LandingPage*/
-.transparent-nav {
-  background: transparent;
-}
-
-/*solid style for all other pages*/
-.solid-nav {
-  background-color: #1B3A4B;
-}
-
-
 .navbar-nav {
   display: flex;
   flex-direction: row;

@@ -1,15 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { thunkLogin } from "../../redux/session";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+
+  const user = useSelector(state => state.session.user);
+
+  useEffect(() => {
+    if (user) {
+      closeModal();
+      navigate(`/client/${user.id}`);
+    }
+  }, [user, navigate, closeModal]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,8 +35,6 @@ function LoginFormModal() {
 
     if (serverResponse) {
       setErrors(serverResponse);
-    } else {
-      closeModal();
     }
   };
 
@@ -44,11 +54,9 @@ function LoginFormModal() {
 
     try {
       await dispatch(thunkLogin({ email: "demo@aa.io", password: "password" }));
-      closeModal();
-    } catch (res) {
-      const data = await res.json();
-      if (data && data.errors) {
-        setErrors(data.errors)
+    } catch (err) {
+      if (err && err.errors) {
+        setErrors(err.errors)
       } else {
         setErrors({ email: 'Unsuccessful Demo Login' })
       }

@@ -69,13 +69,16 @@ export const thunkLogout = () => async (dispatch) => {
 };
 
 export const thunkUserById = (userId) => async (dispatch) => {
-  const response = await fetch(`/api/users/${userId}`);
-
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-  } else {
-    console.error("Failed to fetch user data");
+  try {
+    const response = await fetch(`/api/users/${userId}`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setUser(data));
+      return data;
+    } 
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return null;
   }
 };
 

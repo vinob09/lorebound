@@ -1,0 +1,91 @@
+.client-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    color: #fff;
+    font-size: 1.2em;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.client-nav-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    margin-right: 50px;
+    background-color: transparent;
+    color: #fff;
+    position: relative;
+}
+
+.client-menu-icon {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #52d0e1;
+}
+
+.client-nav-sidebar {
+    position: absolute;
+    top: 60px;
+    width: calc(100% - 30px);
+    height: calc(100% - 60px);
+    background-color: #0B525B;
+    padding-left: 15px;
+    padding-right: 15px; 
+    box-sizing: border-box;
+}
+
+.client-nav-welcome {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.client-nav-search {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.client-nav-button {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.client-nav-section {
+    margin-bottom: 20px;
+}
+
+.client-nav-section h3 {
+    margin-bottom: 10px;
+}
+
+.client-nav-section ul {
+    list-style: none;
+    padding: 0;
+    margin-left: 15px;
+}
+
+.client-nav-section ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.client-nav-logout {
+    margin-top: 50px;
+    padding: 10px;
+    background-color: #3E1F47;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
