@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import { thunkUserById } from '../../redux/session';
-import ClientNav from './ClientNav';
+import TopNav from './TopNav';
 import './ClientPage.css';
 
 const ClientPage = () => {
@@ -40,7 +40,7 @@ const ClientPage = () => {
 
     return isLoaded && user ? (
         <div className="client-page">
-            <ClientNav />
+            <TopNav userId={user.id} />
             <div className="client-info">
                 <h1>Welcome, {user.username}</h1>
             </div>

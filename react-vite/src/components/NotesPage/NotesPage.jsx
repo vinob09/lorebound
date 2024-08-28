@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { thunkAllNotes } from '../../redux/notes';
+import Tiles from '../Tiles';
 import './NotesPage.css';
 
 const NotesPage = () => {
@@ -9,13 +10,12 @@ const NotesPage = () => {
     const navigate = useNavigate();
 
     const user = useSelector(state => state.session.user);
-    // const notes = useSelector(state => state.notes.allNotes);
+    const notes = useSelector(state => state.notes.allNotes);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         if (user) {
-            dispatch(thunkAllNotes())
-            .then(() => setIsLoaded(true));
+            dispatch(thunkAllNotes()).then(() => setIsLoaded(true));
         } else {
             navigate("/");
         }
@@ -24,6 +24,7 @@ const NotesPage = () => {
     return isLoaded && user ? (
         <div className='notes-page'>
             <h1>All Notes Page</h1>
+            <Tiles items={notes} type="note" />
         </div>
     ) : (
         <h1>Loading...</h1>

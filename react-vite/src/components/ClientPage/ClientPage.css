@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding-left: 250px;
     color: #ffffff;
     overflow-x: hidden;
 }
@@ -10,10 +9,10 @@
 .client-info {
     padding: 20px;
     background-color: transparent;
+    text-align: center;
 }
 
 .client-info h1 {
-    text-align: center;
     font-size: 2em;
     color: #006466;
 }
@@ -23,8 +22,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding: 20px;
     background-color: #f0f0f0;
     color: #000;
-    max-width: calc(100% - 70px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .client-main-content {
+        padding-left: 250px; 
+        padding-right: 250px;
+    }
 }
