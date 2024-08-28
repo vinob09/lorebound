@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import { thunkUserById } from '../../redux/session';
 import ClientNav from './ClientNav';
 import './ClientPage.css';
@@ -43,6 +43,9 @@ const ClientPage = () => {
             <ClientNav />
             <div className="client-info">
                 <h1>Welcome, {user.username}</h1>
+            </div>
+            <div className="client-main-content">
+                <Outlet />
             </div>
         </div>
     ) : (

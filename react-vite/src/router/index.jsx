@@ -1,8 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
 import LandingPage from '../components/LandingPage';
 import ClientPage from '../components/ClientPage';
+import NotesPage from '../components/NotesPage';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -10,20 +9,18 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <LandingPage />
       },
       {
-        path: "/client/:userId",
-        element: <ClientPage />
-      },
-      {
-        path: "login",
-        element: <LoginFormPage />,
-      },
-      {
-        path: "signup",
-        element: <SignupFormPage />,
+        path: "client/:userId",
+        element: <ClientPage />,
+        children: [
+          {
+            path: "notes",
+            element: <NotesPage />
+          }
+        ]
       },
       // wildcard catch all
       {
