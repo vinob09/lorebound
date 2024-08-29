@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, URLField
-from wtforms.validators import DataRequired, Length, URL, Optional, ValidationError
+from wtforms import StringField, TextAreaField
+from wtforms.validators import DataRequired, Length, Optional, ValidationError
 from app.models import Note
 
 
@@ -15,4 +15,4 @@ def title_exists(form, field):
 class NoteForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=255), title_exists])
     content = TextAreaField('Content', validators=[Optional()])
-    url = URLField('Image URL', validators=[Optional(), URL(require_tld=False), Length(max=100)])
+    url = StringField('Image URL', validators=[Optional(), Length(max=100)])

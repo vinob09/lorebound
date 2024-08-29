@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { thunkAllNotes } from '../../redux/notes';
 import Tiles from '../Tiles';
 import './NotesPage.css';
@@ -8,23 +8,31 @@ import './NotesPage.css';
 const NotesPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const user = useSelector(state => state.session.user);
     const notes = useSelector(state => state.notes.allNotes);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        if (user) {
-            dispatch(thunkAllNotes()).then(() => setIsLoaded(true));
-        } else {
-            navigate("/");
-        }
-    }, [user, dispatch, navigate]);
+        dispatch(thunkAllNotes()).then(() => setIsLoaded(true));
+    }, [dispatch]);
 
-    return isLoaded && user ? (
+    // handle tiles click into details
+    const handleClick = (noteId) => {
+        if (user && user.id) {
+            navigate(`/client/${user.id}/notes/${noteId}`);
+        }
+    };
+
+    // handle creating new note
+    const handleNewNote = () => {
+        navigate(`/client/${user.id}/note/new`)
+    };
+
+    return isLoaded ? (
         <div className='notes-page'>
             <h1>All Notes Page</h1>
-            <Tiles items={notes} type="note" />
+            <Link onClick={handleNewNote}>Create New Note</Link>
+            <Tiles items={notes} type="note" onTileClick={handleClick} />
         </div>
     ) : (
         <h1>Loading...</h1>

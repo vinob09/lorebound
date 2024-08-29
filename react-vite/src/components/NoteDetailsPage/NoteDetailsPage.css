@@ -1,0 +1,42 @@
+.note-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 20px;
+}
+
+.note-details-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.note-details-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.note-details-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.note-details-content {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-align: left;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .note-details-container {
+        padding-left: 250px;
+        padding-right: 250px;
+    }
+}

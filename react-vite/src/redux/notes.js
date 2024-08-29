@@ -72,10 +72,13 @@ export const thunkCreateNote = (noteData) => async (dispatch) => {
             const newNote = await response.json();
             dispatch(createNote(newNote));
             return newNote;
+        } else if (response.status === 400) {
+            const errorData = await response.json();
+            return { error: errorData };
         }
     } catch (err) {
         console.error("Failed to create new note:", err);
-        return null;
+        return { error: { general: "An unexpected error occurred while creating the note." } };
     }
 };
 
