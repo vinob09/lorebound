@@ -13,8 +13,10 @@ export async function csrfFetch(url, options = {}) {
 
     const res = await window.fetch(url, options)
 
-    if (res.status >= 400) throw res;
+    // Only throw an error for network errors or server errors (5xx)
+    if (res.status >= 500) throw res;
 
+    // For 4xx errors, we should return the response to handle in our thunks
     return res;
 }
 

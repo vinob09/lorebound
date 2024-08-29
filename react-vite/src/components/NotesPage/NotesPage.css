@@ -1,0 +1,11 @@
+.notes-page {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.notes-page h1 {
+    text-align: center;
+    margin-bottom: 20px; 
+}

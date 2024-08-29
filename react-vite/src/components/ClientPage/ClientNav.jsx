@@ -1,21 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { TiThMenu } from "react-icons/ti";
+import { useNavigate, Link } from 'react-router-dom';
 import { thunkLogout } from '../../redux/session';
 import './ClientNav.css';
 
 const ClientNav = () => {
-    const [isNavOpen, setIsNavOpen] = useState(false);
-    const navRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const user = useSelector(state => state.session.user);
+    const notes = useSelector(state => state.notes.allNotes);
 
-    // handle sidebar toggle
-    const toggleNav = () => {
-        setIsNavOpen(!isNavOpen);
+    // handle new note button
+    const handleNewNote = () => {
+        navigate(`/client/${user.id}/note/new`)
     };
 
     // handle logout
@@ -26,57 +23,40 @@ const ClientNav = () => {
             })
     };
 
-    useEffect(() => {
-        const handleClick = (event) => {
-            if (navRef.current && !navRef.current.contains(event.target)) {
-                setIsNavOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClick);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClick);
-        }
-    }, []);
+    // sort notes by latest updated at
+    const latestNotes = notes
+        .slice() // shallow copy
+        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // sort by descending order
+        .slice(0, 3); // grabbing only latest 3 to display
 
     return (
-        <div className='client-nav'>
-            <div className='client-nav-header'>
-                <div className='client-menu-icon' onClick={toggleNav}>
-                    <TiThMenu />
-                </div>
-                <Link to="/">HOME</Link>
+        <>
+            <div className='client-nav-welcome'>
+                {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
             </div>
-
-            {isNavOpen && (
-                <div className='client-nav-sidebar' ref={navRef}>
-                    <div className='client-nav-welcome'>
-                        {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
-                    </div>
-                    <input type='text' placeholder='Search' className='client-nav-search'/>
-                    <button className='client-nav-button'>New Character</button>
-                    <button className='client-nav-button'>New Note</button>
-                    <div className='client-nav-section'>
-                        <h3>Characters</h3>
-                        <ul>
-                            <li><a href='#'>Character_1</a></li>
-                            <li><a href='#'>Character_2</a></li>
-                            <li><a href='#'>Character_3</a></li>
-                        </ul>
-                    </div>
-                    <div className='client-nav-section'>
-                        <h3>Grimoires</h3>
-                        <ul>
-                            <li><a href='#'>Note_1</a></li>
-                            <li><a href='#'>Note_2</a></li>
-                            <li><a href='#'>Note_3</a></li>
-                        </ul>
-                    </div>
-                    <button className='client-nav-logout' onClick={logout}>Logout</button>
-                </div>
-            )}
-        </div>
+            <input type='text' placeholder='Search' className='client-nav-search' />
+            <button className='client-nav-button'>New Character</button>
+            <button className='client-nav-button' onClick={handleNewNote}>New Note</button>
+            <div className='client-nav-section'>
+                <h3>Characters</h3>
+                <ul>
+                    <li><a href='#'>Character_1</a></li>
+                    <li><a href='#'>Character_2</a></li>
+                    <li><a href='#'>Character_3</a></li>
+                </ul>
+            </div>
+            <div className='client-nav-section'>
+                <h3><Link to={`/client/${user.id}/notes`}>Grimoires</Link></h3>
+                <ul>
+                    {latestNotes.map(note => (
+                        <li key={note.id}>
+                            <Link to={`/client/${user.id}/notes/${note.id}`}>{note.title}</Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <button className='client-nav-logout' onClick={logout}>Logout</button>
+        </>
     )
 };
 
