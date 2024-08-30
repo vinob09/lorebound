@@ -2,9 +2,19 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Note
 from app.forms import NoteForm
+from bleach import clean
 
 
 note_routes = Blueprint('notes', __name__)
+
+# Define allowed tags and attributes
+ALLOWED_TAGS = ['a', 'b', 'em', 'i', 'li', 'ol', 'p', 'strong', 'ul', 'h1', 'h2', 'h3', 'u', 's', 'bold', 'italic', 'underline', 'br']
+ALLOWED_ATTRIBUTES = {
+    '*': ['style'],
+    'a': ['href', 'title'],
+    'ol': ['type', 'start'],
+    'ul': ['type']
+}
 
 
 @note_routes.route("", methods=["POST"])
@@ -17,10 +27,14 @@ def create_note():
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
+            sanitized_content = clean(
+                form.data['content'], tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES
+            )
+
             new_note = Note(
                 user_id = current_user.id,
                 title = form.data['title'],
-                content = form.data['content'],
+                content = sanitized_content,
                 url = form.data['url']
             )
 
@@ -79,8 +93,10 @@ def update_note(note_id):
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
+            santitized_content = clean(form.data['content'])
+
             note.title = form.data['title']
-            note.content = form.data['content']
+            note.content = santitized_content
             note.url = form.data['url']
 
             db.session.commit()

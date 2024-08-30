@@ -11,6 +11,9 @@ export default defineConfig((mode) => ({
       failOnError: mode === "production",
     }),
   ],
+  optimizeDeps: {
+    include: ['quill'], // have vite pre-bundle quill
+  },
   server: {
     open: true,
     proxy: {

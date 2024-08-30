@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { thunkCreateNote, thunkUpdateNote, thunkGetNote } from '../../redux/notes';
+import QuillEditor from './QuillEditor';
+import 'react-quill/dist/quill.snow.css';
 import './NoteForm.css';
 
 const NoteForm = () => {
@@ -79,7 +81,7 @@ const NoteForm = () => {
             const result = await dispatch(thunkCreateNote(noteData));
 
             if (result.error) {
-                setErrors(result.error);  
+                setErrors(result.error);
             } else {
                 navigate(`/client/${user.id}/notes/${result.id}`);
             }
@@ -132,11 +134,7 @@ const NoteForm = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="content">Content</label>
-                        <textarea
-                            id="content"
-                            value={content}
-                            onChange={handleInputChange("content")}
-                        />
+                        <QuillEditor content={content} setContent={setContent} />
                         {errors.content && <p className="error-message">{errors.content}</p>}
                     </div>
                     <button type="submit" className="btn-save">Save</button>

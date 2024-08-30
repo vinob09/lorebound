@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { thunkDeleteNote } from '../../redux/notes';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import 'react-quill/dist/quill.snow.css';
 import './Tiles.css';
 
 const Tiles = ({ items, type, onTileClick }) => {
@@ -42,7 +43,7 @@ const Tiles = ({ items, type, onTileClick }) => {
                             <img src={item.url} alt={item.title} className='tile-image' onError={handleImageError} />
                             <div className='tile-content'>
                                 <h2>{item.title}</h2>
-                                <p>{item.content ? item.content.substring(0, 100) : ''}....</p>
+                                <p dangerouslySetInnerHTML={{ __html: item.content ? item.content.substring(0, 100) : '' }}></p>
                                 <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
                                 <Link to={`/client/${user.id}/note/edit/${item.id}`}>
                                     <button onClick={(e) => e.stopPropagation()}>Edit Note</button>
