@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { thunkLogout } from '../../redux/session';
+import SearchBar from './SearchBar';
 import './ClientNav.css';
 
 const ClientNav = () => {
@@ -34,7 +35,7 @@ const ClientNav = () => {
             <div className='client-nav-welcome'>
                 {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
             </div>
-            <input type='text' placeholder='Search' className='client-nav-search' />
+            <div className='search-bar'><SearchBar /></div>
             <button className='client-nav-button'>New Character</button>
             <button className='client-nav-button' onClick={handleNewNote}>New Note</button>
             <div className='client-nav-section'>
