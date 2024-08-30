@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { thunkGetNote } from '../../redux/notes';
+import 'react-quill/dist/quill.snow.css';
 import './NoteDetailsPage.css';
 
 const NoteDetailsPage = () => {
@@ -28,7 +29,7 @@ const NoteDetailsPage = () => {
                 <img src={note.url} alt={note.title} onError={handleImageError} />
             </div>
             <div className='note-details-content'>
-                <p>{note.content}</p>
+                <p dangerouslySetInnerHTML={{ __html: note.content }}></p>
             </div>
         </div>
     ) : (
