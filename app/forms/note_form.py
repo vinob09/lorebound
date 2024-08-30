@@ -1,18 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField
-from wtforms.validators import DataRequired, Length, Optional, ValidationError
+from wtforms import StringField, TextAreaField, SubmitField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms.validators import DataRequired, Length, Optional
 from app.models import Note
+from app.api.aws_boto import ALLOWED_EXTENSIONS
 
-
-def title_exists(form, field):
-    # Checking if a title exists
-    title = field.data
-    title_exists = Note.query.filter(Note.title == title).first()
-    if title_exists:
-        raise ValidationError('This title already exists in the database.')
 
 
 class NoteForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired(), Length(max=255), title_exists])
+    title = StringField('Title', validators=[DataRequired(), Length(max=255)])
     content = TextAreaField('Content', validators=[Optional()])
-    url = StringField('Image URL', validators=[Optional(), Length(max=100)])
+    url = FileField('Image File', validators=[Optional(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    submit = SubmitField("Create Note")

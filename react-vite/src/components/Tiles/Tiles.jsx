@@ -40,24 +40,38 @@ const Tiles = ({ items, type, onTileClick }) => {
                 <div className='tile' key={item.id} onClick={() => onTileClick(item.id)}>
                     {type === 'note' ? (
                         <>
-                            <img src={item.url} alt={item.title} className='tile-image' onError={handleImageError} />
+                            <img
+                                src={item.url ? item.url : '/sorry-image-not-available.jpg'}
+                                alt={item.title}
+                                className='tile-image'
+                                onError={handleImageError}
+                            />
                             <div className='tile-content'>
                                 <h2>{item.title}</h2>
                                 <p dangerouslySetInnerHTML={{ __html: item.content ? item.content.substring(0, 100) : '' }}></p>
-                                <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
-                                <Link to={`/client/${user.id}/note/edit/${item.id}`}>
-                                    <button onClick={(e) => e.stopPropagation()}>Edit Note</button>
-                                </Link>
-                                <OpenModalButton
-                                    modalComponent={<DeleteNoteConfirmationModal noteId={item.id} />}
-                                    buttonText="Delete Note"
-                                    onButtonClick={(e) => e.stopPropagation()}
-                                />
+                                <div className='tile-footer'>
+                                    <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
+                                </div>
+                                <div className='tile-buttons'>
+                                    <Link to={`/client/${user.id}/note/edit/${item.id}`}>
+                                        <button onClick={(e) => e.stopPropagation()}>Edit Note</button>
+                                    </Link>
+                                    <OpenModalButton
+                                        modalComponent={<DeleteNoteConfirmationModal noteId={item.id} />}
+                                        buttonText="Delete Note"
+                                        onButtonClick={(e) => e.stopPropagation()}
+                                    />
+                                </div>
                             </div>
                         </>
                     ) : type === 'character' ? (
                         <>
-                            <img src={item.url} alt={item.name} className='tile-image' onError={handleImageError} />
+                            <img
+                                src={item.url ? item.url : '/sorry-image-not-available.jpg'}
+                                alt={item.name}
+                                className='tile-image'
+                                onError={handleImageError}
+                            />
                             <div className='tile-content'>
                                 <h2>{item.name}</h2>
                                 <p><em>Last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>

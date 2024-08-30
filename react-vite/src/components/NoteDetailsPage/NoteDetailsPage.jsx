@@ -26,7 +26,11 @@ const NoteDetailsPage = () => {
         <div className='note-details-container'>
             <h1>{note.title}</h1>
             <div className='note-details-image'>
-                <img src={note.url} alt={note.title} onError={handleImageError} />
+                <img
+                    src={note.url ? note.url : '/sorry-image-not-available.jpg'}
+                    alt={note.title}
+                    onError={handleImageError}
+                />
             </div>
             <div className='note-details-content'>
                 <p dangerouslySetInnerHTML={{ __html: note.content }}></p>

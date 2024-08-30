@@ -16,9 +16,11 @@ const NoteForm = () => {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [url, setUrl] = useState('');
+    const [file, setFile] = useState(null);
+    const [removeImage, setRemoveImage] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [errors, setErrors] = useState({});
+    const [imageLoading, setImageLoading] = useState(false);
 
     // fetch note if editing or set isLoaded when creating
     useEffect(() => {
@@ -34,7 +36,7 @@ const NoteForm = () => {
         if (noteId && note) {
             setTitle(note.title);
             setContent(note.content);
-            setUrl(note.url);
+            setFile(null);
         }
     }, [noteId, note]);
 
@@ -43,42 +45,21 @@ const NoteForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // validate image extensions and format
-        const isValidImage = (url) => {
-            const extension = url.split('.').pop().toLowerCase();
-            return ['png', 'jpg', 'jpeg'].includes(extension);
-        };
-
-        const isValidURL = (string) => {
-            try {
-                new URL(string);
-                return true;
-            } catch (err) {
-                return false;
-            }
-        };
-
-        // error validations
-        const validateForm = () => {
-            const newErrors = {};
-            if (!title) newErrors.title = 'Title is required.';
-            if (title.length > 255) newErrors.title = 'Title must be less than 255 characters.';
-            if (url && url.length > 100) newErrors.url = 'Image URL needs to be less than 100 characters.';
-            if (url && (!isValidImage(url) || !isValidURL(url))) newErrors.url = 'Image URL needs to end in png, jpg or jpeg.';
-            return newErrors;
-        };
-
-        const validationErrors = validateForm();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        if (file) {
+            formData.append("url", file);
+        }
+        if (removeImage) {
+            formData.append("removeImage", "true");
         }
 
-        const noteData = { title, content, url };
+        setImageLoading(true);
 
         // creating note
         if (!noteId) {
-            const result = await dispatch(thunkCreateNote(noteData));
+            const result = await dispatch(thunkCreateNote(formData));
 
             if (result.error) {
                 setErrors(result.error);
@@ -87,16 +68,22 @@ const NoteForm = () => {
             }
         } else {
             // editing note
-            await dispatch(thunkUpdateNote(noteId, noteData));
-            navigate(`/client/${user.id}/notes/${noteId}`);
+            const result = await dispatch(thunkUpdateNote(noteId, formData));
+
+            if (result && result.error) {
+                setErrors(result.error);
+            } else {
+                navigate(`/client/${user.id}/notes/${noteId}`);
+            }
         }
+        setImageLoading(false);
     };
 
     // clear error messages on input change
     const handleInputChange = (field) => (e) => {
         setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
         if (field === "title") setTitle(e.target.value);
-        if (field === "url") setUrl(e.target.value);
+        if (field === "url") setFile(e.target.files[0]);
         if (field === "content") setContent(e.target.value);
     };
 
@@ -110,7 +97,7 @@ const NoteForm = () => {
         <div>
             <div className="note-form-container">
                 <h1>{noteId ? "Edit Note" : "Create Note"}</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
                         <input
@@ -123,15 +110,25 @@ const NoteForm = () => {
                         {errors.title && <p className="error-message">{errors.title}</p>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="url">Image URL</label>
+                        <label htmlFor="url">Image File</label>
                         <input
-                            type="text"
-                            id="url"
-                            value={url}
+                            type="file"
+                            accept="image/*"
                             onChange={handleInputChange("url")}
                         />
                         {errors.url && <p className="error-message">{errors.url}</p>}
                     </div>
+                    {noteId && note?.url && (
+                        <div className="form-group">
+                            <label htmlFor="removeImage">Remove existing image</label>
+                            <input
+                                type="checkbox"
+                                id="removeImage"
+                                checked={removeImage}
+                                onChange={(e) => setRemoveImage(e.target.checked)}
+                            />
+                        </div>
+                    )}
                     <div className="form-group">
                         <label htmlFor="content">Content</label>
                         <QuillEditor content={content} setContent={setContent} />
@@ -139,6 +136,7 @@ const NoteForm = () => {
                     </div>
                     <button type="submit" className="btn-save">Save</button>
                     <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
+                    {imageLoading && <p>Loading...</p>}
                 </form>
             </div>
         </div>
