@@ -7,12 +7,15 @@
 }
 
 .tile {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
+    max-width: 300px;
 }
 
 .tile:hover {
@@ -21,13 +24,29 @@
 
 .tile-image {
     width: 100%;
-    height: auto;
+    height: 180px;
+    object-fit: cover;
     border-radius: 8px;
     margin-bottom: 15px;
 }
 
 .tile-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
     text-align: left;
+    margin-bottom: 10px;
+}
+
+.tile-footer {
+    margin-top: auto;
+}
+
+.tile-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .tile-content h2 {

@@ -62,11 +62,11 @@ export const thunkGetNote = (noteId) => async (dispatch) => {
     }
 };
 
-export const thunkCreateNote = (noteData) => async (dispatch) => {
+export const thunkCreateNote = (formData) => async (dispatch) => {
     try {
         const response = await csrfFetch(`/api/notes`, {
             method: 'POST',
-            body: JSON.stringify(noteData)
+            body: formData
         });
         if (response.ok) {
             const newNote = await response.json();
@@ -82,16 +82,19 @@ export const thunkCreateNote = (noteData) => async (dispatch) => {
     }
 };
 
-export const thunkUpdateNote = (noteId, noteData) => async (dispatch) => {
+export const thunkUpdateNote = (noteId, formData) => async (dispatch) => {
     try {
         const response = await csrfFetch(`/api/notes/${noteId}`, {
             method: 'PUT',
-            body: JSON.stringify(noteData),
+            body: formData
         });
         if (response.ok) {
             const updatedNote = await response.json();
             dispatch(updateNote(updatedNote));
             return updatedNote;
+        } else if (response.status === 400) {
+            const errorData = await response.json();
+            return {error: errorData};
         }
     } catch (err) {
         console.error("Failed to update note:", err);

@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Note
 from app.forms import NoteForm
+from .aws_boto import upload_file_to_s3, remove_file_from_s3
 from bleach import clean
 
 
@@ -31,20 +32,31 @@ def create_note():
                 form.data['content'], tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES
             )
 
+            url = form.data['url']
+            image = None
+
+            if url:
+                upload = upload_file_to_s3(url)
+                if "errors" in upload:
+                    return jsonify(upload), 400
+                image = upload['url']
+
             new_note = Note(
                 user_id = current_user.id,
                 title = form.data['title'],
                 content = sanitized_content,
-                url = form.data['url']
+                url = image
             )
 
             db.session.add(new_note)
             db.session.commit()
 
             return jsonify(new_note.to_dict()), 201
-        return jsonify(form.errors), 400
-    except Exception:
-        return jsonify({"errors": "An error occurred while creating a new note"}), 500
+        else:
+            return jsonify(form.errors), 400
+    except Exception as e:
+        print(f"Exception in create_note: {str(e)}")
+        return jsonify({"errors": f"An error occurred while creating a new note: {str(e)}"}), 500
 
 
 
@@ -57,7 +69,8 @@ def all_notes():
         notes = Note.query.filter_by(user_id=current_user.id).all()
         notes_data = [note.to_dict() for note in notes]
         return jsonify(notes_data), 200
-    except Exception:
+    except Exception as e:
+        print(f"Exception in all_note: {str(e)}")
         return jsonify({"error": "An error occurred while fetching all notes"}), 500
 
 
@@ -74,7 +87,8 @@ def get_note_by_id(note_id):
 
         note_data = note.to_dict()
         return jsonify(note_data), 200
-    except Exception:
+    except Exception as e:
+        print(f"Exception in get_note_by_id: {str(e)}")
         return jsonify({"errors": "An error occurred while fetching this note"}), 500
 
 
@@ -93,18 +107,36 @@ def update_note(note_id):
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
-            santitized_content = clean(form.data['content'])
+            sanitized_content = clean(
+                form.data['content'], tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES
+            )
 
             note.title = form.data['title']
-            note.content = santitized_content
-            note.url = form.data['url']
+            note.content = sanitized_content
+
+            if request.form.get('removeImage') == 'true':
+                if note.url:
+                    remove_file_from_s3(note.url)
+                    note.url = None
+
+            url = form.data['url']
+            if url:
+                if note.url:
+                    remove_file_from_s3(note.url)
+                    
+                upload = upload_file_to_s3(url)
+                if "errors" in upload:
+                    return jsonify(upload), 400
+                note.url = upload['url']
 
             db.session.commit()
 
             return jsonify(note.to_dict()), 200
-        return jsonify(form.errors), 400
-    except Exception:
-        return jsonify({"errors": "An error occurred while updating the note"}), 500
+        else:
+            return jsonify(form.errors), 400
+    except Exception as e:
+        print(f"Exception in update_note: {str(e)}")
+        return jsonify({"errors": f"An error occurred while updating the note: {str(e)}"}), 500
 
 
 
@@ -121,5 +153,6 @@ def delete_note(note_id):
         db.session.delete(note)
         db.session.commit()
         return jsonify({"message": "Successfully deleted"}), 200
-    except Exception:
+    except Exception as e:
+        print(f"Exception in delete_note: {str(e)}")
         return jsonify({"errors": "An error occurred while deleting this note"}), 500
