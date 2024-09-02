@@ -31,7 +31,7 @@ const ClientPage = () => {
         }
         // validate loaded user id
         else if (user.id !== parseInt(userId)) {
-            navigate("/");
+            navigate("/login");
         }
         // displays content if user is correctly loaded
         else {

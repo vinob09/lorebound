@@ -16,6 +16,9 @@ class Note(db.Model):
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
 
+    # many to one with User
+    user = db.relationship("User", back_populates="notes", passive_deletes=True)
+
     def to_dict(self):
         return {
             'id': self.id,

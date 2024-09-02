@@ -6,7 +6,7 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import 'react-quill/dist/quill.snow.css';
 import './Tiles.css';
 
-const Tiles = ({ items, type, onTileClick }) => {
+const Tiles = ({ items, type, onTileClick, onDelete }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const user = useSelector(state => state.session.user);
@@ -20,6 +20,7 @@ const Tiles = ({ items, type, onTileClick }) => {
     const handleDeleteNote = (noteId) => {
         dispatch(thunkDeleteNote(noteId)).then(() => {
             closeModal();
+            onDelete(noteId);
         })
     };
 

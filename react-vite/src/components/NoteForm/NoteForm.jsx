@@ -92,7 +92,6 @@ const NoteForm = () => {
         navigate(`/client/${user.id}/notes`);
     };
 
-
     return isLoaded ? (
         <div>
             <div className="note-form-container">

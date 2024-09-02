@@ -34,13 +34,13 @@ const deleteNote = (note) => ({
 });
 
 // thunks
-export const thunkAllNotes = () => async (dispatch) => {
+export const thunkAllNotes = (page = 1, per_page = 8) => async (dispatch) => {
     try {
-        const response = await csrfFetch(`/api/notes`);
+        const response = await csrfFetch(`/api/notes?page=${page}&per_page=${per_page}`);
         if (response.ok) {
-            const notes = await response.json();
-            dispatch(getNotes(notes));
-            return notes;
+            const notesData = await response.json();
+            dispatch(getNotes(notesData.notes));
+            return notesData;
         }
     } catch (err) {
         console.error("Failed to fetch notes:", err);

@@ -35,6 +35,8 @@ function LoginFormModal() {
 
     if (serverResponse) {
       setErrors(serverResponse);
+    } else {
+      navigate(`/client/${user.id}`);
     }
   };
 

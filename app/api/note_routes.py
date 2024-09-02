@@ -66,9 +66,20 @@ def all_notes():
     """Get a list of all notes for the current user"""
 
     try:
-        notes = Note.query.filter_by(user_id=current_user.id).all()
-        notes_data = [note.to_dict() for note in notes]
-        return jsonify(notes_data), 200
+        # get paginated results
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 8, type=int)
+
+        notes = Note.query.filter_by(user_id=current_user.id)\
+                            .order_by(Note.created_at.desc())\
+                            .paginate(page=page, per_page=per_page, error_out=False)
+        notes_data = [note.to_dict() for note in notes.items]
+        return jsonify({
+            "notes": notes_data,
+            "total": notes.total,
+            "pages": notes.pages,
+            "current_page": notes.page
+        }), 200
     except Exception as e:
         print(f"Exception in all_note: {str(e)}")
         return jsonify({"error": "An error occurred while fetching all notes"}), 500
@@ -123,7 +134,7 @@ def update_note(note_id):
             if url:
                 if note.url:
                     remove_file_from_s3(note.url)
-                    
+
                 upload = upload_file_to_s3(url)
                 if "errors" in upload:
                     return jsonify(upload), 400
