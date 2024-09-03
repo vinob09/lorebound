@@ -16,6 +16,9 @@ const NotesPage = () => {
         dispatch(thunkAllNotes()).then(() => setIsLoaded(true));
     }, [dispatch]);
 
+    // sort notes by newest first
+    const sortedNotes = notes.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
     // handle tiles click into details
     const handleClick = (noteId) => {
         if (user && user.id) {
@@ -32,7 +35,7 @@ const NotesPage = () => {
         <div className='notes-page'>
             <h1>All Notes Page</h1>
             <Link onClick={handleNewNote}>Create New Note</Link>
-            <Tiles items={notes} type="note" onTileClick={handleClick} />
+            <Tiles items={sortedNotes} type="note" onTileClick={handleClick} />
         </div>
     ) : (
         <h1>Loading...</h1>
