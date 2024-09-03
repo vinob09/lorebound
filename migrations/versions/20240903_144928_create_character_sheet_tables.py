@@ -1,8 +1,8 @@
-"""create character sheets tables
+"""create character sheet tables
 
-Revision ID: ecf3580c7d54
+Revision ID: cc0f86c0ce95
 Revises: 5c0c2e7514f0
-Create Date: 2024-09-03 13:05:08.513626
+Create Date: 2024-09-03 14:49:28.175495
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'ecf3580c7d54'
+revision = 'cc0f86c0ce95'
 down_revision = '5c0c2e7514f0'
 branch_labels = None
 depends_on = None
@@ -58,20 +58,6 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE characters SET SCHEMA {SCHEMA};")
-
-    op.create_table('character_attributes',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('character_id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=255), nullable=True),
-    sa.Column('value', sa.Integer(), nullable=True),
-    sa.Column('additional_info', sa.Text(), nullable=True),
-    sa.Column('game_type', sa.String(length=50), nullable=True),
-    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('id')
-    )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE character_attributes SET SCHEMA {SCHEMA};")
 
     op.create_table('character_items',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -136,7 +122,6 @@ def downgrade():
     op.drop_table('delta_green_characters')
     op.drop_table('character_skills')
     op.drop_table('character_items')
-    op.drop_table('character_attributes')
     op.drop_table('characters')
     op.drop_table('skills')
     op.drop_table('games')

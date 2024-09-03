@@ -24,8 +24,6 @@ class Character(db.Model):
     items = db.relationship("CharacterItem", back_populates="character", cascade="all, delete-orphan")
     # one to many with CharacterSkill
     skills = db.relationship("CharacterSkill", back_populates="character", cascade="all, delete-orphan")
-    # one to many with CharacterAttribute
-    attributes = db.relationship("CharacterAttribute", back_populates="character", cascade="all, delete-orphan")
     # one to many with DeltaGreen
     delta = db.relationship("DeltaGreenCharacter", back_populates="character", uselist=False, cascade="all, delete-orphan")
 
