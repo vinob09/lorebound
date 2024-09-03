@@ -1,14 +1,13 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
-
-class DeltaGreen(db.Model):
+class DeltaGreenCharacter(db.Model):
     __tablename__ = 'delta_green_characters'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    character_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('characters.id'), ondelete='SET NULL'), nullable=True)
+    character_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('characters.id'), ondelete='CASCADE'), nullable=False)
     strength = db.Column(db.Integer)
     constitution = db.Column(db.Integer)
     dexterity = db.Column(db.Integer)
@@ -29,8 +28,7 @@ class DeltaGreen(db.Model):
     personal_details_notes = db.Column(db.Text)
 
     # many to one with Character
-    character = db.relationship("Character", back_populates="delta", passive_deletes=True)
-
+    character = db.relationship("Character", back_populates="delta")
 
     def to_dict(self):
         return {

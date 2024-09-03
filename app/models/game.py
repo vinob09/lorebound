@@ -11,10 +11,10 @@ class Game(db.Model):
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text)
 
-    # one to many with CharacterSkill
-    skills = db.relationship("CharacterSkill", back_populates="game")
     # one to many with Character
-    characters = db.relationship("Character", back_populates="game")
+    characters = db.relationship("Character", back_populates="game", passive_deletes=True)
+    # one to many with CharacterItem
+    items = db.relationship("CharacterItem", back_populates="game", passive_deletes=True)
 
     def to_dict(self):
         return {

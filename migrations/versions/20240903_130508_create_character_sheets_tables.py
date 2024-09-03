@@ -1,8 +1,8 @@
-"""create character sheet tables
+"""create character sheets tables
 
-Revision ID: 0cf90c763700
+Revision ID: ecf3580c7d54
 Revises: 5c0c2e7514f0
-Create Date: 2024-09-03 10:25:11.852560
+Create Date: 2024-09-03 13:05:08.513626
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '0cf90c763700'
+revision = 'ecf3580c7d54'
 down_revision = '5c0c2e7514f0'
 branch_labels = None
 depends_on = None
@@ -32,6 +32,17 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE games SET SCHEMA {SCHEMA};")
 
+    op.create_table('skills',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.Column('base_value', sa.Integer(), nullable=True),
+    sa.Column('game_type', sa.String(length=50), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE skills SET SCHEMA {SCHEMA};")
+
     op.create_table('characters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('game_id', sa.Integer(), nullable=True),
@@ -48,54 +59,51 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE characters SET SCHEMA {SCHEMA};")
 
-    op.create_table('character_armory',
+    op.create_table('character_attributes',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('character_id', sa.Integer(), nullable=True),
-    sa.Column('armor_name', sa.String(length=255), nullable=True),
-    sa.Column('armor_rating', sa.Integer(), nullable=True),
-    sa.Column('traits', sa.Text(), nullable=True),
-    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='SET NULL'),
+    sa.Column('character_id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=True),
+    sa.Column('value', sa.Integer(), nullable=True),
+    sa.Column('additional_info', sa.Text(), nullable=True),
+    sa.Column('game_type', sa.String(length=50), nullable=True),
+    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE character_armory SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE character_attributes SET SCHEMA {SCHEMA};")
+
+    op.create_table('character_items',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('character_id', sa.Integer(), nullable=False),
+    sa.Column('game_id', sa.Integer(), nullable=False),
+    sa.Column('item_type', sa.String(length=50), nullable=True),
+    sa.Column('name', sa.String(length=255), nullable=True),
+    sa.Column('attributes', sa.JSON(), nullable=True),
+    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['game_id'], ['games.id'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('id')
+    )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE character_items SET SCHEMA {SCHEMA};")
 
     op.create_table('character_skills',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('character_id', sa.Integer(), nullable=True),
-    sa.Column('game_id', sa.Integer(), nullable=True),
-    sa.Column('skill_name', sa.String(length=255), nullable=False),
+    sa.Column('character_id', sa.Integer(), nullable=False),
+    sa.Column('skill_id', sa.Integer(), nullable=False),
     sa.Column('skill_level', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='SET NULL'),
-    sa.ForeignKeyConstraint(['game_id'], ['games.id'], ondelete='SET NULL'),
+    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['skill_id'], ['skills.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
 
     if environment == "production":
         op.execute(f"ALTER TABLE character_skills SET SCHEMA {SCHEMA};")
 
-    op.create_table('character_weapons',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('character_id', sa.Integer(), nullable=True),
-    sa.Column('weapon_name', sa.String(length=255), nullable=True),
-    sa.Column('dice_pool', sa.String(length=50), nullable=True),
-    sa.Column('damage', sa.String(length=50), nullable=True),
-    sa.Column('extra_damage', sa.String(length=50), nullable=True),
-    sa.Column('armor_piercing', sa.Integer(), nullable=True),
-    sa.Column('salvo', sa.Integer(), nullable=True),
-    sa.Column('range', sa.String(length=50), nullable=True),
-    sa.Column('traits', sa.Text(), nullable=True),
-    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='SET NULL'),
-    sa.PrimaryKeyConstraint('id')
-    )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE character_weapons SET SCHEMA {SCHEMA};")
-
     op.create_table('delta_green_characters',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('character_id', sa.Integer(), nullable=True),
+    sa.Column('character_id', sa.Integer(), nullable=False),
     sa.Column('strength', sa.Integer(), nullable=True),
     sa.Column('constitution', sa.Integer(), nullable=True),
     sa.Column('dexterity', sa.Integer(), nullable=True),
@@ -114,7 +122,7 @@ def upgrade():
     sa.Column('wounds', sa.Text(), nullable=True),
     sa.Column('ailments', sa.Text(), nullable=True),
     sa.Column('personal_details_notes', sa.Text(), nullable=True),
-    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='SET NULL'),
+    sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
 
@@ -126,9 +134,10 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('delta_green_characters')
-    op.drop_table('character_weapons')
     op.drop_table('character_skills')
-    op.drop_table('character_armory')
+    op.drop_table('character_items')
+    op.drop_table('character_attributes')
     op.drop_table('characters')
+    op.drop_table('skills')
     op.drop_table('games')
     # ### end Alembic commands ###
