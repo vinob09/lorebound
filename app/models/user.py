@@ -16,6 +16,8 @@ class User(db.Model, UserMixin):
 
     # one to many with Note
     notes = db.relationship("Note", back_populates="user")
+    # one to many with Character
+    characters = db.relationship("Character", back_populates="user")
 
     @property
     def password(self):
