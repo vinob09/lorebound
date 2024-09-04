@@ -107,8 +107,8 @@ def seed_notes():
     ]
 
     add_all_notes = [db.session.add(note) for note in all_notes]
-    print('All notes added')
     db.session.commit()
+    print('All notes added')
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't

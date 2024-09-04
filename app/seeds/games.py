@@ -25,8 +25,8 @@ def seed_games():
     ]
 
     add_all_games = [db.session.add(game) for game in all_games]
-    print('All games added')
     db.session.commit()
+    print('All games added')
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
