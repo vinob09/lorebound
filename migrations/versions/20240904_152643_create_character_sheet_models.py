@@ -1,8 +1,8 @@
 """create character sheet models
 
-Revision ID: 0fe86debefa2
+Revision ID: 5e0d4c3a8576
 Revises: 5c0c2e7514f0
-Create Date: 2024-09-04 11:03:58.441541
+Create Date: 2024-09-04 15:26:43.074702
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '0fe86debefa2'
+revision = '5e0d4c3a8576'
 down_revision = '5c0c2e7514f0'
 branch_labels = None
 depends_on = None
@@ -108,7 +108,7 @@ def upgrade():
     sa.Column('breaking_point_current', sa.Integer(), nullable=True),
     sa.Column('physical_description', sa.Text(), nullable=True),
     sa.Column('bonds', sa.Text(), nullable=True),
-    sa.Column('bonds_score', sa.Integer(), nullable=True),
+    sa.Column('bonds_score', sa.Text(), nullable=True),
     sa.Column('motivations_mental_disorders', sa.Text(), nullable=True),
     sa.Column('incidents_violence', sa.Integer(), nullable=True),
     sa.Column('incidents_helplessness', sa.Integer(), nullable=True),
@@ -130,11 +130,11 @@ def upgrade():
     sa.Column('character_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=True),
     sa.Column('skill_percentage', sa.Float(), nullable=True),
-    sa.Column('base_range', sa.Float(), nullable=True),
-    sa.Column('damage', sa.Float(), nullable=True),
-    sa.Column('armor_piercing', sa.String(), nullable=True),
+    sa.Column('base_range', sa.String(), nullable=True),
+    sa.Column('damage', sa.String(), nullable=True),
+    sa.Column('armor_piercing', sa.Integer(), nullable=True),
     sa.Column('lethality', sa.Float(), nullable=True),
-    sa.Column('kill_radius', sa.Float(), nullable=True),
+    sa.Column('kill_radius', sa.String(), nullable=True),
     sa.Column('ammo', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
