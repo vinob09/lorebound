@@ -8,7 +8,7 @@ class Skill(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    base_value = db.Column(db.Integer, default=0)
+    base_value = db.Column(db.Integer)
     game_type = db.Column(db.String(50))
 
     # one to many with CharacterSkill

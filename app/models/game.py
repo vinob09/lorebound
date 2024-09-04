@@ -13,8 +13,6 @@ class Game(db.Model):
 
     # one to many with Character
     characters = db.relationship("Character", back_populates="game", passive_deletes=True)
-    # one to many with CharacterItem
-    items = db.relationship("CharacterItem", back_populates="game", passive_deletes=True)
 
     def to_dict(self):
         return {
