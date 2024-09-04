@@ -1,8 +1,8 @@
-"""create character sheet tables
+"""create character sheets models
 
-Revision ID: cc0f86c0ce95
+Revision ID: da45ee01f430
 Revises: 5c0c2e7514f0
-Create Date: 2024-09-03 14:49:28.175495
+Create Date: 2024-09-03 19:26:25.764423
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'cc0f86c0ce95'
+revision = 'da45ee01f430'
 down_revision = '5c0c2e7514f0'
 branch_labels = None
 depends_on = None
@@ -48,7 +48,6 @@ def upgrade():
     sa.Column('game_id', sa.Integer(), nullable=True),
     sa.Column('player_id', sa.Integer(), nullable=True),
     sa.Column('character_name', sa.String(length=255), nullable=False),
-    sa.Column('background', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['game_id'], ['games.id'], ondelete='SET NULL'),
@@ -90,24 +89,49 @@ def upgrade():
     op.create_table('delta_green_characters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('character_id', sa.Integer(), nullable=False),
-    sa.Column('strength', sa.Integer(), nullable=True),
-    sa.Column('constitution', sa.Integer(), nullable=True),
-    sa.Column('dexterity', sa.Integer(), nullable=True),
-    sa.Column('intelligence', sa.Integer(), nullable=True),
-    sa.Column('power', sa.Integer(), nullable=True),
-    sa.Column('charisma', sa.Integer(), nullable=True),
-    sa.Column('hit_points', sa.Integer(), nullable=True),
-    sa.Column('willpower_points', sa.Integer(), nullable=True),
-    sa.Column('sanity_points', sa.Integer(), nullable=True),
-    sa.Column('breaking_point', sa.Integer(), nullable=True),
-    sa.Column('distinguishing_features', sa.Text(), nullable=True),
-    sa.Column('motivations_mental_disorders', sa.Text(), nullable=True),
-    sa.Column('incidents_sanity_loss', sa.Text(), nullable=True),
+    sa.Column('profession', sa.String(length=50), nullable=True),
+    sa.Column('employer', sa.String(length=100), nullable=True),
+    sa.Column('nationality', sa.String(length=50), nullable=True),
+    sa.Column('sex', sa.String(), nullable=True),
+    sa.Column('age_dob', sa.String(length=20), nullable=True),
+    sa.Column('education_occupation_history', sa.Text(), nullable=True),
+    sa.Column('strength_score', sa.Integer(), nullable=True),
+    sa.Column('strength_x5', sa.Integer(), nullable=True),
+    sa.Column('strength_features', sa.String(length=50), nullable=True),
+    sa.Column('constitution_score', sa.Integer(), nullable=True),
+    sa.Column('constitution_x5', sa.Integer(), nullable=True),
+    sa.Column('constitution_features', sa.String(length=50), nullable=True),
+    sa.Column('dexterity_score', sa.Integer(), nullable=True),
+    sa.Column('dexterity_x5', sa.Integer(), nullable=True),
+    sa.Column('dexterity_features', sa.String(length=50), nullable=True),
+    sa.Column('intelligence_score', sa.Integer(), nullable=True),
+    sa.Column('intelligence_x5', sa.Integer(), nullable=True),
+    sa.Column('intelligence_features', sa.String(length=50), nullable=True),
+    sa.Column('power_score', sa.Integer(), nullable=True),
+    sa.Column('power_x5', sa.Integer(), nullable=True),
+    sa.Column('power_features', sa.String(length=50), nullable=True),
+    sa.Column('charisma_score', sa.Integer(), nullable=True),
+    sa.Column('charisma_x5', sa.Integer(), nullable=True),
+    sa.Column('charisma_features', sa.String(length=50), nullable=True),
+    sa.Column('hit_points_maximum', sa.Integer(), nullable=True),
+    sa.Column('hit_points_current', sa.Integer(), nullable=True),
+    sa.Column('willpower_points_maximum', sa.Integer(), nullable=True),
+    sa.Column('willpower_points_current', sa.Integer(), nullable=True),
+    sa.Column('sanity_points_maximum', sa.Integer(), nullable=True),
+    sa.Column('sanity_points_current', sa.Integer(), nullable=True),
+    sa.Column('breaking_point_maximum', sa.Integer(), nullable=True),
+    sa.Column('breaking_point_current', sa.Integer(), nullable=True),
     sa.Column('physical_description', sa.Text(), nullable=True),
     sa.Column('bonds', sa.Text(), nullable=True),
-    sa.Column('wounds', sa.Text(), nullable=True),
-    sa.Column('ailments', sa.Text(), nullable=True),
+    sa.Column('bonds_score', sa.Integer(), nullable=True),
+    sa.Column('motivations_mental_disorders', sa.Text(), nullable=True),
+    sa.Column('incidents_violence', sa.Integer(), nullable=True),
+    sa.Column('incidents_helplessness', sa.Integer(), nullable=True),
+    sa.Column('wounds_ailments', sa.Text(), nullable=True),
     sa.Column('personal_details_notes', sa.Text(), nullable=True),
+    sa.Column('developments_home_family', sa.Text(), nullable=True),
+    sa.Column('special_training', sa.Text(), nullable=True),
+    sa.Column('skill_stat_used', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )

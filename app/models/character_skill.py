@@ -10,7 +10,7 @@ class CharacterSkill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     character_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('characters.id'), ondelete='CASCADE'), nullable=False)
     skill_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('skills.id'), ondelete='CASCADE'), nullable=False)
-    skill_level = db.Column(db.Integer, default=0)
+    skill_level = db.Column(db.Integer)
 
     # many to one with Character
     character = db.relationship("Character", back_populates="skills")
