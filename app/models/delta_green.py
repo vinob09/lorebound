@@ -8,6 +8,7 @@ class DeltaGreenCharacter(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     character_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('characters.id'), ondelete='CASCADE'), nullable=False)
+
     # personal data
     profession = db.Column(db.String(50))
     employer = db.Column(db.String(100))
@@ -15,6 +16,7 @@ class DeltaGreenCharacter(db.Model):
     sex = db.Column(db.String())
     age_dob = db.Column(db.String(20))
     education_occupation_history = db.Column(db.Text)
+
     # statistical data
     strength_score = db.Column(db.Integer)
     strength_x5 = db.Column(db.Integer)
@@ -34,6 +36,8 @@ class DeltaGreenCharacter(db.Model):
     charisma_score = db.Column(db.Integer)
     charisma_x5 = db.Column(db.Integer)
     charisma_features = db.Column(db.String(50))
+
+    # derived attributes
     hit_points_maximum = db.Column(db.Integer)
     hit_points_current = db.Column(db.Integer)
     willpower_points_maximum = db.Column(db.Integer)
@@ -43,14 +47,20 @@ class DeltaGreenCharacter(db.Model):
     breaking_point_maximum = db.Column(db.Integer)
     breaking_point_current = db.Column(db.Integer)
     physical_description = db.Column(db.Text)
+
     # psychological data
     bonds = db.Column(db.Text)
     bonds_score = db.Column(db.Integer)
     motivations_mental_disorders = db.Column(db.Text)
     incidents_violence = db.Column(db.Integer)
     incidents_helplessness = db.Column(db.Integer)
+
     # injuries
     wounds_ailments = db.Column(db.Text)
+
+    # armor and gear
+    armor_gear = db.Column(db.Text)
+
     # remarks
     personal_details_notes = db.Column(db.Text)
     developments_home_family = db.Column(db.Text)

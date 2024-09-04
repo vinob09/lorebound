@@ -19,12 +19,12 @@ class Character(db.Model):
     game = db.relationship("Game", back_populates="characters", passive_deletes=True)
     # many to one with User
     user = db.relationship("User", back_populates="characters", passive_deletes=True)
-    # one to many with CharacterItem
-    items = db.relationship("CharacterItem", back_populates="character", cascade="all, delete-orphan")
     # one to many with CharacterSkill
     skills = db.relationship("CharacterSkill", back_populates="character", cascade="all, delete-orphan")
     # one to many with DeltaGreen
     delta = db.relationship("DeltaGreenCharacter", back_populates="character", uselist=False, cascade="all, delete-orphan")
+    # one to many with DeltaWeapon
+    weapons = db.relationship("DeltaWeapon", back_populates="character", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

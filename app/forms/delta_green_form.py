@@ -1,26 +1,17 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, RadioField, TextAreaField, SubmitField, FieldList, FormField, SelectField, HiddenField
+from wtforms import StringField, IntegerField, RadioField, TextAreaField, SubmitField, FieldList, FormField, SelectField, HiddenField, FloatField
 from wtforms.validators import DataRequired, Optional, NumberRange, Length
 import json
 
-class ItemForm(FlaskForm):
-    item_type = HiddenField('Item Type', validators=[DataRequired()])
-    name = StringField('Name', validators=[Optional(), Length(max=255)])
-    attributes = TextAreaField('Attributes', validators=[Optional()])
-
-    def validate(self):
-        """Custom validation based on item type."""
-        initial_validation = super(ItemForm, self).validate()
-        if not initial_validation:
-            return False
-
-        try:
-            json.loads(self.attributes.data)
-        except ValueError:
-            self.attributes.errors.append('Attributes must be a valid JSON string.')
-            return False
-
-        return True
+class DeltaWeaponForm(FlaskForm):
+    name = StringField('Name', validators=[Optional(), Length(max=50)])
+    skill_percentage = FloatField('Skill Percentage', validators=[Optional()])
+    base_range = FloatField('Base Range', validators=[Optional()])
+    damage = FloatField('Damage', validators=[Optional()])
+    armor_piercing = StringField('Armor Piercing', validators=[Optional()])
+    lethality = FloatField('Lethality', validators=[Optional()])
+    kill_radius = FloatField('Kill Radius', validators=[Optional()])
+    ammo = IntegerField('Ammo', validators=[Optional()])
 
 class SkillForm(FlaskForm):
     skill_id = SelectField('Skill', coerce=int, validators=[DataRequired()])
@@ -37,6 +28,8 @@ class DeltaGreenCharacterForm(FlaskForm):
     sex = RadioField('Sex', choices=[('M', 'Male'), ('F', 'Female')], validators=[Optional()])
     age_dob = StringField('Age and DOB', validators=[Optional(),Length(max=20)])
     education_occupation_history = TextAreaField('Education and Occupational History', validators=[Optional()])
+
+    # statistics
     strength_score = IntegerField('Strength', validators=[DataRequired(), NumberRange(min=0)])
     strength_x5 = IntegerField('Strength x5', validators=[DataRequired(), NumberRange(min=0)])
     strength_features = StringField('Strength Features', validators=[Optional(), Length(max=50)])
@@ -55,6 +48,8 @@ class DeltaGreenCharacterForm(FlaskForm):
     charisma_score = IntegerField('Charisma', validators=[DataRequired(), NumberRange(min=0)])
     charisma_x5 = IntegerField('Charisma x5', validators=[DataRequired(), NumberRange(min=0)])
     charisma_features = StringField('Charisma Features', validators=[Optional(), Length(max=50)])
+
+    # derived attributes
     hit_points_maximum = IntegerField('Hit Points Maximum', validators=[DataRequired(), NumberRange(min=0)])
     hit_points_current = IntegerField('Hit Points Current', validators=[Optional(), NumberRange(min=0)])
     willpower_points_maximum = IntegerField('Willpower Points Maximum', validators=[DataRequired(), NumberRange(min=0)])
@@ -63,6 +58,7 @@ class DeltaGreenCharacterForm(FlaskForm):
     sanity_points_current = IntegerField('Sanity Points Current', validators=[Optional(), NumberRange(min=0)])
     breaking_point_maximum = IntegerField('Breaking Point Maximum', validators=[DataRequired(), NumberRange(min=0)])
     breaking_point_current = IntegerField('Breaking Point Current', validators=[Optional(), NumberRange(min=0)])
+
     physical_description = TextAreaField('Physical Description', validators=[Optional()])
     bonds = TextAreaField('Bonds', validators=[Optional()])
     bonds_score = IntegerField('Bonds Score', validators=[Optional()])
@@ -75,7 +71,7 @@ class DeltaGreenCharacterForm(FlaskForm):
     special_training = TextAreaField('Special Training', validators=[Optional()])
     skill_stat_used = TextAreaField('Skill or Stat Used', validators=[Optional()])
 
-    items = FieldList(FormField(ItemForm), min_entries=1)
+    weapons = FieldList(FormField(DeltaWeaponForm), min_entries=1)
     skills = FieldList(FormField(SkillForm), min_entries=1)
 
     submit = SubmitField('Create Delta Green Character')
