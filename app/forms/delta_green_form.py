@@ -1,21 +1,27 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, RadioField, TextAreaField, SubmitField, FieldList, FormField, SelectField, HiddenField, FloatField
+from wtforms import StringField, IntegerField, RadioField, TextAreaField, SubmitField, FieldList, FormField, SelectField, FloatField
 from wtforms.validators import DataRequired, Optional, NumberRange, Length
-import json
 
 class DeltaWeaponForm(FlaskForm):
     name = StringField('Name', validators=[Optional(), Length(max=50)])
     skill_percentage = FloatField('Skill Percentage', validators=[Optional()])
-    base_range = FloatField('Base Range', validators=[Optional()])
-    damage = FloatField('Damage', validators=[Optional()])
+    base_range = StringField('Base Range', validators=[Optional()])
+    damage = StringField('Damage', validators=[Optional()])
     armor_piercing = StringField('Armor Piercing', validators=[Optional()])
     lethality = FloatField('Lethality', validators=[Optional()])
-    kill_radius = FloatField('Kill Radius', validators=[Optional()])
+    kill_radius = StringField('Kill Radius', validators=[Optional()])
     ammo = IntegerField('Ammo', validators=[Optional()])
+
 
 class SkillForm(FlaskForm):
     skill_id = SelectField('Skill', coerce=int, validators=[DataRequired()])
     skill_level = IntegerField('Skill Level', validators=[Optional()])
+
+
+class BondForm(FlaskForm):
+    bond_name = StringField('Bond Name', validators=[Optional()])
+    bond_score = StringField('Bond Score', validators=[Optional()])
+
 
 class DeltaGreenCharacterForm(FlaskForm):
     # generic character field
@@ -60,8 +66,6 @@ class DeltaGreenCharacterForm(FlaskForm):
     breaking_point_current = IntegerField('Breaking Point Current', validators=[Optional(), NumberRange(min=0)])
 
     physical_description = TextAreaField('Physical Description', validators=[Optional()])
-    bonds = TextAreaField('Bonds', validators=[Optional()])
-    bonds_score = IntegerField('Bonds Score', validators=[Optional()])
     motivations_mental_disorders = TextAreaField('Motivations and Mental Disorders', validators=[Optional()])
     incidents_violence = IntegerField('Incidents of Sanity Loss - Violence', validators=[Optional(), Length(max=3)])
     incidents_helplessness = IntegerField('Incidents of Sanity Loss - Helplessness', validators=[Optional(), Length(max=3)])
@@ -73,5 +77,6 @@ class DeltaGreenCharacterForm(FlaskForm):
 
     weapons = FieldList(FormField(DeltaWeaponForm), min_entries=1)
     skills = FieldList(FormField(SkillForm), min_entries=1)
+    bonds = FieldList(FormField(BondForm), min_entries=1)
 
     submit = SubmitField('Create Delta Green Character')

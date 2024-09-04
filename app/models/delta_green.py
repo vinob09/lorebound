@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+import json
 
 class DeltaGreenCharacter(db.Model):
     __tablename__ = 'delta_green_characters'
@@ -50,7 +51,7 @@ class DeltaGreenCharacter(db.Model):
 
     # psychological data
     bonds = db.Column(db.Text)
-    bonds_score = db.Column(db.Integer)
+    bonds_score = db.Column(db.Text)
     motivations_mental_disorders = db.Column(db.Text)
     incidents_violence = db.Column(db.Integer)
     incidents_helplessness = db.Column(db.Integer)
@@ -107,8 +108,8 @@ class DeltaGreenCharacter(db.Model):
             'breakingPointMaximum': self.breaking_point_maximum,
             'breakingPointCurrent': self.breaking_point_current,
             'physicalDescription': self.physical_description,
-            'bonds': self.bonds,
-            'bondsScore': self.bonds_score,
+            'bonds': json.loads(self.bonds) if self.bonds else [],
+            'bondsScore': json.loads(self.bonds_scores) if self.bonds_scores else [],
             'motivationsMentalDisorders': self.motivations_mental_disorders,
             'incidentsViolence': self.incidents_violence,
             'incidentsHelplessness': self.incidents_helplessness,

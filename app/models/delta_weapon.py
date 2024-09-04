@@ -10,11 +10,11 @@ class DeltaWeapon(db.Model):
     character_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('characters.id'), ondelete='CASCADE'), nullable=False)
     name = db.Column(db.String(50))
     skill_percentage = db.Column(db.Float)
-    base_range = db.Column(db.Float)
-    damage = db.Column(db.Float)
-    armor_piercing = db.Column(db.String)
+    base_range = db.Column(db.String)
+    damage = db.Column(db.String)
+    armor_piercing = db.Column(db.Integer)
     lethality = db.Column(db.Float)
-    kill_radius = db.Column(db.Float)
+    kill_radius = db.Column(db.String)
     ammo = db.Column(db.Integer)
 
     # many to one with Character
