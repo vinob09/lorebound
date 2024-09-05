@@ -103,14 +103,14 @@ def seed_dg_chars():
         personal_details_notes="Slept with a senior officer. Sent here after affair was discovered.",
         developments_home_family="",
         special_training="",
-        skill_stat_used="" 
+        skill_stat_used=""
     )
 
     all_dg_characters = [
         dale, robert
     ]
 
-    add_all_dg_characters = [db.session.add(character) for character in all_dg_characters]
+    db.session.bulk_save_objects(all_dg_characters)
     db.session.commit()
     print('All DG Characters added.')
 

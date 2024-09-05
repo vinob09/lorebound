@@ -69,7 +69,7 @@ class DeltaGreenCharacter(db.Model):
     skill_stat_used = db.Column(db.Text)
 
     # many to one with Character
-    character = db.relationship("Character", back_populates="delta")
+    character = db.relationship("Character", back_populates="delta_green_character")
 
     def to_dict(self):
         return {
@@ -114,6 +114,7 @@ class DeltaGreenCharacter(db.Model):
             'incidentsViolence': self.incidents_violence,
             'incidentsHelplessness': self.incidents_helplessness,
             'woundsAilments': self.wounds_ailments,
+            'armorGear': self.armor_gear,
             'personalDetailsNotes': self.personal_details_notes,
             'developmentHomeFamily': self.developments_home_family,
             'specialTraining': self.special_training,

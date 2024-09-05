@@ -19,7 +19,7 @@ def seed_characters():
         dg1, dg2
     ]
 
-    add_all_characters = [db.session.add(character) for character in all_characters]
+    db.session.bulk_save_objects(all_characters)
     db.session.commit()
     print('All characters added')
 

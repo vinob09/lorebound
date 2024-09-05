@@ -16,13 +16,13 @@ class Character(db.Model):
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
 
     # many to one with Game
-    game = db.relationship("Game", back_populates="characters", passive_deletes=True)
+    game = db.relationship("Game", back_populates="characters")
     # many to one with User
-    user = db.relationship("User", back_populates="characters", passive_deletes=True)
+    user = db.relationship("User", back_populates="characters")
     # one to many with CharacterSkill
     skills = db.relationship("CharacterSkill", back_populates="character", cascade="all, delete-orphan")
     # one to many with DeltaGreen
-    delta = db.relationship("DeltaGreenCharacter", back_populates="character", uselist=False, cascade="all, delete-orphan")
+    delta_green_character = db.relationship("DeltaGreenCharacter", back_populates="character", uselist=False, cascade="all, delete-orphan")
     # one to many with DeltaWeapon
     weapons = db.relationship("DeltaWeapon", back_populates="character", cascade="all, delete-orphan")
 

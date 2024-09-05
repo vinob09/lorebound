@@ -20,6 +20,7 @@ class SkillForm(FlaskForm):
 
 class DeltaGreenCharacterForm(FlaskForm):
     # generic character field
+    game_id = SelectField('Game', coerce=int, validators=[DataRequired()])
     character_name = StringField('Last Name, First Name, Middle Initial', validators=[DataRequired(), Length(max=255)])
 
     # delta green specific fields
@@ -64,9 +65,10 @@ class DeltaGreenCharacterForm(FlaskForm):
     bonds_score = FieldList(StringField('Bond Score', validators=[Optional()]), min_entries=1)
     physical_description = TextAreaField('Physical Description', validators=[Optional()])
     motivations_mental_disorders = TextAreaField('Motivations and Mental Disorders', validators=[Optional()])
-    incidents_violence = IntegerField('Incidents of Sanity Loss - Violence', validators=[Optional(), Length(max=3)])
-    incidents_helplessness = IntegerField('Incidents of Sanity Loss - Helplessness', validators=[Optional(), Length(max=3)])
+    incidents_violence = IntegerField('Incidents of Sanity Loss - Violence', validators=[Optional(), NumberRange(min=0)])
+    incidents_helplessness = IntegerField('Incidents of Sanity Loss - Helplessness', validators=[Optional(), NumberRange(min=0)])
     wounds_ailments = TextAreaField('Wounds and Ailments', validators=[Optional()])
+    armor_gear = TextAreaField('Armor and Gear', validators=[Optional()])
     personal_details_notes = TextAreaField('Personal Details and Notes', validators=[Optional()])
     developments_home_family = TextAreaField('Developments Which Affect Home and Family', validators=[Optional()])
     special_training = TextAreaField('Special Training', validators=[Optional()])
