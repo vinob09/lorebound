@@ -20,7 +20,7 @@ class SkillForm(FlaskForm):
 
 class DeltaGreenCharacterForm(FlaskForm):
     # generic character field
-    game_id = SelectField('Game', coerce=int, validators=[DataRequired()])
+    game_id = IntegerField('Game', validators=[DataRequired()])
     character_name = StringField('Last Name, First Name, Middle Initial', validators=[DataRequired(), Length(max=255)])
 
     # delta green specific fields
@@ -73,8 +73,5 @@ class DeltaGreenCharacterForm(FlaskForm):
     developments_home_family = TextAreaField('Developments Which Affect Home and Family', validators=[Optional()])
     special_training = TextAreaField('Special Training', validators=[Optional()])
     skill_stat_used = TextAreaField('Skill or Stat Used', validators=[Optional()])
-
-    weapons = FieldList(FormField(DeltaWeaponForm), min_entries=1)
-    skills = FieldList(FormField(SkillForm), min_entries=1)
 
     submit = SubmitField('Create Delta Green Character')
