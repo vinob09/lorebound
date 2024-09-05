@@ -20,7 +20,10 @@ def create_delta_green_character():
     # dynamically load choices for games
     form.game_id.choices = [(game.id, game.name) for game in Game.query.all()]
     # dynamically load choices for skills
-    form.skills.skill_id.choices = [(skill.id, skill.name) for skill in Skill.query.all()]
+    skills = Skill.query.all()
+    skill_choices = [(skill.id, skill.name) for skill in skills]
+    for skill_form in form.skills:
+        skill_form.skill_id.choices = skill_choices
 
     if form.validate_on_submit():
         try:
@@ -35,9 +38,6 @@ def create_delta_green_character():
             db.session.flush()
 
             # Delta Green specific entry
-            bonds_json = json.dumps(form.bonds.data)
-            bonds_score_json = json.dumps(form.bonds_score.data)
-
             delta_character = DeltaGreenCharacter(
                 character_id=new_character.id,
                 profession=form.data['profession'],
@@ -82,8 +82,8 @@ def create_delta_green_character():
                 developments_home_family=form.data['developments_home_family'],
                 special_training=form.data['special_training'],
                 skill_stat_used=form.data['skill_stat_used'],
-                bonds=bonds_json,
-                bonds_score=bonds_score_json
+                bonds=json.dumps(form.bonds.data),
+                bonds_score=json.dumps(form.bonds_score.data)
             )
 
             db.session.add(delta_character)
@@ -172,13 +172,14 @@ def edit_delta_green_character(character_id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     # dynamically load choices for skills
-    form.skills.skill_id.choices = [(skill.id, skill.name) for skill in Skill.query.all()]
+    skills = Skill.query.all()  # Pre-fetch all skills
+    skill_choices = [(skill.id, skill.name) for skill in skills]
+    for skill_form in form.skills:
+        skill_form.skill_id.choices = skill_choices
 
     if form.validate_on_submit():
         try:
-            bonds_json = json.dumps(form.bonds.data)
-            bonds_score_json = json.dumps(form.bonds_score.data)
-
+            # update
             delta_character.profession = form.data['profession']
             delta_character.employer = form.data['employer']
             delta_character.nationality = form.data['nationality']
@@ -221,8 +222,8 @@ def edit_delta_green_character(character_id):
             delta_character.developments_home_family = form.data['developments_home_family']
             delta_character.special_training = form.data['special_training']
             delta_character.skill_stat_used = form.data['skill_stat_used']
-            delta_character.bonds = bonds_json,
-            delta_character.bonds_score = bonds_score_json
+            delta_character.bonds = json.dumps(form.bonds.data),
+            delta_character.bonds_score = json.dumps(form.bonds_score.data)
 
             # update skills
             existing_skills = {cs.skill_id: cs for cs in CharacterSkill.query.filter_by(character_id=character_id).all()}
