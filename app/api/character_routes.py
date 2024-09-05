@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Game, Character, DeltaGreenCharacter, CharacterSkill, DeltaWeapon
+from app.models import db, Character, DeltaGreenCharacter, CharacterSkill, DeltaWeapon
 from app.forms import DeltaGreenCharacterForm, SkillForm, DeltaWeaponForm
 import json
 
@@ -8,6 +8,7 @@ import json
 character_routes = Blueprint('characters', __name__)
 
 
+# delta green character sheets
 @character_routes.route("/deltagreen", methods=["POST"])
 @login_required
 def create_delta_green_character():
@@ -21,7 +22,7 @@ def create_delta_green_character():
             bonds_json = json.dumps(form.bonds.data)
             bonds_score_json = json.dumps(form.bonds_score.data)
 
-            new_character = DeltaGreenCharacterForm(
+            new_character = DeltaGreenCharacter(
                 profession=form.data['profession'],
                 employer=form.data['employer'],
                 nationality=form.data['nationality'],
@@ -197,3 +198,189 @@ def delete_character(character_id):
     except Exception as e:
         print(f"Exception in delete_character: {str(e)}")
         return jsonify({"errors": "An error occurred while deleting this character"}), 500
+
+
+# delta green character skill management
+@character_routes.route("/<int:character_id>/skills", methods=["POST"])
+@login_required
+def add_skill_delta_green_character(character_id):
+    """Add skill values to Delta Green character"""
+
+    form = DeltaGreenCharacterForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        try:
+            for skill_form in form.skills:
+                skill_id = skill_form.skill_id.data
+                skill_level = skill_form.skill_level.data
+
+                character_skill = CharacterSkill.query.filter_by(character_id=character_id, skill_id=skill_id).first()
+                if character_skill:
+                    character_skill.skill_level = skill_level
+                else:
+                    new_character_skill = CharacterSkill(
+                        character_id=character_id,
+                        skill_id=skill_id,
+                        skill_level=skill_level
+                    )
+                    db.session.add(new_character_skill)
+            db.session.commit()
+            return jsonify({"message": "All skills added successfully"}), 201
+        except Exception as e:
+            print(f"Exception in add_skill_delta_green_character: {str(e)}")
+            return jsonify({"errors": "An error occurred while adding skills"}), 500
+    else:
+        return jsonify(form.errors), 400
+
+
+@character_routes.route("/<int:character_id>/skills", methods=["GET"])
+@login_required
+def get_character_skills(character_id):
+    """Get a list of all the character's skills"""
+
+    character_skills = CharacterSkill.query.filter_by(character_id=character_id).all()
+    if not character_skills:
+        return jsonify({"errors": "No skills found for this character"}), 404
+
+    return jsonify([cs.to_dict() for cs in character_skills]), 200
+
+
+@character_routes.route("/<int:character_id>/skills/<int:skill_id>", methods=["PUT"])
+@login_required
+def edit_skill_delta_green_character(character_id, skill_id):
+    """Edit skill values to Delta Green character"""
+
+    character = Character.query.get_or_404(character_id)
+    if character.player_id != current_user.id:
+        return jsonify({"errors": "Forbidden"}), 403
+
+    character_skill = CharacterSkill.query.filter_by(character_id=character_id, skill_id=skill_id).first()
+    if not character_skill:
+        return jsonify({"errors": "Character skill not found"}), 404
+
+    form = SkillForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        try:
+            character_skill.skill_level = form.data['skill_level']
+            db.session.commit()
+            return jsonify(character_skill.to_dict()), 200
+        except Exception as e:
+            print(f"Exception in edit_skill_delta_green_character: {str(e)}")
+            return jsonify({"errors": "An error occurred while updating the skill level"}), 500
+    else:
+        return jsonify(form.errors), 400
+
+
+# delta green weapon management
+@character_routes.route("/deltagreen/<int:character_id>/weapons", methods=["POST"])
+@login_required
+def add_a_weapon_delta_green(character_id):
+    """Add a weapon to a specific character"""
+
+    character = Character.query.get_or_404(character_id)
+    if character.player_id != current_user.id:
+        return jsonify({"errors": "Forbidden"}), 403
+
+    form = DeltaWeaponForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        try:
+            new_weapon = DeltaWeapon(
+                character_id=character_id,
+                name=form.data['name'],
+                skill_percentage=form.data['skill_percentage'],
+                base_range=form.data['base_range'],
+                damage=form.data['damage'],
+                armor_piercing=form.data['armor_piercing'],
+                lethality=form.data['lethality'],
+                kill_radius=form.data['kill_radius'],
+                ammo=form.data['ammo']
+            )
+            db.session.add(new_weapon)
+            db.session.commit()
+            return jsonify(new_weapon.to_dict()), 201
+        except Exception as e:
+            print(f"Exception in add_a_weapon_delta_green: {str(e)}")
+            return jsonify({"errors": "An error occurred while adding the weapon"}), 500
+    else:
+        return jsonify(form.errors), 400
+
+
+@character_routes.route("/deltagreen/<int:character_id>/weapons", methods=["GET"])
+@login_required
+def get_character_weapons(character_id):
+    """Get a list of all the character's weapons"""
+
+    character = Character.query.get_or_404(character_id)
+    if character.player_id != current_user.id:
+        return jsonify({"errors": "Forbidden"}), 403
+
+    try:
+        weapons = DeltaWeapon.query.filter_by(character_id=character_id).all()
+        weapons_data = [weapon.to_dict() for weapon in weapons]
+        return jsonify(weapons_data), 200
+    except Exception as e:
+        print(f"Exception in get_character_weapons: {str(e)}")
+        return jsonify({"errors": "An error occurred while fetching weapons"}), 500
+
+
+@character_routes.route("/deltagreen/<int:character_id>/weapons/<int:weapon_id>", methods=["PUT"])
+@login_required
+def edit_character_weapon(character_id, weapon_id):
+    """Edit a specific character's weapon by id"""
+
+    character = Character.query.get_or_404(character_id)
+    if character.player_id != current_user.id:
+        return jsonify({"errors": "Forbidden"}), 403
+
+    weapon = DeltaWeapon.query.get_or_404(weapon_id)
+    if weapon.character_id != character_id:
+        return jsonify({"errors": "Weapon does not belong to this character"}), 400
+
+    form = DeltaWeaponForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        try:
+            weapon.name = form.data['name']
+            weapon.skill_percentage = form.data['skill_percentage']
+            weapon.base_range = form.data['base_range']
+            weapon.damage = form.data['damage']
+            weapon.armor_piercing = form.data['armor_piercing']
+            weapon.lethality = form.data['lethality']
+            weapon.kill_radius = form.data['kill_radius']
+            weapon.ammo = form.data['ammo']
+
+            db.session.commit()
+            return jsonify(weapon.to_dict()), 200
+        except Exception as e:
+            print(f"Exception in edit_character_weapon: {str(e)}")
+            return jsonify({"errors": "An error occurred while updating the weapon"}), 500
+    else:
+        return jsonify(form.errors), 400
+
+
+@character_routes.route("/deltagreen/<int:character_id>/weapons/<int:weapon_id>", methods=["DELETE"])
+@login_required
+def delete_character_weapon(character_id, weapon_id):
+    """Delete a specific character's weapon by id"""
+
+    character = Character.query.get_or_404(character_id)
+    if character.player_id != current_user.id:
+        return jsonify({"errors": "Forbidden"}), 403
+
+    weapon = DeltaWeapon.query.get_or_404(weapon_id)
+    if weapon.character_id != character_id:
+        return jsonify({"errors": "Weapon does not belong to this character"}), 400
+
+    try:
+        db.session.delete(weapon)
+        db.session.commit()
+        return jsonify({"message": "Successfully deleted"}), 200
+    except Exception as e:
+        print(f"Exception in delete_character_weapon: {str(e)}")
+        return jsonify({"errors": "An error occurred while deleting the weapon"}), 500
