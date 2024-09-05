@@ -18,11 +18,6 @@ class SkillForm(FlaskForm):
     skill_level = IntegerField('Skill Level', validators=[Optional()])
 
 
-class BondForm(FlaskForm):
-    bond_name = StringField('Bond Name', validators=[Optional()])
-    bond_score = StringField('Bond Score', validators=[Optional()])
-
-
 class DeltaGreenCharacterForm(FlaskForm):
     # generic character field
     character_name = StringField('Last Name, First Name, Middle Initial', validators=[DataRequired(), Length(max=255)])
@@ -65,6 +60,8 @@ class DeltaGreenCharacterForm(FlaskForm):
     breaking_point_maximum = IntegerField('Breaking Point Maximum', validators=[DataRequired(), NumberRange(min=0)])
     breaking_point_current = IntegerField('Breaking Point Current', validators=[Optional(), NumberRange(min=0)])
 
+    bonds = FieldList(StringField('Bond Name', validators=[Optional()]), min_entries=1)
+    bonds_score = FieldList(StringField('Bond Score', validators=[Optional()]), min_entries=1)
     physical_description = TextAreaField('Physical Description', validators=[Optional()])
     motivations_mental_disorders = TextAreaField('Motivations and Mental Disorders', validators=[Optional()])
     incidents_violence = IntegerField('Incidents of Sanity Loss - Violence', validators=[Optional(), Length(max=3)])
@@ -77,6 +74,5 @@ class DeltaGreenCharacterForm(FlaskForm):
 
     weapons = FieldList(FormField(DeltaWeaponForm), min_entries=1)
     skills = FieldList(FormField(SkillForm), min_entries=1)
-    bonds = FieldList(FormField(BondForm), min_entries=1)
 
     submit = SubmitField('Create Delta Green Character')
