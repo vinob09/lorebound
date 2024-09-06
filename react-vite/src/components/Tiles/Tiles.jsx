@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { thunkDeleteNote } from '../../redux/notes';
+import { thunkDeleteCharacter } from '../../redux/characterSheets';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import 'react-quill/dist/quill.snow.css';
 import './Tiles.css';
@@ -29,6 +30,24 @@ const Tiles = ({ items, type, onTileClick }) => {
             <div>
                 <p>Are you sure you want to delete this note?</p>
                 <button onClick={() => handleDeleteNote(noteId)}>Confirm Delete</button>
+                <button onClick={closeModal}>Cancel</button>
+            </div>
+        )
+    };
+
+    // handle click to delete character
+    const handleDeleteCharacter = (characterId) => {
+        dispatch(thunkDeleteCharacter(characterId)).then(() => {
+            closeModal();
+        })
+    };
+
+    // handle confirmation modal for delete character
+    const DeleteCharacterConfirmationModal = ({ characterId }) => {
+        return (
+            <div>
+                <p>Are you sure you want to delete this character?</p>
+                <button onClick={() => handleDeleteCharacter(characterId)}>Confirm Delete</button>
                 <button onClick={closeModal}>Cancel</button>
             </div>
         )
@@ -68,13 +87,25 @@ const Tiles = ({ items, type, onTileClick }) => {
                         <>
                             <img
                                 src={item.url ? item.url : '/sorry-image-not-available.jpg'}
-                                alt={item.name}
+                                alt={item.characterName}
                                 className='tile-image'
                                 onError={handleImageError}
                             />
                             <div className='tile-content'>
-                                <h2>{item.name}</h2>
-                                <p><em>Last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
+                                <h2>{item.characterName}</h2>
+                                <div className='tile-footer'>
+                                    <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
+                                </div>
+                                <div className='tile-buttons'>
+                                    <Link to={`/client/${user.id}/character/edit/${item.id}`}>
+                                        <button onClick={(e) => e.stopPropagation()}>Edit Character</button>
+                                    </Link>
+                                    <OpenModalButton
+                                        modalComponent={<DeleteCharacterConfirmationModal characterId={item.id} />}
+                                        buttonText="Delete Character"
+                                        onButtonClick={(e) => e.stopPropagation()}
+                                    />
+                                </div>
                             </div>
                         </>
                     ) : null}
