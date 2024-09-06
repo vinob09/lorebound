@@ -10,10 +10,16 @@ const ClientNav = () => {
 
     const user = useSelector(state => state.session.user);
     const notes = useSelector(state => state.notes.allNotes);
+    const characters = useSelector(state => state.characters.characters);
 
     // handle new note button
     const handleNewNote = () => {
         navigate(`/client/${user.id}/note/new`)
+    };
+
+    // handle new character button
+    const handleNewCharacter = () => {
+        navigate(`/client/${user.id}/character/new`)
     };
 
     // handle logout
@@ -30,20 +36,28 @@ const ClientNav = () => {
         .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // sort by descending order
         .slice(0, 3); // grabbing only latest 3 to display
 
+    // sort characters by latest updatea at
+    const latestCharacters = characters
+        .slice()
+        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+        .slice(0, 3);
+
     return (
         <>
             <div className='client-nav-welcome'>
                 {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
             </div>
             <div className='search-bar'><SearchBar /></div>
-            <button className='client-nav-button'>New Character</button>
+            <button className='client-nav-button' onClick={handleNewCharacter}>New Character</button>
             <button className='client-nav-button' onClick={handleNewNote}>New Note</button>
             <div className='client-nav-section'>
-                <h3>Characters</h3>
+                <h3><Link to={`/client/${user.id}/characters`}>Characters</Link></h3>
                 <ul>
-                    <li><a href='#'>Character_1</a></li>
-                    <li><a href='#'>Character_2</a></li>
-                    <li><a href='#'>Character_3</a></li>
+                    {latestCharacters.map(character => (
+                        <li key={character.id}>
+                            <Link to={`/client/${user.id}/characters/${character.id}`}>{character.characterName}</Link>
+                        </li>
+                    ))}
                 </ul>
             </div>
             <div className='client-nav-section'>

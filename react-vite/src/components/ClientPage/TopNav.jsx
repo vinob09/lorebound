@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { TiThMenu } from 'react-icons/ti';
 import { thunkLogout } from '../../redux/session';
 import ClientNav from './ClientNav';
+import SearchBar from './SearchBar';
 import './TopNav.css';
 
 const TopNav = ({ userId }) => {
@@ -40,10 +41,12 @@ const TopNav = ({ userId }) => {
             <div className='menu-icon' onClick={toggleNav}>
                 <TiThMenu />
             </div>
+            <div className='search-bar'><SearchBar /></div>
             <div className='top-nav-links'>
                 <Link to="/" className={location.pathname === "/" ? "active" : ""}>HOME</Link>
                 <Link to={`/client/${userId}`} className={location.pathname === `/client/${userId}` ? "active" : ""}>DASHBOARD</Link>
                 <Link to={`/client/${userId}/notes`} className={location.pathname === `/client/${userId}/notes` ? "active" : ""}>NOTES</Link>
+                <Link to={`/client/${userId}/characters`} className={location.pathname === `/client/${userId}/characters` ? "active" : ""}>CHARACTERS</Link>
                 <Link onClick={logout}>LOGOUT</Link>
             </div>
 
