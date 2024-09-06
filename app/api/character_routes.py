@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Character, DeltaGreenCharacter, CharacterSkill, DeltaWeapon, Skill
 from app.forms import DeltaGreenCharacterForm, DeltaWeaponForm, SkillForm
+from .aws_boto import upload_file_to_s3, remove_file_from_s3
 import json
 
 
@@ -19,11 +20,22 @@ def create_delta_green_character():
 
     if form.validate_on_submit():
         try:
+            # image upload
+            url = form.data['url']
+            image = None
+
+            if url:
+                upload = upload_file_to_s3(url)
+                if "errors" in upload:
+                    return jsonify(upload), 400
+                image = upload['url']
+
             # main character entry
             new_character = Character(
                 game_id=form.data['game_id'],
                 player_id=current_user.id,
-                character_name=form.data['character_name']
+                character_name=form.data['character_name'],
+                url = image
             )
             db.session.add(new_character)
             # populates new character id for dg specific creation below
@@ -180,6 +192,21 @@ def edit_delta_green_character(character_id):
             delta_character.skill_stat_used = form.data['skill_stat_used']
             delta_character.bonds = json.dumps(form.bonds.data)
             delta_character.bonds_score = json.dumps(form.bonds_score.data)
+
+            if request.form.get('removeImage') == 'true':
+                if delta_character.url:
+                    remove_file_from_s3(delta_character.url)
+                    delta_character.url = None
+
+            url = form.data['url']
+            if url:
+                if delta_character.url:
+                    remove_file_from_s3(delta_character.url)
+                    
+                upload = upload_file_to_s3(url)
+                if "errors" in upload:
+                    return jsonify(upload), 400
+                delta_character.url = upload['url']
 
             db.session.commit()
             return jsonify(delta_character.to_dict()), 200
