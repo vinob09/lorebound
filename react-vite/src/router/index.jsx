@@ -6,6 +6,9 @@ import ClientPage from '../components/ClientPage';
 import NotesPage from '../components/NotesPage';
 import NoteDetailsPage from '../components/NoteDetailsPage';
 import NoteForm from '../components/NoteForm';
+import CharactersPage from '../components/CharactersPage';
+import CharacterDetailsPage from '../components/CharacterDetailsPage';
+import CharacterForm from '../components/CharacterForm';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -43,6 +46,22 @@ export const router = createBrowserRouter([
           {
             path: "note/edit/:noteId",
             element: <NoteForm />
+          },
+          {
+            path: "characters",
+            element: <CharactersPage />
+          },
+          {
+            path: "characters/:characterId",
+            element: <CharacterDetailsPage />
+          },
+          {
+            path: "character/new",
+            element: <CharacterForm />
+          },
+          {
+            path: "character/edit/:characterId",
+            element: <CharacterForm />
           }
         ]
       },
