@@ -1,8 +1,8 @@
 """create character sheet models
 
-Revision ID: 5e0d4c3a8576
+Revision ID: 364300c1748a
 Revises: 5c0c2e7514f0
-Create Date: 2024-09-04 15:26:43.074702
+Create Date: 2024-09-05 16:23:53.009162
 
 """
 from alembic import op
@@ -13,8 +13,9 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 
+
 # revision identifiers, used by Alembic.
-revision = '5e0d4c3a8576'
+revision = '364300c1748a'
 down_revision = '5c0c2e7514f0'
 branch_labels = None
 depends_on = None

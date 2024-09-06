@@ -14,14 +14,14 @@ class DeltaWeaponForm(FlaskForm):
 
 
 class SkillForm(FlaskForm):
-    skill_id = SelectField('Skill', coerce=int, validators=[DataRequired()])
+    skill_id = SelectField('Skill', coerce=int, validators=[Optional()])
     skill_level = IntegerField('Skill Level', validators=[Optional()])
 
 
 class DeltaGreenCharacterForm(FlaskForm):
     # generic character field
-    game_id = IntegerField('Game', validators=[DataRequired()])
-    character_name = StringField('Last Name, First Name, Middle Initial', validators=[DataRequired(), Length(max=255)])
+    game_id = IntegerField('Game', validators=[Optional()])
+    character_name = StringField('Last Name, First Name, Middle Initial', validators=[Optional(), Length(max=255)])
 
     # delta green specific fields
     profession = StringField('Profession', validators=[Optional(), Length(max=50)])
@@ -32,33 +32,33 @@ class DeltaGreenCharacterForm(FlaskForm):
     education_occupation_history = TextAreaField('Education and Occupational History', validators=[Optional()])
 
     # statistics
-    strength_score = IntegerField('Strength', validators=[DataRequired(), NumberRange(min=0)])
-    strength_x5 = IntegerField('Strength x5', validators=[DataRequired(), NumberRange(min=0)])
+    strength_score = IntegerField('Strength', validators=[Optional(), NumberRange(min=0)])
+    strength_x5 = IntegerField('Strength x5', validators=[Optional(), NumberRange(min=0)])
     strength_features = StringField('Strength Features', validators=[Optional(), Length(max=50)])
-    constitution_score = IntegerField('Constitution', validators=[DataRequired(), NumberRange(min=0)])
-    constitution_x5 = IntegerField('Constitution x5', validators=[DataRequired(), NumberRange(min=0)])
+    constitution_score = IntegerField('Constitution', validators=[Optional(), NumberRange(min=0)])
+    constitution_x5 = IntegerField('Constitution x5', validators=[Optional(), NumberRange(min=0)])
     constitution_features = StringField('Constitution Features', validators=[Optional(), Length(max=50)])
-    dexterity_score = IntegerField('Dexterity', validators=[DataRequired(), NumberRange(min=0)])
-    dexterity_x5 = IntegerField('Dexterity x5', validators=[DataRequired(), NumberRange(min=0)])
+    dexterity_score = IntegerField('Dexterity', validators=[Optional(), NumberRange(min=0)])
+    dexterity_x5 = IntegerField('Dexterity x5', validators=[Optional(), NumberRange(min=0)])
     dexterity_features = StringField('Dexterity Features', validators=[Optional(), Length(max=50)])
-    intelligence_score = IntegerField('Intelligence', validators=[DataRequired(), NumberRange(min=0)])
-    intelligence_x5 = IntegerField('Intelligence x5', validators=[DataRequired(), NumberRange(min=0)])
+    intelligence_score = IntegerField('Intelligence', validators=[Optional(), NumberRange(min=0)])
+    intelligence_x5 = IntegerField('Intelligence x5', validators=[Optional(), NumberRange(min=0)])
     intelligence_features = StringField('Intelligence Features', validators=[Optional(), Length(max=50)])
-    power_score = IntegerField('Power', validators=[DataRequired(), NumberRange(min=0)])
-    power_x5 = IntegerField('Power x5', validators=[DataRequired(), NumberRange(min=0)])
+    power_score = IntegerField('Power', validators=[Optional(), NumberRange(min=0)])
+    power_x5 = IntegerField('Power x5', validators=[Optional(), NumberRange(min=0)])
     power_features = StringField('Power Features', validators=[Optional(), Length(max=50)])
-    charisma_score = IntegerField('Charisma', validators=[DataRequired(), NumberRange(min=0)])
-    charisma_x5 = IntegerField('Charisma x5', validators=[DataRequired(), NumberRange(min=0)])
+    charisma_score = IntegerField('Charisma', validators=[Optional(), NumberRange(min=0)])
+    charisma_x5 = IntegerField('Charisma x5', validators=[Optional(), NumberRange(min=0)])
     charisma_features = StringField('Charisma Features', validators=[Optional(), Length(max=50)])
 
     # derived attributes
-    hit_points_maximum = IntegerField('Hit Points Maximum', validators=[DataRequired(), NumberRange(min=0)])
+    hit_points_maximum = IntegerField('Hit Points Maximum', validators=[Optional(), NumberRange(min=0)])
     hit_points_current = IntegerField('Hit Points Current', validators=[Optional(), NumberRange(min=0)])
-    willpower_points_maximum = IntegerField('Willpower Points Maximum', validators=[DataRequired(), NumberRange(min=0)])
+    willpower_points_maximum = IntegerField('Willpower Points Maximum', validators=[Optional(), NumberRange(min=0)])
     willpower_points_current = IntegerField('Willpower Points Current', validators=[Optional(), NumberRange(min=0)])
-    sanity_points_maximum = IntegerField('Sanity Points Maximum', validators=[DataRequired(), NumberRange(min=0)])
+    sanity_points_maximum = IntegerField('Sanity Points Maximum', validators=[Optional(), NumberRange(min=0)])
     sanity_points_current = IntegerField('Sanity Points Current', validators=[Optional(), NumberRange(min=0)])
-    breaking_point_maximum = IntegerField('Breaking Point Maximum', validators=[DataRequired(), NumberRange(min=0)])
+    breaking_point_maximum = IntegerField('Breaking Point Maximum', validators=[Optional(), NumberRange(min=0)])
     breaking_point_current = IntegerField('Breaking Point Current', validators=[Optional(), NumberRange(min=0)])
 
     bonds = FieldList(StringField('Bond Name', validators=[Optional()]), min_entries=1)

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Character, DeltaGreenCharacter, CharacterSkill, DeltaWeapon
+from app.models import db, Character, DeltaGreenCharacter, CharacterSkill, DeltaWeapon, Skill
 from app.forms import DeltaGreenCharacterForm, DeltaWeaponForm, SkillForm
 import json
 
@@ -216,6 +216,10 @@ def edit_delta_skill(character_id, skill_id):
 
     form = SkillForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
+    # load skills
+    available_skills = Skill.query.all()
+    form.skill_id.choices = [(skill.id, skill.name) for skill in available_skills]
 
     character = Character.query.get_or_404(character_id)
     if character.player_id != current_user.id:
