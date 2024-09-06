@@ -13,33 +13,51 @@ const SearchBar = () => {
 
     const user = useSelector(state => state.session.user);
 
-    const handleSearch = (query) => {
+    const handleSearch = async (query) => {
         setIsLoading(true)
 
-        csrfFetch('/api/notes')
-            .then((response) => response.json())
-            .then(json =>
-                json.filter(note => note && note.title && note.title.toLowerCase().includes(query.toLowerCase()))
-            )
-            .then((notes) => {
-                setOptions(notes)
-                setIsLoading(false)
-            })
-            .catch (() => setIsLoading(false));
+        // fetch for noth notes and characters
+        const [notesResponse, charactersResponse] = await Promise.all([
+            csrfFetch('/api/notes'),
+            csrfFetch('/api/characters')
+        ]);
+
+        // convert to JSON
+        const notesData = await notesResponse.json();
+        const charactersData = await charactersResponse.json();
+
+        // filter results based on search query
+        const filteredNotes = notesData.filter(note => note && note.title && note.title.toLowerCase().includes(query.toLowerCase()));
+        const filteredCharacters = charactersData.filter(character => character && character.characterName && character.characterName.toLowerCase().includes(query.toLowerCase()));
+
+        // combine notes and characters
+        const combinedResults = [
+            ...filteredNotes.map(note => ({ ...note, type: 'note' })),
+            ...filteredCharacters.map(character => ({ ...character, type: 'character' }))
+        ];
+
+        setOptions(combinedResults);
+        setIsLoading(false);
     };
 
-    const selectNote = (e, note) => {
+    const selectResult = (e, result) => {
         e.stopPropagation();
-        navigate(`/client/${user.id}/notes/${note.id}`);
 
-        // clear options and reset inputs
+        // navigate based on whether its a note or character
+        if (result.type === 'note') {
+            navigate(`/client/${user.id}/notes/${result.id}`);
+        } else if (result.type === 'character') {
+            navigate(`/client/${user.id}/characters/${result.id}`);
+        }
+
+        // clear options and reset input
         setOptions([]);
         if (typeaheadRef.current) {
             typeaheadRef.current.clear();
         }
     };
 
-    const filterBy = () => true
+    const filterBy = () => true;
 
     return (
         <AsyncTypeahead
@@ -47,14 +65,14 @@ const SearchBar = () => {
             filterBy={filterBy}
             id="async-search"
             isLoading={isLoading}
-            labelKey="title"
+            labelKey={(option) => option.type === 'note' ? option.title : option.characterName}
             minLength={3}
             onSearch={handleSearch}
             options={options}
-            placeholder="Search for a note..."
-            renderMenuItemChildren={note => (
-                <button onClick={(e) => selectNote(e, note)} className="search-result-button">
-                    {note.title}
+            placeholder="Search for a note or character..."
+            renderMenuItemChildren={result => (
+                <button onClick={(e) => selectResult(e, result)} className="search-result-button">
+                    {result.type === 'note' ? `Note: ${result.title}` : `Character: ${result.characterName}`}
                 </button>
             )}
         />
