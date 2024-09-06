@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, RadioField, TextAreaField, SubmitField, FieldList, FormField, SelectField, FloatField
 from wtforms.validators import DataRequired, Optional, NumberRange, Length
+from flask_wtf.file import FileField, FileAllowed
+from app.api.aws_boto import ALLOWED_EXTENSIONS
 
 class DeltaWeaponForm(FlaskForm):
     name = StringField('Name', validators=[Optional(), Length(max=50)])
@@ -22,6 +24,7 @@ class DeltaGreenCharacterForm(FlaskForm):
     # generic character field
     game_id = IntegerField('Game', validators=[Optional()])
     character_name = StringField('Last Name, First Name, Middle Initial', validators=[Optional(), Length(max=255)])
+    url = FileField('Image File', validators=[Optional(), FileAllowed(list(ALLOWED_EXTENSIONS))])
 
     # delta green specific fields
     profession = StringField('Profession', validators=[Optional(), Length(max=50)])

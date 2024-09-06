@@ -1,8 +1,8 @@
-"""create character sheet models
+"""create character sheets models
 
-Revision ID: 364300c1748a
+Revision ID: 25a3f2c99de2
 Revises: 5c0c2e7514f0
-Create Date: 2024-09-05 16:23:53.009162
+Create Date: 2024-09-06 15:02:53.418761
 
 """
 from alembic import op
@@ -13,9 +13,8 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 
-
 # revision identifiers, used by Alembic.
-revision = '364300c1748a'
+revision = '25a3f2c99de2'
 down_revision = '5c0c2e7514f0'
 branch_labels = None
 depends_on = None
@@ -49,6 +48,7 @@ def upgrade():
     sa.Column('game_id', sa.Integer(), nullable=True),
     sa.Column('player_id', sa.Integer(), nullable=True),
     sa.Column('character_name', sa.String(length=255), nullable=False),
+    sa.Column('url', sa.String(length=100), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['game_id'], ['games.id'], ondelete='SET NULL'),

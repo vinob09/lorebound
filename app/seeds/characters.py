@@ -7,12 +7,14 @@ def seed_characters():
     dg1 = Character(
         game_id = 1,
         player_id = 1,
-        character_name = "Dale Price"
+        character_name = "Dale Price",
+        url = "https://chansbucket.s3.us-east-2.amazonaws.com/Notes-Images/agent-1.png"
     )
     dg2 = Character(
         game_id = 1,
         player_id = 1,
-        character_name = "Robert Johnson"
+        character_name = "Robert Johnson",
+        url = "https://chansbucket.s3.us-east-2.amazonaws.com/Notes-Images/agent-2.png"
     )
 
     all_characters = [
