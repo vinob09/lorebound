@@ -1,38 +1,56 @@
 .client-page {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    color: #ffffff;
-    overflow-x: hidden;
+    padding: 20px;
 }
 
 .client-info {
-    padding: 20px;
-    background-color: transparent;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-.client-info h1 {
-    font-size: 2em;
-    color: #006466;
-}
-
-.client-main-content {
-    flex-grow: 1;
+.latest-tiles-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    margin-bottom: 40px;
     padding: 20px;
-    background-color: #f0f0f0;
-    color: #000;
-    width: 100%;
-    box-sizing: border-box;
+}
+
+.latest-tiles-section h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.client-main-content {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.client-page-tiles {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.client-page-tiles .tile {
+    flex: 1 1 300px;
+    max-width: 100%;
+    min-width: 300px;
+}
+
+.tiles-grid {
+    display: grid;
 }
 
 @media (min-width: 768px) {
     .client-main-content {
-        padding-left: 250px; 
+        padding-left: 250px;
         padding-right: 250px;
     }
 }

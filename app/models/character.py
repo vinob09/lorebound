@@ -34,6 +34,7 @@ class Character(db.Model):
             'playerId': self.player_id,
             'characterName': self.character_name,
             'url': self.url,
+            'deltaGreenCharacter': self.delta_green_character.to_dict() if self.delta_green_character else None,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }
