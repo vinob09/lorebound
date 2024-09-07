@@ -16,6 +16,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
     max-width: 300px;
+    min-height: 400px;
 }
 
 .tile:hover {
@@ -64,3 +65,5 @@
     font-size: 0.9em;
     color: #999;
 }
+
+

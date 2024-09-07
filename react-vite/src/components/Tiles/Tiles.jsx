@@ -7,7 +7,7 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import 'react-quill/dist/quill.snow.css';
 import './Tiles.css';
 
-const Tiles = ({ items, type, onTileClick }) => {
+const Tiles = ({ items, onTileClick }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const user = useSelector(state => state.session.user);
@@ -54,24 +54,24 @@ const Tiles = ({ items, type, onTileClick }) => {
     };
 
     return (
-        <div className='tiles-grid'>
+        <div className="tiles-grid">
             {items.map(item => (
-                <div className='tile' key={item.id} onClick={() => onTileClick(item.id)}>
-                    {type === 'note' ? (
+                <div className="tile" key={item.id} onClick={() => onTileClick(item)}>
+                    {item.title ? (
                         <>
                             <img
                                 src={item.url ? item.url : '/sorry-image-not-available.jpg'}
                                 alt={item.title}
-                                className='tile-image'
+                                className="tile-image"
                                 onError={handleImageError}
                             />
-                            <div className='tile-content'>
+                            <div className="tile-content">
                                 <h2>{item.title}</h2>
                                 <p dangerouslySetInnerHTML={{ __html: item.content ? item.content.substring(0, 100) : '' }}></p>
-                                <div className='tile-footer'>
+                                <div className="tile-footer">
                                     <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
                                 </div>
-                                <div className='tile-buttons'>
+                                <div className="tile-buttons">
                                     <Link to={`/client/${user.id}/note/edit/${item.id}`}>
                                         <button onClick={(e) => e.stopPropagation()}>Edit Note</button>
                                     </Link>
@@ -83,20 +83,20 @@ const Tiles = ({ items, type, onTileClick }) => {
                                 </div>
                             </div>
                         </>
-                    ) : type === 'character' ? (
+                    ) : (
                         <>
                             <img
                                 src={item.url ? item.url : '/sorry-image-not-available.jpg'}
                                 alt={item.characterName}
-                                className='tile-image'
+                                className="tile-image"
                                 onError={handleImageError}
                             />
-                            <div className='tile-content'>
+                            <div className="tile-content">
                                 <h2>{item.characterName}</h2>
-                                <div className='tile-footer'>
+                                <div className="tile-footer">
                                     <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
                                 </div>
-                                <div className='tile-buttons'>
+                                <div className="tile-buttons">
                                     <Link to={`/client/${user.id}/character/edit/${item.id}`}>
                                         <button onClick={(e) => e.stopPropagation()}>Edit Character</button>
                                     </Link>
@@ -108,11 +108,11 @@ const Tiles = ({ items, type, onTileClick }) => {
                                 </div>
                             </div>
                         </>
-                    ) : null}
+                    )}
                 </div>
             ))}
         </div>
-    )
+    );
 };
 
 export default Tiles;
