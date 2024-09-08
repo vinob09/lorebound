@@ -109,7 +109,7 @@ class DeltaGreenCharacter(db.Model):
             'breakingPointCurrent': self.breaking_point_current,
             'physicalDescription': self.physical_description,
             'bonds': json.loads(self.bonds) if self.bonds else [],
-            'bondsScore': json.loads(self.bonds_score) if self.bonds_score else [],
+            'bondsScore': [int(score) for score in json.loads(self.bonds_score)] if self.bonds_score else [],
             'motivationsMentalDisorders': self.motivations_mental_disorders,
             'incidentsViolence': self.incidents_violence,
             'incidentsHelplessness': self.incidents_helplessness,

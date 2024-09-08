@@ -25,7 +25,7 @@ class DeltaWeapon(db.Model):
             'id': self.id,
             'characterId': self.character_id,
             'name': self.name,
-            'skillPrecentage': self.skill_percentage,
+            'skillPercentage': self.skill_percentage,
             'baseRange': self.base_range,
             'damage': self.damage,
             'armorPiercing': self.armor_piercing,

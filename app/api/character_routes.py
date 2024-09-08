@@ -30,6 +30,14 @@ def create_delta_green_character():
                     return jsonify(upload), 400
                 image = upload['url']
 
+            data = request.form
+            skills = json.loads(data.get('skills', '[]'))
+            weapons = json.loads(data.get('weapons', '[]'))
+            bonds = json.loads(data.get('bonds', '[]'))
+            bonds_score = json.loads(data.get('bonds_score', '[]'))
+
+            bonds_score = [int(score) for score in bonds_score]
+
             # main character entry
             new_character = Character(
                 game_id=form.data['game_id'],
@@ -86,11 +94,35 @@ def create_delta_green_character():
                 developments_home_family=form.data['developments_home_family'],
                 special_training=form.data['special_training'],
                 skill_stat_used=form.data['skill_stat_used'],
-                bonds=json.dumps(form.bonds.data),
-                bonds_score=json.dumps(form.bonds_score.data)
+                bonds=json.dumps(bonds),
+                bonds_score=json.dumps(bonds_score)
             )
 
             db.session.add(delta_character)
+
+            for skill_data in skills:
+                character_skill = CharacterSkill(
+                    character_id=new_character.id,
+                    skill_id=skill_data['skillId'],
+                    skill_level=skill_data['skillLevel']
+                )
+                db.session.add(character_skill)
+
+            for weapon_data in weapons:
+                new_weapon = DeltaWeapon(
+                    character_id=new_character.id,
+                    name=weapon_data.get('name'),
+                    skill_percentage=weapon_data.get('skillPercentage'),
+                    base_range=weapon_data.get('baseRange'),
+                    damage=weapon_data.get('damage'),
+                    armor_piercing=weapon_data.get('armorPiercing'),
+                    lethality=weapon_data.get('lethality'),
+                    kill_radius=weapon_data.get('killRadius'),
+                    ammo=weapon_data.get('ammo')
+                )
+                db.session.add(new_weapon)
+
+
             db.session.commit()
             return jsonify(delta_character.to_dict()), 201
         except Exception as e:
