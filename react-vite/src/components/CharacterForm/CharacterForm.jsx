@@ -1,19 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { thunkCreateCharacter, thunkGetAllSkills, thunkGetAllGames } from '../../redux/characterSheets';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+    thunkCreateCharacter,
+    thunkGetAllSkills,
+    thunkGetAllGames,
+    thunkGetCharacterById,
+    thunkUpdateCharacter,
+    thunkGetCharacterSkills,
+    thunkUpdateCharacterSkill,
+    thunkGetCharacterWeapons,
+    thunkAddCharacterWeapon,
+    thunkUpdateCharacterWeapon,
+    thunkDeleteCharacterWeapon
+} from '../../redux/characterSheets';
 import './CharacterForm.css';
 
 const CharacterForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { characterId } = useParams();
 
     const user = useSelector(state => state.session.user);
-    // const games = useSelector(state => state.characters.games);
-    // const allSkills = useSelector(state => state.characters.allSkills);
-    const [skills, setSkills] = useState([]);
+    const character = useSelector(state => state.characters.character);
 
     // General
+    const [skills, setSkills] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [errors, setErrors] = useState({});
 
@@ -21,6 +33,7 @@ const CharacterForm = () => {
     // const [gameId, setGameId] = useState('');
     const [characterName, setCharacterName] = useState('');
     const [file, setFile] = useState(null);
+    const [removeImage, setRemoveImage] = useState(false);
     const [imageLoading, setImageLoading] = useState(false);
 
     // Delta Green Specific Fields
@@ -82,35 +95,88 @@ const CharacterForm = () => {
 
     // Weapons
     const [weapons, setWeapons] = useState([]);
-    const [newWeapon, setNewWeapon] = useState({
-        name: '',
-        skillPercentage: '',
-        baseRange: '',
-        damage: '',
-        armorPiercing: '',
-        lethality: '',
-        killRadius: '',
-        ammo: ''
-    });
 
-    // Load skills on mount
+    // check for editing or creating and mount all skills
     useEffect(() => {
-        Promise.all([
-            dispatch(thunkGetAllSkills()),
-            dispatch(thunkGetAllGames())
-        ]).then(([fetchedSkills]) => {
-            const initialSkills = fetchedSkills.map(skill => ({
-                skillId: skill.id,
-                name: skill.name,
-                baseValue: skill.baseValue,
-                skillLevel: skill.baseValue
-            }));
-
-            // Set skills and mark component as loaded
-            setSkills(initialSkills);
-            setIsLoaded(true);
-        });
-    }, [dispatch]);
+        if (characterId) {
+            // Fetch the character data for editing
+            dispatch(thunkGetCharacterById(characterId)).then((characterData) => {
+                // Prepopulate the form fields with character data
+                setCharacterName(characterData.characterName);
+                // check for skills
+                if (characterData.skills && characterData.skills.length > 0) {
+                    setSkills(characterData.skills.map(skill => ({
+                        skillId: skill.skillId,
+                        name: skill.name,
+                        skillLevel: skill.skillLevel
+                    })));
+                } else {
+                    setSkills([]);
+                }
+                setWeapons(characterData.weapons || []);
+                setProfession(characterData.deltaGreenCharacter.profession);
+                setEmployer(characterData.deltaGreenCharacter.employer);
+                setNationality(characterData.deltaGreenCharacter.nationality);
+                setSex(characterData.deltaGreenCharacter.sex);
+                setAgeDOB(characterData.deltaGreenCharacter.ageDOB);
+                setEducationOccupationHistory(characterData.deltaGreenCharacter.educationOccupation);
+                setStrengthScore(characterData.deltaGreenCharacter.strengthScore);
+                setStrengthx5(characterData.deltaGreenCharacter.strengthx5);
+                setStrengthFeatures(characterData.deltaGreenCharacter.strengthFeatures);
+                setConstitutionScore(characterData.deltaGreenCharacter.constitutionScore);
+                setConstitutionx5(characterData.deltaGreenCharacter.constitutionx5);
+                setConstitutionFeatures(characterData.deltaGreenCharacter.constitutionFeatures);
+                setDexterityScore(characterData.deltaGreenCharacter.dexterityScore);
+                setDexterityx5(characterData.deltaGreenCharacter.dexterityx5);
+                setDexterityFeatures(characterData.deltaGreenCharacter.dexterityFeatures);
+                setIntelligenceScore(characterData.deltaGreenCharacter.intelligenceScore);
+                setIntelligencex5(characterData.deltaGreenCharacter.intelligencex5);
+                setIntelligenceFeatures(characterData.deltaGreenCharacter.intelligenceFeatures);
+                setPowerScore(characterData.deltaGreenCharacter.powerScore);
+                setPowerx5(characterData.deltaGreenCharacter.powerx5);
+                setPowerFeatures(characterData.deltaGreenCharacter.powerFeatures);
+                setCharismaScore(characterData.deltaGreenCharacter.charismaScore);
+                setCharismax5(characterData.deltaGreenCharacter.charismax5);
+                setCharismaFeatures(characterData.deltaGreenCharacter.charismaFeatures);
+                setHitPointsMax(characterData.deltaGreenCharacter.hitPointsMaximum);
+                setHitPointsCurrent(characterData.deltaGreenCharacter.hitPointsCurrent);
+                setWillpowerMax(characterData.deltaGreenCharacter.willpowerPointsMaximum);
+                setWillpowerCurrent(characterData.deltaGreenCharacter.willpowerPointsCurrent);
+                setSanityMax(characterData.deltaGreenCharacter.sanityPointsMaximum);
+                setSanityCurrent(characterData.deltaGreenCharacter.sanityPointsCurrent);
+                setBreakingPointMax(characterData.deltaGreenCharacter.breakingPointMaximum);
+                setBreakingPointCurrent(characterData.deltaGreenCharacter.breakingPointCurrent);
+                setBonds(characterData.deltaGreenCharacter.bonds || []);
+                setBondsScore(characterData.deltaGreenCharacter.bondsScore || []);
+                setPhysicalDescription(characterData.deltaGreenCharacter.physicalDescription);
+                setMotivationsMentalDisorders(characterData.deltaGreenCharacter.motivationsMentalDisorders);
+                setIncidentsViolence(characterData.deltaGreenCharacter.incidentsViolence);
+                setIncidentsHelplessness(characterData.deltaGreenCharacter.incidentsHelplessness);
+                setArmorGear(characterData.deltaGreenCharacter.armorGear);
+                setWoundsAilments(characterData.deltaGreenCharacter.woundsAilments);
+                setPersonalDetails(characterData.deltaGreenCharacter.personalDetailsNotes);
+                setDevelopments(characterData.deltaGreenCharacter.developmentHomeFamily);
+                setSpecialTraining(characterData.deltaGreenCharacter.specialTraining);
+                setSkillStatUsed(characterData.deltaGreenCharacter.skillStatUsed);
+                setIsLoaded(true);
+            });
+        } else {
+            // Load skills and set loaded to true when creating a new character
+            Promise.all([
+                dispatch(thunkGetAllSkills()),
+                dispatch(thunkGetAllGames())
+            ]).then(([fetchedSkills]) => {
+                const initialSkills = fetchedSkills.map(skill => ({
+                    skillId: skill.id,
+                    name: skill.name,
+                    baseValue: skill.baseValue,
+                    skillLevel: skill.baseValue
+                }));
+                setSkills(initialSkills);
+                setIsLoaded(true);
+            });
+        }
+    }, [dispatch, characterId]);
 
     // Handle skill level change
     const handleSkillLevelChange = (skillId, newLevel) => {
@@ -120,8 +186,7 @@ const CharacterForm = () => {
     };
 
     const handleAddWeapon = () => {
-        setWeapons([...weapons, newWeapon]);
-        setNewWeapon({
+        setWeapons([...weapons, {
             name: '',
             skillPercentage: '',
             baseRange: '',
@@ -130,7 +195,7 @@ const CharacterForm = () => {
             lethality: '',
             killRadius: '',
             ammo: ''
-        });
+        }]);
     };
 
     // Handle adding new bond
@@ -161,6 +226,7 @@ const CharacterForm = () => {
         formData.append('game_id', 1);
         formData.append('character_name', characterName);
         if (file) formData.append('url', file);
+        if (removeImage) formData.append('removeImage', 'true');
         setImageLoading(true);
 
         formData.append('skills', JSON.stringify(skills.map(skill => ({
@@ -217,14 +283,25 @@ const CharacterForm = () => {
         formData.append('motivations_mental_disorders', motivationsMentalDisorders);
         formData.append('skill_stat_used', skillStatUsed);
 
-        const result = await dispatch(thunkCreateCharacter(formData));
+        // creating character
+        if (!characterId) {
+            const result = await dispatch(thunkCreateCharacter(formData));
 
-        if (result.error) {
-            setErrors(result.error);
+            if (result.error) {
+                setErrors(result.error);
+            } else {
+                navigate(`/client/${user.id}/characters/${result.id}`);
+            }
         } else {
-            navigate(`/client/${user.id}/characters/${result.id}`);
-        }
+            // editing character
+            const result = await dispatch(thunkUpdateCharacter(characterId, formData));
 
+            if (result && result.error) {
+                setErrors(result.error);
+            } else {
+                navigate(`/client/${user.id}/characters/${characterId}`);
+            }
+        }
         setImageLoading(false);
     };
 
@@ -254,7 +331,7 @@ const CharacterForm = () => {
     // Form Rendering
     return isLoaded ? (
         <div className="character-form-container">
-            <h1>Create New Delta Green Character</h1>
+            <h1>{characterId ? 'Edit Character' : 'Create Character'}</h1>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
 
                 {/* Character Name */}
@@ -280,6 +357,19 @@ const CharacterForm = () => {
                     />
                     {errors.url && <p className="error-message">{errors.url}</p>}
                 </div>
+
+                {/* Existing Image */}
+                {characterId && character?.url && (
+                    <div className="form-group">
+                        <label htmlFor="removeImage">Remove existing image</label>
+                        <input
+                            type="checkbox"
+                            id="removeImage"
+                            checked={removeImage}
+                            onChange={(e) => setRemoveImage(e.target.checked)}
+                        />
+                    </div>
+                )}
 
                 {/* Profession */}
                 <div className="form-group">
@@ -705,7 +795,7 @@ const CharacterForm = () => {
                     {errors.motivations_mental_disorders && <p className="error-message">{errors.motivations_mental_disorders}</p>}
                 </div>
 
-                {/* Incidents of Sanity Loss - Violence (Checkbox) */}
+                {/* Incidents of Sanity Loss - Violence */}
                 <div className="form-group">
                     <label>Incidents of Sanity Loss - Violence</label>
                     <div>
@@ -721,7 +811,7 @@ const CharacterForm = () => {
                     {errors.incidents_violence && <p className="error-message">{errors.incidents_violence}</p>}
                 </div>
 
-                {/* Incidents of Sanity Loss - Helplessness (Checkbox) */}
+                {/* Incidents of Sanity Loss - Helplessness */}
                 <div className="form-group">
                     <label>Incidents of Sanity Loss - Helplessness</label>
                     <div>
@@ -805,64 +895,97 @@ const CharacterForm = () => {
 
                 {/* Weapons */}
                 <div className="form-group">
-                    <label htmlFor="weapons">Weapons</label>
-                    <input
-                        type="text"
-                        placeholder="Weapon Name"
-                        value={newWeapon.name}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, name: e.target.value })}
-                    />
-                    <input
-                        type="number"
-                        placeholder="Skill Percentage"
-                        value={newWeapon.skillPercentage}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, skillPercentage: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Base Range"
-                        value={newWeapon.baseRange}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, baseRange: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Damage"
-                        value={newWeapon.damage}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, damage: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Armor Piercing"
-                        value={newWeapon.armorPiercing}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, armorPiercing: e.target.value })}
-                    />
-                    <input
-                        type="number"
-                        placeholder="Lethality"
-                        value={newWeapon.lethality}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, lethality: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Kill Radius"
-                        value={newWeapon.killRadius}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, killRadius: e.target.value })}
-                    />
-                    <input
-                        type="number"
-                        placeholder="Ammo"
-                        value={newWeapon.ammo}
-                        onChange={(e) => setNewWeapon({ ...newWeapon, ammo: e.target.value })}
-                    />
-                    <button type="button" onClick={handleAddWeapon}>Add Weapon</button>
+                    <h3>Weapons</h3>
+                    {weapons && weapons.length > 0 ? (
 
-                    <ul>
-                        {weapons.map((weapon, index) => (
-                            <li key={index}>
-                                {weapon.name} - <p>Skill Percentage</p>{weapon.skillPercentage}%
-                            </li>
-                        ))}
-                    </ul>
+                        weapons.map((weapon, index) => (
+                            <div key={index} className="weapon-entry">
+                                <input
+                                    type="text"
+                                    placeholder="Weapon Name"
+                                    value={weapon.name}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].name = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Skill Percentage"
+                                    value={weapon.skillPercentage}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].skillPercentage = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Base Range"
+                                    value={weapon.baseRange}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].baseRange = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Damage"
+                                    value={weapon.damage}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].damage = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Armor Piercing"
+                                    value={weapon.armorPiercing}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].armorPiercing = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Lethality"
+                                    value={weapon.lethality}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].lethality = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Kill Radius"
+                                    value={weapon.killRadius}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].killRadius = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Ammo"
+                                    value={weapon.ammo}
+                                    onChange={(e) => {
+                                        const updatedWeapons = [...weapons];
+                                        updatedWeapons[index].ammo = e.target.value;
+                                        setWeapons(updatedWeapons);
+                                    }}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <p>No weapons added.</p>
+                    )}
+                    <button type="button" onClick={handleAddWeapon}>Add Weapon</button>
                 </div>
 
                 <button type="submit">Save Character</button>
