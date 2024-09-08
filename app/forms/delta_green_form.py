@@ -5,6 +5,7 @@ from flask_wtf.file import FileField, FileAllowed
 from app.api.aws_boto import ALLOWED_EXTENSIONS
 
 class DeltaWeaponForm(FlaskForm):
+    character_id = IntegerField('Character', validators=[Optional()])
     name = StringField('Name', validators=[Optional(), Length(max=50)])
     skill_percentage = FloatField('Skill Percentage', validators=[Optional()])
     base_range = StringField('Base Range', validators=[Optional()])

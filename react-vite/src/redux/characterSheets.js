@@ -15,6 +15,9 @@ const ADD_CHARACTER_WEAPON = 'characters/addWeapon';
 const UPDATE_CHARACTER_WEAPON = 'characters/updateWeapon';
 const DELETE_CHARACTER_WEAPON = 'characters/deleteWeapon';
 
+const GET_ALL_SKILLS = 'skills/getAll';
+const GET_ALL_GAMES = 'games/getAll';
+
 // action creators
 const getCharacters = (characters) => ({
     type: GET_CHARACTERS,
@@ -51,6 +54,11 @@ const updateCharacterSkill = (skill) => ({
     payload: skill
 });
 
+const getAllSkills = (skills) => ({
+    type: GET_ALL_SKILLS,
+    payload: skills
+});
+
 const getCharacterWeapons = (weapons) => ({
     type: GET_CHARACTER_WEAPONS,
     payload: weapons
@@ -69,6 +77,11 @@ const updateCharacterWeapon = (weapon) => ({
 const deleteCharacterWeapon = (weaponId) => ({
     type: DELETE_CHARACTER_WEAPON,
     payload: weaponId
+});
+
+const getAllGames = (games) => ({
+    type: GET_ALL_GAMES,
+    payload: games
 });
 
 // thunks
@@ -100,15 +113,22 @@ export const thunkGetCharacterById = (characterId) => async (dispatch) => {
     }
 };
 
-export const thunkCreateCharacter = (formData) => async (dispatch) => {
+export const thunkCreateCharacter = (formData, weaponData) => async (dispatch) => {
     try {
         const response = await csrfFetch(`/api/characters`, {
             method: 'POST',
             body: formData
         });
+
         if (response.ok) {
             const newCharacter = await response.json();
             dispatch(createCharacter(newCharacter));
+
+            if (weaponData) {
+                weaponData.append('character_id', newCharacter.id);
+                await dispatch(thunkAddCharacterWeapon(newCharacter.id, weaponData));
+            }
+
             return newCharacter;
         } else if (response.status === 400) {
             const errorData = await response.json();
@@ -187,6 +207,20 @@ export const thunkUpdateCharacterSkill = (characterId, skillId, formData) => asy
     }
 };
 
+export const thunkGetAllSkills = () => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/skills`);
+        if (response.ok) {
+            const skills = await response.json();
+            dispatch(getAllSkills(skills));
+            return skills;
+        }
+    } catch (err) {
+        console.error("Failed to fetch all skills:", err);
+        return { error: err.message };
+    }
+};
+
 // weapons thunks
 export const thunkGetCharacterWeapons = (characterId) => async (dispatch) => {
     try {
@@ -251,12 +285,29 @@ export const thunkDeleteCharacterWeapon = (characterId, weaponId) => async (disp
     }
 };
 
+// games thunks
+export const thunkGetAllGames = () => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/games`);
+        if (response.ok) {
+            const games = await response.json();
+            dispatch(getAllGames(games));
+            return games;
+        }
+    } catch (err) {
+        console.error("Failed to fetch all games:", err);
+        return { error: err.message };
+    }
+};
+
 // initial state
 const initialState = {
     characters: [],
     character: null,
     skills: [],
-    weapons: []
+    allSkills: [],
+    weapons: [],
+    games: []
 };
 
 // reducer
@@ -291,6 +342,8 @@ const characterSheetsReducer = (state = initialState, action) => {
                     skill.id === action.payload.id ? action.payload : skill
                 )
             };
+        case GET_ALL_SKILLS:
+            return { ...state, allSkills: action.payload };
         case GET_CHARACTER_WEAPONS:
             return { ...state, weapons: action.payload };
         case ADD_CHARACTER_WEAPON:
@@ -307,6 +360,8 @@ const characterSheetsReducer = (state = initialState, action) => {
                 ...state,
                 weapons: state.weapons.filter(weapon => weapon.id !== action.payload)
             };
+        case GET_ALL_GAMES:
+            return { ...state, games: action.payload };
         default:
             return state;
     }
