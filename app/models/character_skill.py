@@ -22,5 +22,6 @@ class CharacterSkill(db.Model):
             'id': self.id,
             'characterId': self.character_id,
             'skillId': self.skill_id,
+            'skillName': self.skill.name,
             'skillLevel': self.skill_level
         }
