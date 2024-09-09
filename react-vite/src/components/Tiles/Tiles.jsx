@@ -7,7 +7,7 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import 'react-quill/dist/quill.snow.css';
 import './Tiles.css';
 
-const Tiles = ({ items, onTileClick }) => {
+const Tiles = ({ items, onTileClick, type }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const user = useSelector(state => state.session.user);
@@ -56,7 +56,18 @@ const Tiles = ({ items, onTileClick }) => {
     return (
         <div className="tiles-grid">
             {items.map(item => (
-                <div className="tile" key={item.id} onClick={() => onTileClick(item)}>
+                <div className="tile"
+                    key={item.id}
+                    onClick={() => {
+                        if (type === 'note') {
+                            onTileClick(item.id); // Pass the noteId
+                        } else if (type === 'character') {
+                            onTileClick(item.id); // Pass the characterId
+                        } else if (type === 'mixed') {
+                            onTileClick(item); // Handle mixed content, pass the entire object
+                        }
+                    }}
+                >
                     {item.title ? (
                         <>
                             <img
