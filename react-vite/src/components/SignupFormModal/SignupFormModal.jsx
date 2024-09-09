@@ -45,7 +45,9 @@ function SignupFormModal() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      navigate(`/client/${user.id}`);
+      if (user && user.id){
+        navigate(`/client/${user.id}`);
+      }
     }
   };
 
@@ -68,7 +70,7 @@ function SignupFormModal() {
         <label>
           Email
           <input
-            type="text"
+            type="email"
             value={email}
             onChange={handleInputChange("email")}
             required

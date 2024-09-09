@@ -40,39 +40,39 @@ const CharacterForm = () => {
     const [educationOccupationHistory, setEducationOccupationHistory] = useState('');
 
     // Stats
-    const [strengthScore, setStrengthScore] = useState(0);
-    const [strengthx5, setStrengthx5] = useState(0);
+    const [strengthScore, setStrengthScore] = useState('');
+    const [strengthx5, setStrengthx5] = useState('');
     const [strengthFeatures, setStrengthFeatures] = useState('');
 
-    const [constitutionScore, setConstitutionScore] = useState(0);
-    const [constitutionx5, setConstitutionx5] = useState(0);
+    const [constitutionScore, setConstitutionScore] = useState('');
+    const [constitutionx5, setConstitutionx5] = useState('');
     const [constitutionFeatures, setConstitutionFeatures] = useState('');
 
-    const [dexterityScore, setDexterityScore] = useState(0);
-    const [dexterityx5, setDexterityx5] = useState(0);
+    const [dexterityScore, setDexterityScore] = useState('');
+    const [dexterityx5, setDexterityx5] = useState('');
     const [dexterityFeatures, setDexterityFeatures] = useState('');
 
-    const [intelligenceScore, setIntelligenceScore] = useState(0);
-    const [intelligencex5, setIntelligencex5] = useState(0);
+    const [intelligenceScore, setIntelligenceScore] = useState('');
+    const [intelligencex5, setIntelligencex5] = useState('');
     const [intelligenceFeatures, setIntelligenceFeatures] = useState('');
 
-    const [powerScore, setPowerScore] = useState(0);
-    const [powerx5, setPowerx5] = useState(0);
+    const [powerScore, setPowerScore] = useState('');
+    const [powerx5, setPowerx5] = useState('');
     const [powerFeatures, setPowerFeatures] = useState('');
 
-    const [charismaScore, setCharismaScore] = useState(0);
-    const [charismax5, setCharismax5] = useState(0);
+    const [charismaScore, setCharismaScore] = useState('');
+    const [charismax5, setCharismax5] = useState('');
     const [charismaFeatures, setCharismaFeatures] = useState('');
 
     // Derived Attributes
-    const [hitPointsMax, setHitPointsMax] = useState(0);
-    const [hitPointsCurrent, setHitPointsCurrent] = useState(0);
-    const [willpowerMax, setWillpowerMax] = useState(0);
-    const [willpowerCurrent, setWillpowerCurrent] = useState(0);
-    const [sanityMax, setSanityMax] = useState(0);
-    const [sanityCurrent, setSanityCurrent] = useState(0);
-    const [breakingPointMax, setBreakingPointMax] = useState(0);
-    const [breakingPointCurrent, setBreakingPointCurrent] = useState(0);
+    const [hitPointsMax, setHitPointsMax] = useState('');
+    const [hitPointsCurrent, setHitPointsCurrent] = useState('');
+    const [willpowerMax, setWillpowerMax] = useState('');
+    const [willpowerCurrent, setWillpowerCurrent] = useState('');
+    const [sanityMax, setSanityMax] = useState('');
+    const [sanityCurrent, setSanityCurrent] = useState('');
+    const [breakingPointMax, setBreakingPointMax] = useState('');
+    const [breakingPointCurrent, setBreakingPointCurrent] = useState('');
 
     // Additional Fields
     const [bonds, setBonds] = useState([""]);
@@ -190,13 +190,13 @@ const CharacterForm = () => {
     const handleAddWeapon = () => {
         setWeapons([...weapons, {
             name: '',
-            skillPercentage: '',
+            skillPercentage: 0,
             baseRange: '',
             damage: '',
-            armorPiercing: '',
-            lethality: '',
+            armorPiercing: 0,
+            lethality: 0,
             killRadius: '',
-            ammo: '',
+            ammo: 0,
             toDelete: false
         }]);
     };
@@ -208,6 +208,20 @@ const CharacterForm = () => {
             setDeletedWeapons([...deletedWeapons, weaponToDelete]);
             setWeapons(weapons.filter(weapon => weapon.id !== weaponId));
         }
+    };
+
+    const handleNumericInput = (value) => {
+        return value === '' ? 0 : parseInt(value, 10);
+    };
+
+    const handleWeaponChange = (index, key, value) => {
+        const updatedWeapons = [...weapons];
+        if (['skillPercentage', 'lethality', 'ammo'].includes(key)) {
+            updatedWeapons[index][key] = value === '' ? 0 : parseInt(value, 10);
+        } else {
+            updatedWeapons[index][key] = value;
+        }
+        setWeapons(updatedWeapons);
     };
 
     // Handle adding new bond
@@ -268,33 +282,33 @@ const CharacterForm = () => {
         formData.append('age_dob', ageDOB);
         formData.append('education_occupation_history', educationOccupationHistory);
 
-        formData.append('strength_score', strengthScore);
-        formData.append('strength_x5', strengthx5);
+        formData.append('strength_score', handleNumericInput(strengthScore));
+        formData.append('strength_x5', handleNumericInput(strengthx5));
         formData.append('strength_features', strengthFeatures);
-        formData.append('constitution_score', constitutionScore);
-        formData.append('constitution_x5', constitutionx5);
+        formData.append('constitution_score', handleNumericInput(constitutionScore));
+        formData.append('constitution_x5', handleNumericInput(constitutionx5));
         formData.append('constitution_features', constitutionFeatures);
-        formData.append('dexterity_score', dexterityScore);
-        formData.append('dexterity_x5', dexterityx5);
+        formData.append('dexterity_score', handleNumericInput(dexterityScore));
+        formData.append('dexterity_x5', handleNumericInput(dexterityx5));
         formData.append('dexterity_features', dexterityFeatures);
-        formData.append('intelligence_score', intelligenceScore);
-        formData.append('intelligence_x5', intelligencex5);
+        formData.append('intelligence_score', handleNumericInput(intelligenceScore));
+        formData.append('intelligence_x5', handleNumericInput(intelligencex5));
         formData.append('intelligence_features', intelligenceFeatures);
-        formData.append('power_score', powerScore);
-        formData.append('power_x5', powerx5);
+        formData.append('power_score', handleNumericInput(powerScore));
+        formData.append('power_x5', handleNumericInput(powerx5));
         formData.append('power_features', powerFeatures);
-        formData.append('charisma_score', charismaScore);
-        formData.append('charisma_x5', charismax5);
+        formData.append('charisma_score', handleNumericInput(charismaScore));
+        formData.append('charisma_x5', handleNumericInput(charismax5));
         formData.append('charisma_features', charismaFeatures);
 
-        formData.append('hit_points_maximum', hitPointsMax);
-        formData.append('hit_points_current', hitPointsCurrent);
-        formData.append('willpower_points_maximum', willpowerMax);
-        formData.append('willpower_points_current', willpowerCurrent);
-        formData.append('sanity_points_maximum', sanityMax);
-        formData.append('sanity_points_current', sanityCurrent);
-        formData.append('breaking_point_maximum', breakingPointMax);
-        formData.append('breaking_point_current', breakingPointCurrent);
+        formData.append('hit_points_maximum', handleNumericInput(hitPointsMax));
+        formData.append('hit_points_current', handleNumericInput(hitPointsCurrent));
+        formData.append('willpower_points_maximum', handleNumericInput(willpowerMax));
+        formData.append('willpower_points_current', handleNumericInput(willpowerCurrent));
+        formData.append('sanity_points_maximum', handleNumericInput(sanityMax));
+        formData.append('sanity_points_current', handleNumericInput(sanityCurrent));
+        formData.append('breaking_point_maximum', handleNumericInput(breakingPointMax));
+        formData.append('breaking_point_current', handleNumericInput(breakingPointCurrent));
 
         formData.append('incidents_violence', incidentsViolence);
         formData.append('incidents_helplessness', incidentsHelplessness);
@@ -361,13 +375,13 @@ const CharacterForm = () => {
             <h1>{characterId ? 'Edit Character' : 'Create Character'}</h1>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
 
-                {/* Need conditional check to disable char name when editing */}
                 {/* Character Name */}
                 <div className="form-group">
                     <label htmlFor="characterName">Character Name</label>
                     <input
                         type="text"
                         id="characterName"
+                        name="characterName"
                         value={characterName}
                         onChange={(e) => setCharacterName(e.target.value)}
                         required
@@ -406,6 +420,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="profession"
+                        name="profession"
                         value={profession}
                         onChange={(e) => setProfession(e.target.value)}
                     />
@@ -428,6 +443,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="employer"
+                        name="employer"
                         value={employer}
                         onChange={(e) => setEmployer(e.target.value)}
                     />
@@ -440,6 +456,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="nationality"
+                        name="nationality"
                         value={nationality}
                         onChange={(e) => setNationality(e.target.value)}
                     />
@@ -452,6 +469,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="age_dob"
+                        name="ageDOB"
                         value={ageDOB}
                         onChange={(e) => setAgeDOB(e.target.value)}
                     />
@@ -463,6 +481,7 @@ const CharacterForm = () => {
                     <label htmlFor="education_occupation_history">Education and Occupational History</label>
                     <textarea
                         id="education_occupation_history"
+                        name="educationOccupationHistory"
                         value={educationOccupationHistory}
                         onChange={(e) => setEducationOccupationHistory(e.target.value)}
                     />
@@ -475,6 +494,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="strength_score"
+                        name="strengthScore"
                         value={strengthScore}
                         onChange={(e) => setStrengthScore(e.target.value)}
                     />
@@ -486,6 +506,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="strength_x5"
+                        name="strengthx5"
                         value={strengthx5}
                         onChange={(e) => setStrengthx5(e.target.value)}
                     />
@@ -497,6 +518,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="strength_features"
+                        name="strengthFeatures"
                         value={strengthFeatures}
                         onChange={(e) => setStrengthFeatures(e.target.value)}
                     />
@@ -509,6 +531,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="constitution_score"
+                        name="constitutionScore"
                         value={constitutionScore}
                         onChange={(e) => setConstitutionScore(e.target.value)}
                     />
@@ -520,6 +543,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="constitution_x5"
+                        name="constitutionx5"
                         value={constitutionx5}
                         onChange={(e) => setConstitutionx5(e.target.value)}
                     />
@@ -531,6 +555,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="constitution_features"
+                        name="constitutionFeatures"
                         value={constitutionFeatures}
                         onChange={(e) => setConstitutionFeatures(e.target.value)}
                     />
@@ -543,6 +568,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="dexterity_score"
+                        name="dexterityScore"
                         value={dexterityScore}
                         onChange={(e) => setDexterityScore(e.target.value)}
                     />
@@ -554,6 +580,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="dexterity_x5"
+                        name="dexterityx5"
                         value={dexterityx5}
                         onChange={(e) => setDexterityx5(e.target.value)}
                     />
@@ -565,6 +592,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="dexterity_features"
+                        name="dexterityFeatures"
                         value={dexterityFeatures}
                         onChange={(e) => setDexterityFeatures(e.target.value)}
                     />
@@ -577,6 +605,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="intelligence_score"
+                        name="intelligenceScore"
                         value={intelligenceScore}
                         onChange={(e) => setIntelligenceScore(e.target.value)}
                     />
@@ -588,6 +617,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="intelligence_x5"
+                        name="intelligencex5"
                         value={intelligencex5}
                         onChange={(e) => setIntelligencex5(e.target.value)}
                     />
@@ -599,6 +629,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="intelligence_features"
+                        name="intelligenceFeatures"
                         value={intelligenceFeatures}
                         onChange={(e) => setIntelligenceFeatures(e.target.value)}
                     />
@@ -611,6 +642,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="power_score"
+                        name="powerScore"
                         value={powerScore}
                         onChange={(e) => setPowerScore(e.target.value)}
                     />
@@ -622,6 +654,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="power_x5"
+                        name="powerx5"
                         value={powerx5}
                         onChange={(e) => setPowerx5(e.target.value)}
                     />
@@ -633,6 +666,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="power_features"
+                        name="powerFeatures"
                         value={powerFeatures}
                         onChange={(e) => setPowerFeatures(e.target.value)}
                     />
@@ -645,6 +679,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="charisma_score"
+                        name="charismaScore"
                         value={charismaScore}
                         onChange={(e) => setCharismaScore(e.target.value)}
                     />
@@ -656,6 +691,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="charisma_x5"
+                        name="charismax5"
                         value={charismax5}
                         onChange={(e) => setCharismax5(e.target.value)}
                     />
@@ -667,6 +703,7 @@ const CharacterForm = () => {
                     <input
                         type="text"
                         id="charisma_features"
+                        name="charismaFeatures"
                         value={charismaFeatures}
                         onChange={(e) => setCharismaFeatures(e.target.value)}
                     />
@@ -679,6 +716,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="hit_points_maximum"
+                        name="hitPointsMaximum"
                         value={hitPointsMax}
                         onChange={(e) => setHitPointsMax(e.target.value)}
                     />
@@ -690,6 +728,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="hit_points_current"
+                        name="hitPointsCurrent"
                         value={hitPointsCurrent}
                         onChange={(e) => setHitPointsCurrent(e.target.value)}
                     />
@@ -702,6 +741,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="willpower_points_maximum"
+                        name="willpowerPointsMaximum"
                         value={willpowerMax}
                         onChange={(e) => setWillpowerMax(e.target.value)}
                     />
@@ -713,6 +753,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="willpower_points_current"
+                        name="willpowerPointsCurrent"
                         value={willpowerCurrent}
                         onChange={(e) => setWillpowerCurrent(e.target.value)}
                     />
@@ -725,6 +766,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="sanity_points_maximum"
+                        name="sanityPointsMaximum"
                         value={sanityMax}
                         onChange={(e) => setSanityMax(e.target.value)}
                     />
@@ -736,6 +778,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="sanity_points_current"
+                        name="sanityPointsCurrent"
                         value={sanityCurrent}
                         onChange={(e) => setSanityCurrent(e.target.value)}
                     />
@@ -748,6 +791,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="breaking_point_maximum"
+                        name="breakingPointMaximum"
                         value={breakingPointMax}
                         onChange={(e) => setBreakingPointMax(e.target.value)}
                     />
@@ -759,6 +803,7 @@ const CharacterForm = () => {
                     <input
                         type="number"
                         id="breaking_point_current"
+                        name="breakingPointCurrent"
                         value={breakingPointCurrent}
                         onChange={(e) => setBreakingPointCurrent(e.target.value)}
                     />
@@ -773,11 +818,13 @@ const CharacterForm = () => {
                             <input
                                 type="text"
                                 placeholder="Bond Name"
+                                name="bonds"
                                 value={bond}
                                 onChange={(e) => handleBondChange(index, e.target.value)}
                             />
                             <input
                                 type="number"
+                                name="bondsScore"
                                 placeholder="Bond Score"
                                 value={bondsScore[index]}
                                 onChange={(e) => handleBondScoreChange(index, e.target.value)}
@@ -796,6 +843,7 @@ const CharacterForm = () => {
                                 <label>{skill.name} (Base: {skill.baseValue})</label>
                                 <input
                                     type="number"
+                                    name="skillLevel"
                                     value={skill.skillLevel}
                                     onChange={(e) => handleSkillLevelChange(skill.skillId, e.target.value)}
                                 />
@@ -812,6 +860,7 @@ const CharacterForm = () => {
                     <textarea
                         id="physical_description"
                         value={physicalDescription}
+                        name="physicalDescription"
                         onChange={(e) => setPhysicalDescription(e.target.value)}
                     />
                     {errors.physical_description && <p className="error-message">{errors.physical_description}</p>}
@@ -822,6 +871,7 @@ const CharacterForm = () => {
                     <label htmlFor="motivations_mental_disorders">Motivations and Mental Disorders</label>
                     <textarea
                         id="motivations_mental_disorders"
+                        name="motivationsMentalDisorders"
                         value={motivationsMentalDisorders}
                         onChange={(e) => setMotivationsMentalDisorders(e.target.value)}
                     />
@@ -866,6 +916,7 @@ const CharacterForm = () => {
                     <textarea
                         id="armor_gear"
                         value={armorGear}
+                        name="armorGear"
                         onChange={(e) => setArmorGear(e.target.value)}
                     />
                     {errors.armor_gear && <p className="error-message">{errors.armor_gear}</p>}
@@ -876,6 +927,7 @@ const CharacterForm = () => {
                     <label htmlFor="wounds_ailments">Wounds and Ailments</label>
                     <textarea
                         id="wounds_ailments"
+                        name="woundsAilments"
                         value={woundsAilments}
                         onChange={(e) => setWoundsAilments(e.target.value)}
                     />
@@ -887,6 +939,7 @@ const CharacterForm = () => {
                     <label htmlFor="personal_details_notes">Personal Details and Notes</label>
                     <textarea
                         id="personal_details_notes"
+                        name="personalDetailsNotes"
                         value={personalDetails}
                         onChange={(e) => setPersonalDetails(e.target.value)}
                     />
@@ -898,6 +951,7 @@ const CharacterForm = () => {
                     <label htmlFor="developments_home_family">Developments Which Affect Home and Family</label>
                     <textarea
                         id="developments_home_family"
+                        name="developmentHomeFamily"
                         value={developments}
                         onChange={(e) => setDevelopments(e.target.value)}
                     />
@@ -909,6 +963,7 @@ const CharacterForm = () => {
                     <label htmlFor="special_training">Special Training</label>
                     <textarea
                         id="special_training"
+                        name="specialTraining"
                         value={specialTraining}
                         onChange={(e) => setSpecialTraining(e.target.value)}
                     />
@@ -920,6 +975,7 @@ const CharacterForm = () => {
                     <label htmlFor="skill_stat_used">Skill or Stat Used</label>
                     <textarea
                         id="skill_stat_used"
+                        name="skillStatUsed"
                         value={skillStatUsed}
                         onChange={(e) => setSkillStatUsed(e.target.value)}
                     />
@@ -936,82 +992,58 @@ const CharacterForm = () => {
                                 <input
                                     type="text"
                                     placeholder="Weapon Name"
+                                    name="name"
                                     value={weapon.name}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].name = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'name', e.target.value)}
                                 />
                                 <input
                                     type="number"
                                     placeholder="Skill Percentage"
+                                    name="skillPercentage"
                                     value={weapon.skillPercentage}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].skillPercentage = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'skillPercentage', e.target.value)}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Base Range"
+                                    name="baseRange"
                                     value={weapon.baseRange}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].baseRange = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'baseRange', e.target.value)}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Damage"
+                                    name="damage"
                                     value={weapon.damage}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].damage = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'damage', e.target.value)}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Armor Piercing"
+                                    name="armorPiercing"
                                     value={weapon.armorPiercing}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].armorPiercing = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'armorPiercing', e.target.value)}
                                 />
                                 <input
                                     type="number"
                                     placeholder="Lethality"
+                                    name="lethality"
                                     value={weapon.lethality}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].lethality = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'lethality', e.target.value)}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Kill Radius"
+                                    name="killRadius"
                                     value={weapon.killRadius}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].killRadius = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'killRadius', e.target.value)}
                                 />
                                 <input
                                     type="number"
                                     placeholder="Ammo"
+                                    name="ammo"
                                     value={weapon.ammo}
-                                    onChange={(e) => {
-                                        const updatedWeapons = [...weapons];
-                                        updatedWeapons[index].ammo = e.target.value;
-                                        setWeapons(updatedWeapons);
-                                    }}
+                                    onChange={(e) => handleWeaponChange(index, 'ammo', e.target.value)}
                                 />
                                 <button
                                     type="button"

@@ -55,9 +55,9 @@ const Tiles = ({ items, onTileClick, type }) => {
 
     return (
         <div className="tiles-grid">
-            {items.map(item => (
+            {items.map((item, index) => (
                 <div className="tile"
-                    key={item.id}
+                    key={`${type}-${item.id}-${index}`}
                     onClick={() => {
                         if (type === 'note') {
                             onTileClick(item.id); // Pass the noteId

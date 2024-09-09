@@ -18,6 +18,12 @@ def create_delta_green_character():
     form = DeltaGreenCharacterForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    def convert_to_int(value, default=0):
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return default
+
     if form.validate_on_submit():
         try:
             # image upload
@@ -34,9 +40,7 @@ def create_delta_green_character():
             skills = json.loads(data.get('skills', '[]'))
             weapons = json.loads(data.get('weapons', '[]'))
             bonds = json.loads(data.get('bonds', '[]'))
-            bonds_score = json.loads(data.get('bonds_score', '[]'))
-
-            bonds_score = [int(score) for score in bonds_score]
+            bonds_score = [convert_to_int(score) for score in json.loads(data.get('bonds_score', '[]'))]
 
             # main character entry
             new_character = Character(
@@ -58,36 +62,36 @@ def create_delta_green_character():
                 sex=form.data['sex'],
                 age_dob=form.data['age_dob'],
                 education_occupation_history=form.data['education_occupation_history'],
-                strength_score=form.data['strength_score'],
-                strength_x5=form.data['strength_x5'],
+                strength_score=convert_to_int(form.data['strength_score']),
+                strength_x5=convert_to_int(form.data['strength_x5']),
                 strength_features=form.data['strength_features'],
-                constitution_score=form.data['constitution_score'],
-                constitution_x5=form.data['constitution_x5'],
+                constitution_score=convert_to_int(form.data['constitution_score']),
+                constitution_x5=convert_to_int(form.data['constitution_x5']),
                 constitution_features=form.data['constitution_features'],
-                dexterity_score=form.data['dexterity_score'],
-                dexterity_x5=form.data['dexterity_x5'],
+                dexterity_score=convert_to_int(form.data['dexterity_score']),
+                dexterity_x5=convert_to_int(form.data['dexterity_x5']),
                 dexterity_features=form.data['dexterity_features'],
-                intelligence_score=form.data['intelligence_score'],
-                intelligence_x5=form.data['intelligence_x5'],
+                intelligence_score=convert_to_int(form.data['intelligence_score']),
+                intelligence_x5=convert_to_int(form.data['intelligence_x5']),
                 intelligence_features=form.data['intelligence_features'],
-                power_score=form.data['power_score'],
-                power_x5=form.data['power_x5'],
+                power_score=convert_to_int(form.data['power_score']),
+                power_x5=convert_to_int(form.data['power_x5']),
                 power_features=form.data['power_features'],
-                charisma_score=form.data['charisma_score'],
-                charisma_x5=form.data['charisma_x5'],
+                charisma_score=convert_to_int(form.data['charisma_score']),
+                charisma_x5=convert_to_int(form.data['charisma_x5']),
                 charisma_features=form.data['charisma_features'],
-                hit_points_maximum=form.data['hit_points_maximum'],
-                hit_points_current=form.data['hit_points_current'],
-                willpower_points_maximum=form.data['willpower_points_maximum'],
-                willpower_points_current=form.data['willpower_points_current'],
-                sanity_points_maximum=form.data['sanity_points_maximum'],
-                sanity_points_current=form.data['sanity_points_current'],
-                breaking_point_maximum=form.data['breaking_point_maximum'],
-                breaking_point_current=form.data['breaking_point_current'],
+                hit_points_maximum=convert_to_int(form.data['hit_points_maximum']),
+                hit_points_current=convert_to_int(form.data['hit_points_current']),
+                willpower_points_maximum=convert_to_int(form.data['willpower_points_maximum']),
+                willpower_points_current=convert_to_int(form.data['willpower_points_current']),
+                sanity_points_maximum=convert_to_int(form.data['sanity_points_maximum']),
+                sanity_points_current=convert_to_int(form.data['sanity_points_current']),
+                breaking_point_maximum=convert_to_int(form.data['breaking_point_maximum']),
+                breaking_point_current=convert_to_int(form.data['breaking_point_current']),
                 physical_description=form.data['physical_description'],
                 motivations_mental_disorders=form.data['motivations_mental_disorders'],
-                incidents_violence=form.data['incidents_violence'],
-                incidents_helplessness=form.data['incidents_helplessness'],
+                incidents_violence=convert_to_int(form.data['incidents_violence']),
+                incidents_helplessness=convert_to_int(form.data['incidents_helplessness']),
                 wounds_ailments=form.data['wounds_ailments'],
                 armor_gear=form.data['armor_gear'],
                 personal_details_notes=form.data['personal_details_notes'],
@@ -103,8 +107,8 @@ def create_delta_green_character():
             for skill_data in skills:
                 character_skill = CharacterSkill(
                     character_id=new_character.id,
-                    skill_id=skill_data['skillId'],
-                    skill_level=skill_data['skillLevel']
+                    skill_id=convert_to_int(skill_data['skillId']),
+                    skill_level=convert_to_int(skill_data['skillLevel'])
                 )
                 db.session.add(character_skill)
 
@@ -112,13 +116,13 @@ def create_delta_green_character():
                 new_weapon = DeltaWeapon(
                     character_id=new_character.id,
                     name=weapon_data.get('name'),
-                    skill_percentage=weapon_data.get('skillPercentage'),
+                    skill_percentage=convert_to_int(weapon_data.get('skillPercentage')),
                     base_range=weapon_data.get('baseRange'),
                     damage=weapon_data.get('damage'),
                     armor_piercing=weapon_data.get('armorPiercing'),
-                    lethality=weapon_data.get('lethality'),
+                    lethality=convert_to_int(weapon_data.get('lethality')),
                     kill_radius=weapon_data.get('killRadius'),
-                    ammo=weapon_data.get('ammo')
+                    ammo=convert_to_int(weapon_data.get('ammo'))
                 )
                 db.session.add(new_weapon)
 
