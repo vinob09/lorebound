@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, Outlet, useLocation, Link } from 'react-router-dom';
 import { thunkUserById } from '../../redux/session';
 import { thunkAllNotes } from '../../redux/notes';
 import { thunkGetAllCharacters } from '../../redux/characterSheets';
 import TopNav from './TopNav';
-import Tiles from '../Tiles/Tiles';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import './ClientPage.css';
 
 const ClientPage = () => {
@@ -15,12 +16,9 @@ const ClientPage = () => {
     const location = useLocation();
 
     const user = useSelector(state => state.session.user);
-    const notes = useSelector(state => state.notes.allNotes);
-    const characters = useSelector(state => state.characters.characters);
 
     const [isLoaded, setIsLoaded] = useState(false);
-    const [latestNote, setLatestNote] = useState(null);
-    const [latestCharacter, setLatestCharacter] = useState(null);
+    const [date, setDate] = useState(new Date());
 
     useEffect(() => {
         // fetch user if not loaded
@@ -45,41 +43,18 @@ const ClientPage = () => {
         else {
             setIsLoaded(true);
         }
+    }, [dispatch, userId, user, navigate]);
 
-        // fetch notes on initial load
+    useEffect(() => {
+        // fetch notes and characters on load
         if (user) {
             dispatch(thunkAllNotes());
             dispatch(thunkGetAllCharacters());
         }
-
-    }, [dispatch, userId, user, navigate]);
-
-
-    useEffect(() => {
-        // get the latest note by updatedAt
-        if (notes && notes.length > 0) {
-            const latest = [...notes].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0];
-            setLatestNote(latest);
-        }
-
-        // get the latest character by updatedAt
-        if (characters && characters.length > 0) {
-            const latest = [...characters].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0];
-            setLatestCharacter(latest);
-        }
-    }, [notes, characters]);
+    }, [location.pathname, dispatch, user]);
 
     // check if on the main ClientPage
     const isDashboard = location.pathname === `/client/${userId}`;
-
-    // handle tiles click into character and notes details
-    const handleTileClick = (item) => {
-        if (item.title) {
-            navigate(`/client/${user.id}/notes/${item.id}`);
-        } else if (item.characterName) {
-            navigate(`/client/${user.id}/characters/${item.id}`);
-        }
-    };
 
 
     return isLoaded && user ? (
@@ -88,20 +63,21 @@ const ClientPage = () => {
             <div className="client-info">
                 <h1>Welcome, {user.username}</h1>
             </div>
+
             {isDashboard && (
-                <div className="latest-tiles-section">
-                    <h2>Your Latest Content</h2>
-                    {latestNote && latestCharacter ? (
-                        <div className="client-page-tiles">
-                            <Tiles
-                                items={[latestNote, latestCharacter]}
-                                type="mixed"
-                                onTileClick={handleTileClick}
-                            />
-                        </div>
-                    ) : (
-                        <p>Loading latest data...</p>
-                    )}
+                <div className="client-dashboard-content">
+                    <div className="calendar-section">
+                        <h2>Your Calendar</h2>
+                        <Calendar onChange={setDate} value={date} />
+                        <p>Selected Date: {date.toDateString()}</p>
+                    </div>
+
+                    <div className="create-content-links">
+                        <h3>Start your adventure below!</h3>
+                        <Link to={`/client/${user.id}/note/new`}>Add a New Note</Link>
+                        {"   "}
+                        <Link to={`/client/${user.id}/character/new`}>Add a New Character</Link>
+                    </div>
                 </div>
             )}
             <div className="client-main-content">

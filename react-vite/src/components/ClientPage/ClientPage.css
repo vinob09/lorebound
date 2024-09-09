@@ -1,56 +1,29 @@
-.client-page {
+.client-dashboard-content {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-}
-
-.client-info {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.latest-tiles-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 40px;
-    padding: 20px;
-}
-
-.latest-tiles-section h2 {
-    font-size: 1.8rem;
-    color: #fff;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.client-main-content {
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-}
-
-.client-page-tiles {
-    display: flex;
-    justify-content: center;
     gap: 20px;
+}
+
+.calendar-section {
+    border: 1px solid #ddd;
+    border-radius: 10px;
     padding: 20px;
-    flex-wrap: wrap;
+    background-color: #f9f9f9;
+    max-width: 350px;
+    margin-bottom: 20px;
 }
 
-.client-page-tiles .tile {
-    flex: 1 1 300px;
-    max-width: 100%;
-    min-width: 300px;
+.create-content-links {
+    margin-top: 20px;
 }
 
-.tiles-grid {
-    display: grid;
+.create-content-links a {
+    margin-right: 20px;
+    font-size: 1.2rem;
+    color: #007BFF;
+    text-decoration: none;
 }
 
-@media (min-width: 768px) {
-    .client-main-content {
-        padding-left: 250px;
-        padding-right: 250px;
-    }
+.create-content-links a:hover {
+    text-decoration: underline;
 }
