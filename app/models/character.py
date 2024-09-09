@@ -35,6 +35,8 @@ class Character(db.Model):
             'characterName': self.character_name,
             'url': self.url,
             'deltaGreenCharacter': self.delta_green_character.to_dict() if self.delta_green_character else None,
+            'skills': [skill.to_dict() for skill in self.skills],
+            'weapons': [weapon.to_dict() for weapon in self.weapons],
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }

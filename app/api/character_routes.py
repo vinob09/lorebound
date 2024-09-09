@@ -180,6 +180,17 @@ def edit_delta_green_character(character_id):
     if form.validate_on_submit():
         try:
             # update
+            character.character_name = form.data['character_name']
+
+            data = request.form
+            skills = json.loads(data.get('skills', '[]'))
+            weapons = json.loads(data.get('weapons', '[]'))
+            deleted_weapons = json.loads(data.get('deletedWeapons', '[]'))
+            bonds = json.loads(data.get('bonds', '[]'))
+            bonds_score = json.loads(data.get('bonds_score', '[]'))
+
+            bonds_score = [int(score) for score in bonds_score]
+
             delta_character.profession = form.data['profession']
             delta_character.employer = form.data['employer']
             delta_character.nationality = form.data['nationality']
@@ -222,23 +233,74 @@ def edit_delta_green_character(character_id):
             delta_character.developments_home_family = form.data['developments_home_family']
             delta_character.special_training = form.data['special_training']
             delta_character.skill_stat_used = form.data['skill_stat_used']
-            delta_character.bonds = json.dumps(form.bonds.data)
-            delta_character.bonds_score = json.dumps(form.bonds_score.data)
+            delta_character.bonds = json.dumps(bonds)
+            delta_character.bonds_score = json.dumps(bonds_score)
 
+            # handle image
             if request.form.get('removeImage') == 'true':
-                if delta_character.url:
-                    remove_file_from_s3(delta_character.url)
-                    delta_character.url = None
+                if character.url:
+                    remove_file_from_s3(character.url)
+                    character.url = None
 
             url = form.data['url']
             if url:
-                if delta_character.url:
-                    remove_file_from_s3(delta_character.url)
+                if character.url:
+                    remove_file_from_s3(character.url)
 
                 upload = upload_file_to_s3(url)
                 if "errors" in upload:
                     return jsonify(upload), 400
-                delta_character.url = upload['url']
+                character.url = upload['url']
+
+            # handle skills
+            for skill_data in skills:
+                existing_skill = CharacterSkill.query.filter_by(character_id=character_id, skill_id=skill_data['skillId']).first()
+                if existing_skill:
+                    existing_skill.skill_level = skill_data['skillLevel']
+                else:
+                    new_skill = CharacterSkill(
+                        character_id=character_id,
+                        skill_id=skill_data['skillId'],
+                        skill_level=skill_data['skillLevel']
+                    )
+                    db.session.add(new_skill)
+
+            # Handle weapon deletions
+            for deleted_weapon in deleted_weapons:
+                weapon_id = deleted_weapon.get('id')
+                weapon_to_delete = DeltaWeapon.query.get(weapon_id)
+                if weapon_to_delete:
+                    db.session.delete(weapon_to_delete)
+
+            # Handle weapon updates and additions
+            for weapon_data in weapons:
+                weapon_id = weapon_data.get('id')
+                if weapon_id:
+                    # Update existing weapon
+                    weapon = DeltaWeapon.query.get(weapon_id)
+                    if weapon:
+                        weapon.name = weapon_data['name']
+                        weapon.skill_percentage = weapon_data['skillPercentage']
+                        weapon.base_range = weapon_data['baseRange']
+                        weapon.damage = weapon_data['damage']
+                        weapon.armor_piercing = weapon_data['armorPiercing']
+                        weapon.lethality = weapon_data['lethality']
+                        weapon.kill_radius = weapon_data['killRadius']
+                        weapon.ammo = weapon_data['ammo']
+                else:
+                    # Create new weapon
+                    new_weapon = DeltaWeapon(
+                        character_id=character_id,
+                        name=weapon_data['name'],
+                        skill_percentage=weapon_data['skillPercentage'],
+                        base_range=weapon_data['baseRange'],
+                        damage=weapon_data['damage'],
+                        armor_piercing=weapon_data['armorPiercing'],
+                        lethality=weapon_data['lethality'],
+                        kill_radius=weapon_data['killRadius'],
+                        ammo=weapon_data['ammo']
+                    )
+                    db.session.add(new_weapon)
 
             db.session.commit()
             return jsonify(delta_character.to_dict()), 200
@@ -305,11 +367,31 @@ def edit_delta_skill(character_id, skill_id):
 def get_character_skills(character_id):
     """Get a list of all the character's skills"""
 
-    character_skills = CharacterSkill.query.filter_by(character_id=character_id).all()
+    character_skills = db.session.query(
+        CharacterSkill.id,
+        CharacterSkill.character_id,
+        CharacterSkill.skill_level,
+        Skill.id.label('skillId'),
+        Skill.name,
+        Skill.base_value
+    ).join(Skill, CharacterSkill.skill_id == Skill.id).filter(
+        CharacterSkill.character_id == character_id
+    ).all()
+
     if not character_skills:
         return jsonify({"errors": "No skills found for this character"}), 404
 
-    return jsonify([cs.to_dict() for cs in character_skills]), 200
+    # Transform to a dict structure
+    skill_data = [{
+        'id': cs.id,
+        'characterId': cs.character_id,
+        'skillId': cs.skillId,
+        'skillLevel': cs.skill_level,
+        'name': cs.name,
+        'baseValue': cs.base_value
+    } for cs in character_skills]
+
+    return jsonify(skill_data), 200
 
 
 # delta green weapon management
