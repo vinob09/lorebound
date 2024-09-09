@@ -8,11 +8,7 @@ import {
     thunkGetCharacterById,
     thunkUpdateCharacter,
     thunkGetCharacterSkills,
-    thunkUpdateCharacterSkill,
-    thunkGetCharacterWeapons,
-    thunkAddCharacterWeapon,
-    thunkUpdateCharacterWeapon,
-    thunkDeleteCharacterWeapon
+    thunkGetCharacterWeapons
 } from '../../redux/characterSheets';
 import './CharacterForm.css';
 
@@ -30,7 +26,6 @@ const CharacterForm = () => {
     const [errors, setErrors] = useState({});
 
     // General Character Fields
-    // const [gameId, setGameId] = useState('');
     const [characterName, setCharacterName] = useState('');
     const [file, setFile] = useState(null);
     const [removeImage, setRemoveImage] = useState(false);
@@ -95,6 +90,7 @@ const CharacterForm = () => {
 
     // Weapons
     const [weapons, setWeapons] = useState([]);
+    const [deletedWeapons, setDeletedWeapons] = useState([]);
 
     // check for editing or creating and mount all skills
     useEffect(() => {
@@ -103,17 +99,21 @@ const CharacterForm = () => {
             dispatch(thunkGetCharacterById(characterId)).then((characterData) => {
                 // Prepopulate the form fields with character data
                 setCharacterName(characterData.characterName);
-                // check for skills
-                if (characterData.skills && characterData.skills.length > 0) {
-                    setSkills(characterData.skills.map(skill => ({
-                        skillId: skill.skillId,
-                        name: skill.name,
-                        skillLevel: skill.skillLevel
-                    })));
-                } else {
-                    setSkills([]);
-                }
                 setWeapons(characterData.weapons || []);
+                // check for existing weapons
+                dispatch(thunkGetCharacterWeapons(characterId)).then((weaponsData) => {
+                    setWeapons(weaponsData);
+                })
+                // check for existing skills
+                dispatch(thunkGetCharacterSkills(characterId)).then((skillsData) => {
+                    const populatedSkills = skillsData.map(skill => ({
+                        skillId: skill.skillId,
+                        name: skill.name || '',
+                        baseValue: skill.baseValue,
+                        skillLevel: skill.skillLevel
+                    }));
+                    setSkills(populatedSkills);
+                });
                 setProfession(characterData.deltaGreenCharacter.profession);
                 setEmployer(characterData.deltaGreenCharacter.employer);
                 setNationality(characterData.deltaGreenCharacter.nationality);
@@ -178,6 +178,7 @@ const CharacterForm = () => {
         }
     }, [dispatch, characterId]);
 
+
     // Handle skill level change
     const handleSkillLevelChange = (skillId, newLevel) => {
         setSkills(skills.map(skill =>
@@ -185,6 +186,7 @@ const CharacterForm = () => {
         ));
     };
 
+    // Handle adding weapon
     const handleAddWeapon = () => {
         setWeapons([...weapons, {
             name: '',
@@ -194,8 +196,18 @@ const CharacterForm = () => {
             armorPiercing: '',
             lethality: '',
             killRadius: '',
-            ammo: ''
+            ammo: '',
+            toDelete: false
         }]);
+    };
+
+    // Handle deleting weapon
+    const handleWeaponDelete = (weaponId) => {
+        const weaponToDelete = weapons.find(weapon => weapon.id === weaponId);
+        if (weaponToDelete) {
+            setDeletedWeapons([...deletedWeapons, weaponToDelete]);
+            setWeapons(weapons.filter(weapon => weapon.id !== weaponId));
+        }
     };
 
     // Handle adding new bond
@@ -234,7 +246,21 @@ const CharacterForm = () => {
             skillLevel: skill.skillLevel
         }))));
 
-        formData.append('weapons', JSON.stringify(weapons));
+        formData.append('weapons', JSON.stringify(weapons.map(weapon => ({
+            id: weapon.id,
+            name: weapon.name,
+            skillPercentage: weapon.skillPercentage,
+            baseRange: weapon.baseRange,
+            damage: weapon.damage,
+            armorPiercing: weapon.armorPiercing,
+            lethality: weapon.lethality,
+            killRadius: weapon.killRadius,
+            ammo: weapon.ammo
+        }))));
+        formData.append('deletedWeapons', JSON.stringify(deletedWeapons.map(weapon => ({
+            id: weapon.id
+        }))));
+
         formData.append('sex', sex);
         formData.append('profession', profession);
         formData.append('employer', employer);
@@ -297,6 +323,7 @@ const CharacterForm = () => {
             const result = await dispatch(thunkUpdateCharacter(characterId, formData));
 
             if (result && result.error) {
+                console.error('Error:', result.error);
                 setErrors(result.error);
             } else {
                 navigate(`/client/${user.id}/characters/${characterId}`);
@@ -334,6 +361,7 @@ const CharacterForm = () => {
             <h1>{characterId ? 'Edit Character' : 'Create Character'}</h1>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
 
+                {/* Need conditional check to disable char name when editing */}
                 {/* Character Name */}
                 <div className="form-group">
                     <label htmlFor="characterName">Character Name</label>
@@ -343,6 +371,7 @@ const CharacterForm = () => {
                         value={characterName}
                         onChange={(e) => setCharacterName(e.target.value)}
                         required
+                        disabled={!!characterId}
                     />
                     {errors.characterName && <p className="error-message">{errors.characterName}</p>}
                 </div>
@@ -761,16 +790,20 @@ const CharacterForm = () => {
                 {/* Skills */}
                 <div>
                     <h3>Skills</h3>
-                    {skills.map(skill => (
-                        <div key={skill.skillId} className="skill-entry">
-                            <label>{skill.name} (Base: {skill.baseValue})</label>
-                            <input
-                                type="number"
-                                value={skill.skillLevel}
-                                onChange={(e) => handleSkillLevelChange(skill.skillId, e.target.value)}
-                            />
-                        </div>
-                    ))}
+                    {skills.length > 0 ? (
+                        skills.map(skill => (
+                            <div key={skill.skillId} className="skill-entry">
+                                <label>{skill.name} (Base: {skill.baseValue})</label>
+                                <input
+                                    type="number"
+                                    value={skill.skillLevel}
+                                    onChange={(e) => handleSkillLevelChange(skill.skillId, e.target.value)}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <p>No skills available.</p>
+                    )}
                 </div>
 
                 {/* Physical Description */}
@@ -980,6 +1013,12 @@ const CharacterForm = () => {
                                         setWeapons(updatedWeapons);
                                     }}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => handleWeaponDelete(weapon.id)}
+                                >
+                                    Delete Weapon
+                                </button>
                             </div>
                         ))
                     ) : (
