@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { thunkSignup } from "../../redux/session";
+import Loader from "../Loader/Loader";
 import "./SignupForm.css";
 
 function SignupFormModal() {
@@ -14,6 +15,7 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const user = useSelector(state => state.session.user);
 
@@ -27,6 +29,7 @@ function SignupFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsLoaded(true);
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
@@ -49,6 +52,7 @@ function SignupFormModal() {
         navigate(`/client/${user.id}`);
       }
     }
+    setIsLoaded(false);
   };
 
   // clear error messages on input change
@@ -108,6 +112,7 @@ function SignupFormModal() {
         </label>
         {errors.confirmPassword && <p className="signup-form-errors">{errors.confirmPassword}</p>}
         <button type="submit" className="signup-submit" disabled={!isFormValid}>Sign Up</button>
+        {isLoaded && <Loader />}
       </form>
     </>
   );

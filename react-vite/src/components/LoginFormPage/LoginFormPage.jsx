@@ -2,6 +2,7 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 import "./LoginForm.css";
 
 function LoginFormPage() {
@@ -11,12 +12,14 @@ function LoginFormPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   if (sessionUser) return <Navigate to={`/client/${sessionUser.id}`} replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsLoaded(true);
     const serverResponse = await dispatch(
       thunkLogin({
         email,
@@ -29,6 +32,7 @@ function LoginFormPage() {
     } else {
       navigate(`/client/${sessionUser.id}`);
     }
+    setIsLoaded(false);
   };
 
   return (
@@ -58,6 +62,7 @@ function LoginFormPage() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+        {isLoaded && <Loader />}
       </form>
     </>
   );
