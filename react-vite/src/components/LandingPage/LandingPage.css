@@ -1,68 +1,111 @@
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+/* Landing page container to hold everything */
+.landing-page-container {
+    position: relative;
+    min-height: 100vh;
 }
 
-.bg-image {
-    background-color: #006466;
+/* Main container for the landing page */
+.landing-container {
     position: relative;
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-video {
+/* Video wrapper to cover the full viewport */
+.video-wrapper {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Styling for the video */
+.background-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     z-index: 1;
 }
 
+/* Overlay mask */
 .mask {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg,
-            rgba(27, 58, 75, 0.7),
-            rgba(33, 47, 69, 0.7) 100%);
+    height: 100vh;
+    background: linear-gradient(45deg, rgba(64, 64, 64, 0.85), rgba(32, 32, 32, 0.85));
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    z-index: 2;
+    z-index: 2; /
 }
 
-.landing-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    padding: 0;
-    background: none;
-    color: #ffffff;
-    text-align: center;
-    z-index: 3;
-    animation: fadeIn 2s ease-in-out;
-}
-
-.landing-card {
-    text-align: center;
-    max-width: 1000px;
+/* Text content styling */
+.landing-name {
+    font-size: 5em;
+    font-style: italic;
+    font-weight: bold;
     color: white;
-    position: relative;
+    margin: 0;
+    text-shadow: -2px -2px 0 #000, 1px -2px 0 #000, -2px 1px 0 #000, 1px 1px 0 #000;
     z-index: 3;
 }
 
+/* Subheading for organizing adventures */
+.landing-subtitle {
+    font-size: 2em;
+    color: #ccc;
+    margin-top: 20px;
+    z-index: 3;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Button group for Signup and Try Demo */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* CTA button styling */
+.cta-button {
+    padding: 15px 30px;
+    background-color: #006466;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #065a60;
+}
+
+.demo-button {
+    background-color: #065a60;
+}
+
+.demo-button:hover {
+    background-color: #006466;
+}
+
+.landing-demo-link {
+    text-decoration: none;
+}
+
+/* Thin gradient line */
 .gradient-line {
     width: 100%;
     height: 4px;
@@ -70,135 +113,141 @@ video {
     margin-top: 50px;
 }
 
-.landing-name {
-    font-size: 6.9em;
-    font-style: italic;
-    font-weight: bold;
-    color: white;
-    margin: 0 0 20px;
-    text-shadow:
-        -2px -2px 0 #000,
-        1px -2px 0 #000,
-        -2px 1px 0 #000,
-        1px 1px 0 #000;
-}
-
-.landing-description {
-    font-size: 2.5em;
-    color: #c7c7c7;
-    margin-bottom: 40px;
-    line-height: 1.5;
-    text-shadow:
-        -2px -2px 0 #000,
-        1px -2px 0 #000,
-        -2px 1px 0 #000,
-        1px 1px 0 #000;
-
-}
-
-.landing-description a {
-    color: #2ba2a4;
-    text-shadow:
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000;
-}
-
-.landing-button {
-    background: linear-gradient(90deg, #006466, #065A60);
-    border: 2px solid;
-    padding: 15px 30px;
-    border-radius: 30px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: background 0.5s ease, color 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.landing-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -75%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-    transform: skewX(-25deg);
-}
-
-@keyframes shiny {
-    0% {
-        left: -75%;
-    }
-
-    100% {
-        left: 125%;
-    }
-}
-
-.landing-button:hover {
-    background: linear-gradient(90deg, #1B3A4B, #4D194D);
-    color: white;
-    border: 2px solid;
-}
-
-.landing-button:hover::before {
-    animation: shiny 0.75s forwards;
-}
-
-.landing-button:active {
-    background: linear-gradient(90deg, #144552, #272640);
-    transform: scale(0.98);
-}
-
-
-/*TABLET MEDIA STYLING*/
+/* Media queries for responsiveness */
 @media (max-width: 1024px) {
-    .landing-card {
-        max-width: 400px;
-        padding: 20px;
-    }
-
     .landing-name {
-        font-size: 2.5em;
+        font-size: 3em;
     }
 
-    .landing-description {
+    .landing-subtitle {
+        font-size: 1.5em;
+    }
+
+    .cta-button {
         font-size: 1em;
     }
-
-    .landing-button {
-        padding: 12px 25px;
-        font-size: 14px;
-    }
 }
 
-/*MOBILE MEDIA STYLING*/
 @media (max-width: 768px) {
-    .landing-card {
-        max-width: 300px;
-        padding: 15px;
-    }
-
     .landing-name {
         font-size: 2em;
     }
-
-    .landing-description {
+    .landing-subtitle {
+        font-size: 1.2em;
+    }
+    .cta-button {
         font-size: 0.9em;
+        padding: 12px 25px;
     }
+    .button-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .video-wrapper {
+        width: 90%;
+    }
+}
 
-    .landing-button {
-        padding: 10px 20px;
-        font-size: 12px;
-    }
+/* Introductory Section */
+.intro-section {
+    background-color: #f5f5f5;
+    padding: 50px 20px;
+    text-align: center;
+}
 
-    .gradient-line {
-        margin-top: 30px;
-    }
+.intro-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.intro-section p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+.cta-button {
+    padding: 15px 30px;
+    background-color: #006466;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #065a60;
+}
+
+/* Features Section */
+.features-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 20px;
+    background-color: #fff;
+}
+
+.feature-card {
+    background-color: #f0f0f0;
+    padding: 30px;
+    width: 30%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    font-size: 1.1em;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    background-color: #006466;
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.testimonial {
+    margin: 20px 0;
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+/* CTA Section */
+.cta-section {
+    background-color: #f5f5f5;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.cta-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.cta-content p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+.cta-button {
+    padding: 15px 30px;
+    background-color: #006466;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #065a60;
 }
