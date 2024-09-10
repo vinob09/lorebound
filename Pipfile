@@ -29,6 +29,8 @@ zipp = "==3.17.0"
 bleach = "==6.1.0"
 boto3 = "*"
 wtforms = {extras = ["email"], version = "*"}
+reportlab = "*"
+requests = "*"
 
 [dev-packages]
 

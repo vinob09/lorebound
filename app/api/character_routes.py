@@ -1,9 +1,14 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_file, current_app
 from flask_login import login_required, current_user
 from app.models import db, Character, DeltaGreenCharacter, CharacterSkill, DeltaWeapon, Skill
 from app.forms import DeltaGreenCharacterForm, DeltaWeaponForm, SkillForm
 from .aws_boto import upload_file_to_s3, remove_file_from_s3
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
+import io
 import json
+import requests
 
 
 character_routes = Blueprint('characters', __name__)
@@ -504,3 +509,123 @@ def get_character_weapons(character_id):
     except Exception as e:
         print(f"Exception in get_character_weapons: {str(e)}")
         return jsonify({"errors": "An error occurred while fetching weapons"}), 500
+
+
+@character_routes.route("/<int:character_id>/export-pdf", methods=["GET"])
+@login_required
+def export_character_pdf(character_id):
+    """Generate a PDF character sheet for a specific character"""
+
+    # fetch the character and delta character data from the database
+    character = Character.query.get(character_id)
+    delta_character = DeltaGreenCharacter.query.filter_by(character_id=character_id).first()
+    weapons = DeltaWeapon.query.filter_by(character_id=character_id).all()
+    skills = CharacterSkill.query.filter_by(character_id=character_id).all()
+
+    if character.player_id != current_user.id:
+        return jsonify({"errors": "Unauthorized access"}), 403
+
+    # create PDF in memory using a byte stream
+    buffer = io.BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=letter)
+    pdf.setTitle(f"{character.character_name} - Character Sheet")
+
+    # set the initial y-coordinate (starting from the top)
+    y = 750
+
+    # helper function to move y-coordinate down and add content
+    def add_text(pdf, content, y):
+        if y < 50:
+            pdf.showPage()
+            y = 750
+        pdf.drawString(100, y, content)
+        y -= 20
+        return y
+
+    # add an image if character has one uploaded via AWS
+    if character.url:
+        try:
+            image_url = character.url
+            image_response = requests.get(image_url)
+            if image_response.status_code == 200:
+                image = ImageReader(io.BytesIO(image_response.content))
+                pdf.drawImage(image, 50, 650, width=100, height=100)
+                y -= 150
+        except Exception as e:
+            print(f"Error adding image: {e}")
+
+    # add basic fields
+    y = add_text(pdf, f"Character Name: {character.character_name}", y)
+    y = add_text(pdf, f"Profession: {delta_character.profession}", y)
+    y = add_text(pdf, f"Employer: {delta_character.employer}", y)
+    y = add_text(pdf, f"Nationality: {delta_character.nationality}", y)
+    y = add_text(pdf, f"Sex: {delta_character.sex}", y)
+    y = add_text(pdf, f"Age and DOB: {delta_character.age_dob}", y)
+    y = add_text(pdf, f"Education and Occupational History: {delta_character.education_occupation_history}", y)
+
+    # add stats
+    y = add_text(pdf, f"Strength: {delta_character.strength_score} (x5: {delta_character.strength_x5})", y)
+    y = add_text(pdf, f"Strength Features: {delta_character.strength_features}", y)
+    y = add_text(pdf, f"Constitution: {delta_character.constitution_score} (x5: {delta_character.constitution_x5})", y)
+    y = add_text(pdf, f"Constitution Features: {delta_character.constitution_features}", y)
+    y = add_text(pdf, f"Dexterity: {delta_character.dexterity_score} (x5: {delta_character.dexterity_x5})", y)
+    y = add_text(pdf, f"Dexterity Features: {delta_character.dexterity_features}", y)
+    y = add_text(pdf, f"Intelligence: {delta_character.intelligence_score} (x5: {delta_character.intelligence_x5})", y)
+    y = add_text(pdf, f"Intelligence Features: {delta_character.intelligence_features}", y)
+    y = add_text(pdf, f"Power: {delta_character.power_score} (x5: {delta_character.power_x5})", y)
+    y = add_text(pdf, f"Power Features: {delta_character.power_features}", y)
+    y = add_text(pdf, f"Charisma: {delta_character.charisma_score} (x5: {delta_character.charisma_x5})", y)
+    y = add_text(pdf, f"Charisma Features: {delta_character.charisma_features}", y)
+
+    # add hit points, willpower, sanity, and breaking points
+    y = add_text(pdf, f"Hit Points: {delta_character.hit_points_current}/{delta_character.hit_points_maximum}", y)
+    y = add_text(pdf, f"Willpower: {delta_character.willpower_points_current}/{delta_character.willpower_points_maximum}", y)
+    y = add_text(pdf, f"Sanity: {delta_character.sanity_points_current}/{delta_character.sanity_points_maximum}", y)
+    y = add_text(pdf, f"Breaking Point: {delta_character.breaking_point_current}/{delta_character.breaking_point_maximum}", y)
+
+    # add bonds and bond scores
+    bonds = json.loads(delta_character.bonds)
+    bonds_score = json.loads(delta_character.bonds_score)
+
+    if bonds and bonds_score:
+        y = add_text(pdf, "Bonds and Bond Scores:", y)
+        for i, (bond, score) in enumerate(zip(bonds, bonds_score), start=1):
+            y = add_text(pdf, f"  Bond {i}: {bond} (Score: {score})", y)
+
+    # add physical description, motivations, and incidents
+    y = add_text(pdf, f"Physical Description: {delta_character.physical_description}", y)
+    y = add_text(pdf, f"Motivations and Mental Disorders: {delta_character.motivations_mental_disorders}", y)
+    y = add_text(pdf, f"Incidents of Sanity Loss - Violence: {delta_character.incidents_violence}", y)
+    y = add_text(pdf, f"Incidents of Sanity Loss - Helplessness: {delta_character.incidents_helplessness}", y)
+    y = add_text(pdf, f"Wounds and Ailments: {delta_character.wounds_ailments}", y)
+    y = add_text(pdf, f"Armor and Gear: {delta_character.armor_gear}", y)
+    y = add_text(pdf, f"Personal Details and Notes: {delta_character.personal_details_notes}", y)
+    y = add_text(pdf, f"Developments Which Affect Home and Family: {delta_character.developments_home_family}", y)
+    y = add_text(pdf, f"Special Training: {delta_character.special_training}", y)
+    y = add_text(pdf, f"Skill or Stat Used: {delta_character.skill_stat_used}", y)
+
+    # add weapons
+    if weapons:
+        y = add_text(pdf, "Weapons:", y)
+        for i, weapon in enumerate(weapons, start=1):
+            y = add_text(pdf, f"  {i}. {weapon.name} - Damage: {weapon.damage} - Skill: {weapon.skill_percentage}%", y)
+
+    # add skills
+    if skills:
+        y = add_text(pdf, "Skills:", y)
+        for i, skill in enumerate(skills, start=1):
+            skill_name = skill.skill.name  # Access the related Skill model to get the name
+            y = add_text(pdf, f"  {i}. {skill_name} - Level {skill.skill_level}", y)
+
+    # save PDF to the byte stream and return it as a file
+    pdf.showPage()
+    pdf.save()
+    buffer.seek(0)
+
+    # return generated PDF as a response
+    return send_file(
+        buffer,
+        as_attachment=True,
+        download_name=f"{character.character_name}_sheet.pdf",
+        mimetype='application/pdf'
+    )
