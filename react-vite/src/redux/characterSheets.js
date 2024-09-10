@@ -18,6 +18,7 @@ const DELETE_CHARACTER_WEAPON = 'characters/deleteWeapon';
 const GET_ALL_SKILLS = 'skills/getAll';
 const GET_ALL_GAMES = 'games/getAll';
 
+
 // action creators
 const getCharacters = (characters) => ({
     type: GET_CHARACTERS,
@@ -83,6 +84,7 @@ const getAllGames = (games) => ({
     type: GET_ALL_GAMES,
     payload: games
 });
+
 
 // thunks
 export const thunkGetAllCharacters = () => async (dispatch) => {
@@ -297,6 +299,31 @@ export const thunkGetAllGames = () => async (dispatch) => {
     } catch (err) {
         console.error("Failed to fetch all games:", err);
         return { error: err.message };
+    }
+};
+
+// export thunk
+export const thunkExportCharacterPdf = (characterId) => async () => {
+    try {
+        const response = await csrfFetch(`/api/characters/${characterId}/export-pdf`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/pdf',
+            },
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `character_${characterId}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+        }
+    } catch (err) {
+        console.error("Failed to export character PDF:", err);
     }
 };
 

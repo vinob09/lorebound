@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { thunkGetCharacterById, thunkDeleteCharacter } from '../../redux/characterSheets';
+import { thunkGetCharacterById, thunkDeleteCharacter, thunkExportCharacterPdf } from '../../redux/characterSheets';
 import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import 'react-quill/dist/quill.snow.css';
@@ -13,6 +13,7 @@ const CharacterDetailsPage = () => {
     const { characterId } = useParams();
     const { closeModal } = useModal();
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isGenerating, setIsGenerating] = useState(false);
 
     const character = useSelector(state => state.characters.character);
     const user = useSelector(state => state.session.user);
@@ -22,6 +23,12 @@ const CharacterDetailsPage = () => {
             dispatch(thunkGetCharacterById(characterId)).then(() => setIsLoaded(true));
         }
     }, [dispatch, characterId]);
+
+    const handleExportPDF = async () => {
+        setIsGenerating(true);
+        await dispatch(thunkExportCharacterPdf(characterId));
+        setIsGenerating(false);
+    };
 
     // handle broken image links
     const handleImageError = (e) => {
@@ -114,6 +121,10 @@ const CharacterDetailsPage = () => {
                     modalComponent={<DeleteCharacterConfirmationModal characterId={characterId} />}
                     buttonText="Delete Character"
                 />
+                <button onClick={handleExportPDF} disabled={isGenerating}>
+                    {isGenerating ? 'Generating PDF' : 'Export PDF'}
+                </button>
+                {isGenerating && <div className="loading-spinner"></div>}
             </div>
             <div className='character-details-image'>
                 <img

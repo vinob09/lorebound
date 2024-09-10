@@ -24,11 +24,13 @@ mako = "==1.2.4"
 markupsafe = "==2.1.2"
 sqlalchemy = "==1.4.46"
 werkzeug = "==2.2.2"
-wtforms = "==3.0.1"
 importlib-metadata = "==6.9.0"
 zipp = "==3.17.0"
 bleach = "==6.1.0"
 boto3 = "*"
+wtforms = {extras = ["email"], version = "*"}
+reportlab = "*"
+requests = "*"
 
 [dev-packages]
 
