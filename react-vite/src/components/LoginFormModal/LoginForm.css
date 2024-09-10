@@ -1,86 +1,118 @@
-.login-form-title {
-    color: #fff;
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+.login-modal-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    font-family: 'Cinzel', serif;
+}
+
+.login-form-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
 }
 
 .login-form-modal {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    font-family: 'Cinzel', serif;
 }
 
 .login-form-modal label {
-    color: #ffffff;
-    margin-bottom: 5px;
-    font-size: 1em;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Cinzel', serif;
 }
 
 .login-form-modal input {
     padding: 10px;
-    border: 1px solid #3E1F47;
-    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     margin-bottom: 10px;
-    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+    font-family: 'Cinzel', serif;
 }
 
 .login-form-modal input:focus {
+    border-color: #0066cc;
     outline: none;
-    border-color: #065A60;
-    background-color: #1B3A4B;
-    color: #fff;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
 }
 
 .login-form-errors {
-    color: #FF0000;
-    font-size: 0.9em;
-    margin-top: -8px;
-    margin-bottom: 8px;
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 18px;
+    font-family: 'Cinzel', serif;
+}
+
+.login-form-title {
+    text-align: left;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    color: #212F45;
 }
 
 .login-submit {
-    background-color: #006466;
-    color: #ffffff;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #0066cc;
+    color: white;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 1em;
+    font-family: 'Cinzel', serif;
 }
 
 .login-submit:hover {
-    background-color: #065A60;
+    background-color: #004a99;
 }
 
-.login-submit:active {
-    background-color: #0B525B;
+.login-image-section {
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.login-submit.disabled,
-.login-submit:disabled {
-    background-color: #888888;
-    color: #cccccc;
-    cursor: not-allowed;
-    opacity: 0.7;
+.login-image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 8px 8px 0;
 }
 
-.login-submit:not(.disabled):active {
-    background-color: #0B525B;
-}
+@media (max-width: 768px) {
+    .login-modal-container {
+        flex-direction: column;
+        max-width: 100%;
+    }
 
-.demo-user-link {
-    color: #fff;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1em;
-    transition: color 0.3s ease;
-    padding: 10px;
-    display: inline-block;
-}
+    .login-image-section {
+        height: 200px;
+    }
 
-.demo-user-link:hover {
-    color: #065A60;
-}
-
-.demo-user-link:active {
-    color: #0B525B;
+    .login-image-section img {
+        height: 100%;
+        object-fit: cover;
+    }
 }

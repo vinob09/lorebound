@@ -1,17 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 
-.signup-modal-container {
+.login-page-container {
     display: flex;
-    justify-content: space-between;
-    align-items: stretch;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    height: 100vh;
     background-color: #fff;
     border-radius: 8px;
     font-family: 'Cinzel', serif;
 }
 
-.signup-form-section {
+.login-page-section {
     flex: 1;
     padding: 40px;
     display: flex;
@@ -20,13 +22,13 @@
     font-family: 'Cinzel', serif;
 }
 
-.signup-form-modal {
+.login-page {
     display: flex;
     flex-direction: column;
     font-family: 'Cinzel', serif;
 }
 
-.signup-form-modal label {
+.login-page label {
     margin-bottom: 10px;
     font-size: 16px;
     font-weight: 500;
@@ -34,7 +36,7 @@
     font-family: 'Cinzel', serif;
 }
 
-.signup-form-modal input {
+.login-page input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -46,13 +48,13 @@
     font-family: 'Cinzel', serif;
 }
 
-.signup-form-modal input:focus {
+.login-page input:focus {
     border-color: #0066cc;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
 }
 
-.signup-form-errors {
+.login-page-errors {
     color: red;
     font-size: 12px;
     margin-top: 5px;
@@ -60,7 +62,7 @@
     font-family: 'Cinzel', serif;
 }
 
-.signup-form-title {
+.login-page-title {
     text-align: left;
     font-size: 28px;
     font-weight: 600;
@@ -69,7 +71,7 @@
     color: #212F45;
 }
 
-.signup-submit {
+.login-page-submit {
     margin-top: 20px;
     padding: 12px;
     font-size: 16px;
@@ -83,36 +85,80 @@
     font-family: 'Cinzel', serif;
 }
 
-.signup-submit:hover {
+.login-page-submit:hover {
     background-color: #004a99;
 }
 
-.signup-image-section {
+.login-page-image-section {
     flex: 1.2;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.signup-image-section img {
+.login-page-image-section img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 0 8px 8px 0;
 }
 
-@media (max-width: 768px) {
-    .signup-modal-container {
+
+@media (max-width: 600px) {
+    .login-page-container {
         flex-direction: column;
-        max-width: 100%;
+        max-width: 90%;
+        margin: 0 auto;
+        height: auto;
+        padding: 20px 0;
     }
 
-    .signup-image-section {
-        height: 200px;
+    .login-page-image-section {
+        display: none;
     }
 
-    .signup-image-section img {
-        height: 100%;
-        object-fit: cover;
+    .login-page-section {
+        padding: 20px;
+    }
+
+    .login-page-submit {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .login-page-container {
+        flex-direction: column;
+        max-width: 90%;
+        margin: 0 auto;
+        height: auto;
+        padding: 30px 0;
+    }
+
+    .login-page-image-section {
+        display: none;
+    }
+
+    .login-page-section {
+        padding: 30px;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .login-page-container {
+        flex-direction: row;
+        max-width: 1200px;
+        margin: 0 auto;
+        height: 100vh;
+    }
+
+    .login-page-section {
+        padding: 40px;
+    }
+
+    .login-page-image-section {
+        display: flex; 
     }
 }

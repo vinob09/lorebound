@@ -48,7 +48,7 @@ function SignupFormModal() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      if (user && user.id){
+      if (user && user.id) {
         navigate(`/client/${user.id}`);
       }
     }
@@ -68,53 +68,72 @@ function SignupFormModal() {
   const isFormValid = email && username && password && confirmPassword;
 
   return (
-    <>
-      <h1 className="signup-form-title">Sign Up</h1>
-      <form onSubmit={handleSubmit} className="signup-form-modal">
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={handleInputChange("email")}
-            required
-          />
-        </label>
-        {errors.email && <p className="signup-form-errors">{errors.email}</p>}
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={handleInputChange("username")}
-            required
-          />
-        </label>
-        {errors.username && <p className="signup-form-errors">{errors.username}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={handleInputChange("password")}
-            required
-          />
-        </label>
-        {errors.password && <p className="signup-form-errors">{errors.password}</p>}
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={handleInputChange("confirmPassword")}
-            required
-          />
-        </label>
-        {errors.confirmPassword && <p className="signup-form-errors">{errors.confirmPassword}</p>}
-        <button type="submit" className="signup-submit" disabled={!isFormValid}>Sign Up</button>
-        {isLoaded && <Loader />}
-      </form>
-    </>
+    <div className="signup-modal-container">
+      <div className="signup-form-section">
+        <h1 className="signup-form-title">Sign Up</h1>
+        <form onSubmit={handleSubmit} className="signup-form-modal">
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={handleInputChange("email")}
+              required
+            />
+          </label>
+          {errors.email && (
+            <p className="signup-form-errors">{errors.email}</p>
+          )}
+          <label>
+            Username
+            <input
+              type="text"
+              value={username}
+              onChange={handleInputChange("username")}
+              required
+            />
+          </label>
+          {errors.username && (
+            <p className="signup-form-errors">{errors.username}</p>
+          )}
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={handleInputChange("password")}
+              required
+            />
+          </label>
+          {errors.password && (
+            <p className="signup-form-errors">{errors.password}</p>
+          )}
+          <label>
+            Confirm Password
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={handleInputChange("confirmPassword")}
+              required
+            />
+          </label>
+          {errors.confirmPassword && (
+            <p className="signup-form-errors">{errors.confirmPassword}</p>
+          )}
+          <button
+            type="submit"
+            className="signup-submit"
+            disabled={!isFormValid}
+          >
+            Sign Up
+          </button>
+          {isLoaded && <Loader />}
+        </form>
+      </div>
+      <div className="signup-image-section">
+        <img src="/lorebound-book.png" alt="Signup Illustration" />
+      </div>
+    </div>
   );
 }
 

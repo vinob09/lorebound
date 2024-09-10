@@ -72,34 +72,39 @@ function LoginFormModal() {
   }
 
   return (
-    <>
-      <h1 className="login-form-title">Log In</h1>
-      <form onSubmit={handleSubmit} className="login-form-modal">
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={handleInputChange("email")}
-            required
-          />
-        </label>
-        {errors.email && <p className="login-form-errors">{errors.email}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={handleInputChange("password")}
-            required
-          />
-        </label>
-        {errors.password && <p className="login-form-errors">{errors.password}</p>}
-        <button type="submit" className="login-submit" disabled={!isFormValid}>Log In</button>
-        <a href="#" className="demo-user-link" onClick={handleDemo}>Demo User</a>
-        {isLoaded && <Loader />}
-      </form>
-    </>
+    <div className="login-modal-container">
+      <div className="login-form-section">
+        <h1 className="login-form-title">Log In</h1>
+        <form onSubmit={handleSubmit} className="login-form-modal">
+          <label>
+            Email
+            <input
+              type="text"
+              value={email}
+              onChange={handleInputChange("email")}
+              required
+            />
+          </label>
+          {errors.email && <p className="login-form-errors">{errors.email}</p>}
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={handleInputChange("password")}
+              required
+            />
+          </label>
+          {errors.password && <p className="login-form-errors">{errors.password}</p>}
+          <button type="submit" className="login-submit" disabled={!isFormValid}>Log In</button>
+          <a href="#" className="demo-user-link" onClick={handleDemo}>Demo User</a>
+          {isLoaded && <Loader />}
+        </form>
+      </div>
+      <div className="login-image-section">
+        <img src="/hand-scribble.png" alt="Login Illustration" />
+      </div>
+    </div>
   );
 }
 

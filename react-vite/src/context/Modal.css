@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
 #modal {
   position: fixed;
   top: 0;
@@ -8,6 +10,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1100;
+  overflow: hidden;
 }
 
 #modal-background {
@@ -26,7 +29,85 @@
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
+  max-width: 900px;
   width: 90%;
   background-color: #212F45;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#modal-content h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+#modal-content input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#modal-content input:focus {
+  border-color: #0066cc;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+}
+
+
+@media (max-width: 1024px) {
+  #modal-content {
+    width: 80%;
+    padding: 15px;
+  }
+
+  #modal-content h1 {
+    font-size: 24px;
+  }
+
+  #modal-content input {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  #modal-content {
+    width: 90%;
+    padding: 10px;
+    max-height: 70vh;
+  }
+
+  #modal-content h1 {
+    font-size: 22px;
+  }
+
+  #modal-content input {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  #modal-content {
+    width: 95%;
+    padding: 8px;
+    max-height: 65vh;
+  }
+
+  #modal-content h1 {
+    font-size: 20px;
+  }
+
+  #modal-content input {
+    font-size: 12px;
+    padding: 6px;
+  }
 }

@@ -3,7 +3,7 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import Loader from "../Loader/Loader";
-import "./LoginForm.css";
+import "./LoginFormPage.css";
 
 function LoginFormPage() {
   const navigate = useNavigate();
@@ -36,35 +36,40 @@ function LoginFormPage() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
-        {isLoaded && <Loader />}
-      </form>
-    </>
+    <div className="login-page-container">
+      <div className="login-page-section">
+        <h1 className="login-page-title">Log In</h1>
+        {errors.length > 0 &&
+          errors.map((message) => <p key={message} className="login-page-errors">{message}</p>)}
+        <form onSubmit={handleSubmit} className="login-page">
+          <label>
+            Email
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          {errors.email && <p className="login-page-errors">{errors.email}</p>}
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {errors.password && <p className="login-page-errors">{errors.password}</p>}
+          <button type="submit" className="login-page-submit">Log In</button>
+          {isLoaded && <Loader />}
+        </form>
+      </div>
+      <div className="login-page-image-section">
+        <img src="/hand-scribble.png" alt="Login Illustration" />
+      </div>
+    </div>
   );
 }
 
