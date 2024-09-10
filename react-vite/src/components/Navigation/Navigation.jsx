@@ -1,27 +1,46 @@
-import { useSelector } from "react-redux";
-import ProfileButton from "./ProfileButton";
+import { useDispatch, useSelector } from "react-redux";
+import OpenModalMenuItem from "./OpenModalMenuItem";
+import LoginFormModal from "../LoginFormModal";
+import { thunkLogout } from "../../redux/session";
 import "./Navigation.css";
 
+function Navigation() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
 
-function Navigation({ className }) {
-  const user = useSelector(state => state.session.user);
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(thunkLogout());
+  };
 
   return (
-    <nav className={`navbar ${className}`}>
-      <ul className="navbar-nav">
+    <nav className="navbar">
+      <ul className="nav-list">
         <li className="nav-item">
           {user ? (
-            <a className="nav-link" href={`/client/${user.id}`}>
+            <a href={`/client/${user.id}`} className="nav-link">
               Dashboard
             </a>
           ) : (
-            <a className="nav-link" href="/">
-              Home
+            <a href="/" className="nav-link">
+              Lorebound
             </a>
           )}
         </li>
-        <li className="nav-item">
-          <ProfileButton />
+
+        <li className="button-item">
+          {user ? (
+            <button className="nav-button" onClick={handleLogout}>
+              Log Out
+            </button>
+          ) : (
+            <button className="nav-button">
+              <OpenModalMenuItem
+                itemText="Login"
+                modalComponent={<LoginFormModal />}
+              />
+            </button>
+          )}
         </li>
       </ul>
     </nav>

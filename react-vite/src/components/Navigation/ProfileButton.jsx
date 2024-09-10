@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -40,37 +40,24 @@ function ProfileButton() {
 
   return (
     <div className="profile-container">
-      <button onClick={toggleMenu} className="profile-button">
-        <FaUserCircle />
-      </button>
-      {showMenu && (
+      {user ? (
+        <button onClick={toggleMenu} className="profile-button">
+          {user.username}
+        </button>
+      ) : (
+        <OpenModalMenuItem
+          itemText="Login"
+          onItemClick={() => setShowMenu(false)}
+          modalComponent={<LoginFormModal />}
+          className="profile-button"
+        />
+      )}
+
+      {user && showMenu && (
         <ul className="profile-dropdown" ref={ulRef}>
-          {user ? (
-            <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className="profile-menu-item">
-                <OpenModalMenuItem
-                  itemText="Log In"
-                  onItemClick={() => setShowMenu(false)}
-                  modalComponent={<LoginFormModal />}
-                />
-              </li>
-              <li className="profile-menu-item">
-                <OpenModalMenuItem
-                  itemText="Sign Up"
-                  onItemClick={() => setShowMenu(false)}
-                  modalComponent={<SignupFormModal />}
-                />
-              </li>
-            </>
-          )}
+          <li>
+            <button onClick={logout}>Log Out</button>
+          </li>
         </ul>
       )}
     </div>
