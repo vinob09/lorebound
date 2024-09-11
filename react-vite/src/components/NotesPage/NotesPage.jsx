@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { thunkAllNotes } from '../../redux/notes';
 import Tiles from '../Tiles';
+import Loader from '../Loader/Loader';
 import './NotesPage.css';
 
 const NotesPage = () => {
@@ -33,12 +34,11 @@ const NotesPage = () => {
 
     return isLoaded ? (
         <div className='notes-page'>
-            <h1>All Notes Page</h1>
             <Link onClick={handleNewNote}>Create New Note</Link>
             <Tiles items={sortedNotes} type="note" onTileClick={handleClick} />
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <Loader />
     )
 };
 
