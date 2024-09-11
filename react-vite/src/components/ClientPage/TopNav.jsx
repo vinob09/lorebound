@@ -14,14 +14,35 @@ const TopNav = ({ userId }) => {
     const navRef = useRef(null);
     const location = useLocation();
 
+    const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+
     // handle logout
     const logout = () => {
         dispatch(thunkLogout()).then(() => navigate("/"));
     };
 
+    // toggle sidebar nav
     const toggleNav = () => {
         setIsNavOpen(!isNavOpen);
     };
+
+    useEffect(() => {
+        const handleResize = () => {
+            // adjust state for mobile/tablet breakpoints
+            if (window.innerWidth <= 1024) {
+                setIsMobileOrTablet(true);
+            } else {
+                setIsMobileOrTablet(false);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
 
     useEffect(() => {
         const handleClick = (event) => {
@@ -42,17 +63,20 @@ const TopNav = ({ userId }) => {
                 <TiThMenu />
             </div>
             <div className='search-bar'><SearchBar /></div>
-            <div className='top-nav-links'>
-                <Link to="/" className={location.pathname === "/" ? "active" : ""}>HOME</Link>
-                <Link to={`/client/${userId}`} className={location.pathname === `/client/${userId}` ? "active" : ""}>DASHBOARD</Link>
-                <Link to={`/client/${userId}/notes`} className={location.pathname === `/client/${userId}/notes` ? "active" : ""}>NOTES</Link>
-                <Link to={`/client/${userId}/characters`} className={location.pathname === `/client/${userId}/characters` ? "active" : ""}>CHARACTERS</Link>
-                <Link onClick={logout}>LOGOUT</Link>
-            </div>
+
+            {!isMobileOrTablet && (
+                <div className='top-nav-links'>
+                    <Link to="/" className={location.pathname === "/" ? "active" : ""}>HOME</Link>
+                    <Link to={`/client/${userId}`} className={location.pathname === `/client/${userId}` ? "active" : ""}>DASHBOARD</Link>
+                    <Link to={`/client/${userId}/notes`} className={location.pathname === `/client/${userId}/notes` ? "active" : ""}>NOTES</Link>
+                    <Link to={`/client/${userId}/characters`} className={location.pathname === `/client/${userId}/characters` ? "active" : ""}>CHARACTERS</Link>
+                    <Link onClick={logout}>LOGOUT</Link>
+                </div>
+            )}
 
             {isNavOpen && (
                 <div className='sidebar' ref={navRef}>
-                    <ClientNav />
+                    <ClientNav isMobileOrTablet={isMobileOrTablet}/>
                 </div>
             )}
         </div>

@@ -57,7 +57,6 @@ const ClientPage = () => {
     // check if on the main ClientPage
     const isDashboard = location.pathname === `/client/${userId}`;
 
-
     return isLoaded && user ? (
         <div className="client-page">
             <TopNav userId={user.id} />

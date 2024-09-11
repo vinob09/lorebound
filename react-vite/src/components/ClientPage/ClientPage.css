@@ -27,7 +27,6 @@
     justify-content: center;
     font-size: 2rem;
     font-weight: 600;
-    color: #212F45;
     margin-bottom: 30px;
     font-family: "Cormorant Upright", serif;
     color: #ddd;
@@ -93,13 +92,16 @@
 }
 
 
+/* mobile */
 @media (max-width: 600px) {
     .client-dashboard-content {
         padding: 20px;
+        flex-direction: column;
     }
 
     .client-page-title {
         font-size: 1.6rem;
+        text-align: center;
     }
 
     .calendar-section {
@@ -119,10 +121,11 @@
     }
 }
 
-
+/* tablet */
 @media (max-width: 768px) {
     .client-dashboard-content {
         padding: 30px;
+        flex-direction: column;
     }
 
     .client-page-title {
@@ -145,7 +148,7 @@
     }
 }
 
-
+/* larger screens */
 @media (max-width: 1024px) {
     .client-dashboard-content {
         padding: 30px;
@@ -171,32 +174,3 @@
         width: 150px;
     }
 }
-
-
-@media (min-width: 1024px) {
-    .client-dashboard-content {
-        padding: 40px 20px;
-    }
-
-    .client-page-title {
-        font-size: 2.2rem;
-        margin-bottom: 40px;
-    }
-
-    .calendar-section {
-        max-width: 350px;
-        padding: 30px;
-    }
-
-    .create-content-links {
-        gap: 20px;
-    }
-
-    .create-content-links a {
-        font-size: 0.9rem;
-        padding: 10px 12px;
-        width: 150px;
-    }
-}
-
-
