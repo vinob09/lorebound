@@ -6,6 +6,7 @@ import { thunkAllNotes } from '../../redux/notes';
 import { thunkGetAllCharacters } from '../../redux/characterSheets';
 import TopNav from './TopNav';
 import Calendar from 'react-calendar';
+import Loader from '../Loader/Loader';
 import 'react-calendar/dist/Calendar.css';
 import './ClientPage.css';
 
@@ -61,7 +62,7 @@ const ClientPage = () => {
         <div className="client-page">
             <TopNav userId={user.id} />
             <div className="client-info">
-                <h1>Welcome, {user.username}</h1>
+                <h1 className='client-page-title'>Welcome, {user.username}</h1>
             </div>
 
             {isDashboard && (
@@ -73,7 +74,7 @@ const ClientPage = () => {
                     </div>
 
                     <div className="create-content-links">
-                        <h3>Start your adventure below!</h3>
+                        <h3>Start your adventure now!</h3>
                         <Link to={`/client/${user.id}/note/new`}>Add a New Note</Link>
                         {"   "}
                         <Link to={`/client/${user.id}/character/new`}>Add a New Character</Link>
@@ -85,7 +86,7 @@ const ClientPage = () => {
             </div>
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <Loader />
     );
 };
 

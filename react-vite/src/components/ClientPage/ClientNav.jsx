@@ -44,33 +44,35 @@ const ClientNav = () => {
 
     return (
         <>
-            <div className='client-nav-welcome'>
-                {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
+            <div className='sidebar'>
+                <div className='client-nav-welcome'>
+                    {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
+                </div>
+                <div className='search-bar'><SearchBar /></div>
+                <button className='client-nav-button' onClick={handleNewCharacter}>New Character</button>
+                <button className='client-nav-button' onClick={handleNewNote}>New Note</button>
+                <div className='client-nav-section'>
+                    <h3><Link to={`/client/${user.id}/characters`}>Characters</Link></h3>
+                    <ul>
+                        {latestCharacters.map(character => (
+                            <li key={character.id}>
+                                <Link to={`/client/${user.id}/characters/${character.id}`}>{character.characterName}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className='client-nav-section'>
+                    <h3><Link to={`/client/${user.id}/notes`}>Grimoires</Link></h3>
+                    <ul>
+                        {latestNotes.map(note => (
+                            <li key={note.id}>
+                                <Link to={`/client/${user.id}/notes/${note.id}`}>{note.title}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <button className='client-nav-logout' onClick={logout}>Logout</button>
             </div>
-            <div className='search-bar'><SearchBar /></div>
-            <button className='client-nav-button' onClick={handleNewCharacter}>New Character</button>
-            <button className='client-nav-button' onClick={handleNewNote}>New Note</button>
-            <div className='client-nav-section'>
-                <h3><Link to={`/client/${user.id}/characters`}>Characters</Link></h3>
-                <ul>
-                    {latestCharacters.map(character => (
-                        <li key={character.id}>
-                            <Link to={`/client/${user.id}/characters/${character.id}`}>{character.characterName}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className='client-nav-section'>
-                <h3><Link to={`/client/${user.id}/notes`}>Grimoires</Link></h3>
-                <ul>
-                    {latestNotes.map(note => (
-                        <li key={note.id}>
-                            <Link to={`/client/${user.id}/notes/${note.id}`}>{note.title}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <button className='client-nav-logout' onClick={logout}>Logout</button>
         </>
     )
 };
