@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
+
 .note-details-container {
     display: flex;
     flex-direction: column;
@@ -7,9 +9,11 @@
 }
 
 .note-details-container h1 {
-    font-size: 2rem;
+    font-size: 60px;
     margin-bottom: 10px;
     text-align: center;
+    font-family: "Cormorant Upright", serif;
+    color: antiquewhite;
 }
 
 .note-action-buttons {
@@ -52,6 +56,9 @@
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
+    font-family: "Cormorant Upright", serif;
+    color: antiquewhite;
+    font-size: 40px;
 }
 
 @media (min-width: 768px) {

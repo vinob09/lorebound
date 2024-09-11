@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
+import Loader from "../Loader/Loader";
+import './SignupFormPage.css';
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -12,12 +14,14 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsLoaded(true);
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
@@ -38,56 +42,63 @@ function SignupFormPage() {
     } else {
       navigate("/");
     }
+    setIsLoaded(false);
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
-      </form>
-    </>
+    <div className="signup-page-container">
+      <div className="signup-page-section">
+        <h1 className="signup-page-title">Sign Up</h1>
+        {errors.server && <p className="signup-page-errors">{errors.server}</p>}
+        <form onSubmit={handleSubmit} className="signup-page">
+          <label>
+            Email
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          {errors.email && <p className="signup-page-errors">{errors.email}</p>}
+          <label>
+            Username
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </label>
+          {errors.username && <p className="signup-page-errors">{errors.username}</p>}
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {errors.password && <p className="signup-page-errors">{errors.password}</p>}
+          <label>
+            Confirm Password
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </label>
+          {errors.confirmPassword && <p className="signup-page-errors">{errors.confirmPassword}</p>}
+          <button type="submit" className="signup-page-submit">Sign Up</button>
+          {isLoaded && <Loader />}
+        </form>
+      </div>
+      <div className="signup-page-image-section">
+        <img src="/lorebound-book.png" alt="Signup Illustration" />
+      </div>
+    </div>
   );
 }
 

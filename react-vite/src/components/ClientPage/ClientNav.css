@@ -1,7 +1,23 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 250px;
+    background-color: #0B525B;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+    margin-bottom: 10px; 
+}
+
 .client-nav-welcome {
     margin-bottom: 20px;
     font-size: 1.2em;
     font-style: italic;
+    color: #FFFFFF;
 }
 
 .client-nav-search {
@@ -14,10 +30,19 @@
 
 .client-nav-button {
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 12px;
     width: 100%;
     font-size: 1em;
-    box-sizing: border-box;
+    background-color: #52d0e1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.client-nav-button:hover {
+    background-color: #41b1c4;
 }
 
 .client-nav-section {
@@ -26,6 +51,7 @@
 
 .client-nav-section h3 {
     margin-bottom: 10px;
+    color: #fff;
 }
 
 .client-nav-section ul {
@@ -39,8 +65,12 @@
     text-decoration: none;
 }
 
+.client-nav-section ul li a:hover {
+    text-decoration: underline;
+}
+
 .client-nav-logout {
-    margin-top: 50px;
+    margin-top: auto;
     padding: 10px;
     background-color: #3E1F47;
     border: none;
@@ -48,57 +78,13 @@
     cursor: pointer;
 }
 
-.search-bar {
-    flex-grow: 1;
-    max-width: 600px;
-    text-align: center;
-}
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+        padding: 15px;
+    }
 
-.search-bar input {
-    width: 600px;
-    padding: 10px;
-    font-size: medium;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    background-color: #f0f8ff;
-}
-
-.search-bar input:focus {
-    border-color: #bef4fa;
-    background-color: #f0f8ff;
-    outline: none;
-}
-
-.search-bar button {
-    background-color: #EBEBEB;
-    border: none;
-    color: #5A7684;
-    font-weight: bolder;
-    cursor: pointer;
-    padding: 10px 20px;
-    margin: 15px 10px;
-    border-radius: 30px;
-    transition: background-color 0.9s ease, transform 0.7s ease;
-    display: inline-block;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.322);
-}
-
-.search-bar button:hover {
-    background-color: #7395a7;
-    transform: scale(1.05);
-    color: white;
-}
-
-.search-result-button {
-    background: none;
-    border: none;
-    padding: 5px;
-    text-align: left;
-    width: 100%;
-    cursor: pointer;
-}
-
-.search-result-button:hover {
-    background-color: #f0f0f0;
+    .client-nav-button {
+        font-size: 0.9em;
+    }
 }

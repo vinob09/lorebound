@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { thunkGetCharacterById, thunkDeleteCharacter, thunkExportCharacterPdf } from '../../redux/characterSheets';
 import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import Loader from '../Loader/Loader';
 import 'react-quill/dist/quill.snow.css';
 import './CharacterDetailsPage.css';
 
@@ -183,7 +184,7 @@ const CharacterDetailsPage = () => {
             )}
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <Loader />
     )
 };
 

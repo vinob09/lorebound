@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { thunkGetAllCharacters } from '../../redux/characterSheets';
 import Tiles from '../Tiles';
+import Loader from '../Loader/Loader';
 import './CharactersPage.css';
 
 const CharactersPage = () => {
@@ -33,12 +34,11 @@ const CharactersPage = () => {
 
     return isLoaded ? (
         <div className='characters-page'>
-            <h1>All Characters Page</h1>
             <Link onClick={handleNewCharacter}>Create New Character</Link>
             <Tiles items={sortedCharacters} type="character" onTileClick={handleClick} />
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <Loader />
     )
 };
 

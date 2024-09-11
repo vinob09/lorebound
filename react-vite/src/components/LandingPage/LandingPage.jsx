@@ -1,19 +1,24 @@
 import { thunkLogin } from '../../redux/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 import Navigation from '../Navigation';
 import SignupFormModal from '../SignupFormModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import Loader from '../Loader/Loader';
 import './LandingPage.css';
 
 const LandingPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const user = useSelector(state => state.session.user);
 
     const handleTryDemoClick = async (e) => {
         e.preventDefault();
+
+        setIsLoaded(true);
         try {
             await dispatch(thunkLogin({ email: "demo@aa.io", password: "password" }))
                 .then(() => {
@@ -21,6 +26,8 @@ const LandingPage = () => {
                 })
         } catch (err) {
             console.error(err)
+        } finally {
+            setIsLoaded(false);
         }
     };
 
@@ -65,6 +72,7 @@ const LandingPage = () => {
                                             </button>
                                         )}
                                         <button className="cta-button demo-button" onClick={handleTryDemoClick}>Try a Demo</button>
+                                        {isLoaded && <Loader />}
                                     </div>
                                     <div className="gradient-line"></div>
                                 </div>

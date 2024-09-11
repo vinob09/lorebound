@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
+
 .notes-page {
     width: 100%;
     max-width: 1200px;
@@ -7,5 +9,12 @@
 
 .notes-page h1 {
     text-align: center;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
+    font-family: "Cormorant Upright", serif;
+}
+
+.notes-page a {
+    font-size: 20px;
+    color: antiquewhite;
+    font-family: "Cormorant Upright", serif;
 }

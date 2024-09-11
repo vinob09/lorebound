@@ -10,6 +10,7 @@ import {
     thunkGetCharacterSkills,
     thunkGetCharacterWeapons
 } from '../../redux/characterSheets';
+import Loader from '../Loader/Loader';
 import './CharacterForm.css';
 
 const CharacterForm = () => {
@@ -1065,7 +1066,7 @@ const CharacterForm = () => {
             </form>
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <Loader />
     )
 };
 

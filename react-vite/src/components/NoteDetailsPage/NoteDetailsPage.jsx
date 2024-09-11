@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { thunkGetNote, thunkDeleteNote } from '../../redux/notes';
 import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import Loader from '../Loader/Loader';
 import 'react-quill/dist/quill.snow.css';
 import './NoteDetailsPage.css';
 
@@ -71,7 +72,7 @@ const NoteDetailsPage = () => {
             </div>
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <Loader />
     )
 };
 

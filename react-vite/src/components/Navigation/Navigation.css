@@ -1,15 +1,15 @@
 .navbar {
   position: fixed;
   width: 100%;
-  background-color: white;
+  background-color: #686464;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  z-index: 2;
   padding: 15px;
   box-sizing: border-box;
-  margin-right: 10px;
   top: 0;
   left: 0;
   right: 0;
+  overflow-x: hidden;
 }
 
 .nav-list {
@@ -51,4 +51,27 @@
 
 .nav-link:hover {
   color: #555;
+}
+
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    margin-left: 10px;
+  }
+
+  .nav-button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .nav-list {
+    padding: 0;
+    justify-content: space-between;
+  }
 }
