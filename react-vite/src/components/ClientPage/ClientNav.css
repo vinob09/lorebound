@@ -1,7 +1,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 100vh;
     width: 250px;
     background-color: #0B525B;
@@ -9,6 +9,9 @@
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
+.search-bar {
+    margin-bottom: 10px; 
+}
 
 .client-nav-welcome {
     margin-bottom: 20px;
