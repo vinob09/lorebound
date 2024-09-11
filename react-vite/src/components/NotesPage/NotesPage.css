@@ -11,10 +11,16 @@
     text-align: center;
     margin-bottom: 20px;
     font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .notes-page a {
     font-size: 20px;
     color: antiquewhite;
     font-family: "Cormorant Upright", serif;
+    font-weight: 700;
+}
+
+.notes-page a:hover {
+    color: #52d0e1;
 }

@@ -15,6 +15,7 @@
     gap: 20px;
     padding: 40px 20px;
     font-family: "Cormorant Upright", serif;
+    font-weight: 700;
     background-color: #1B3A4B;
 }
 
@@ -29,6 +30,7 @@
     font-weight: 600;
     margin-bottom: 30px;
     font-family: "Cormorant Upright", serif;
+    font-weight: 700;
     color: #ddd;
 }
 
@@ -41,6 +43,7 @@
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .calendar-section h2 {
@@ -78,7 +81,7 @@
     text-decoration: none;
     font-weight: bold;
     padding: 8px 12px;
-    background-color: #007BFF;
+    background-color: #3E1F47;
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease;
     width: 150px;
@@ -87,8 +90,8 @@
 
 .create-content-links a:hover {
     text-decoration: underline;
-    background-color: #0056b3;
-    color: white;
+    background-color: #52d0e1;
+    color: rgb(21, 35, 58);
 }
 
 

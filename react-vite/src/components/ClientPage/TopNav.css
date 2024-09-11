@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
 /* TOPNAV */
 .top-nav {
     display: flex;
@@ -21,6 +23,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    font-family: "Cinzel", serif;
 }
 
 .top-nav-links a {
@@ -63,7 +66,7 @@
     left: 0;
     width: 250px;
     height: 100%;
-    background-color: #0B525B;
+    background-color: #212F45;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -83,6 +86,7 @@
     border-radius: 10px;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     background-color: #f0f8ff;
+    font-family: "Cinzel", serif;
 }
 
 .search-bar input:focus {

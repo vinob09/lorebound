@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -6,6 +8,8 @@
     width: 250px;
     background-color: #0B525B;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-welcome {
@@ -16,6 +20,8 @@
     margin-bottom: 40px;
     border-bottom: 1px solid #626775;
     padding-bottom: 20px;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-dropdown {
@@ -29,6 +35,8 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-dropdown:hover {
@@ -50,6 +58,8 @@
     font-size: 1em;
     border-radius: 5px;
     border: 1px solid #3E3A58;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-buttons {
@@ -65,12 +75,14 @@
     padding: 12px;
     width: 100%;
     font-size: 1em;
-    background-color: #52d0e1;
+    background-color: #3E1F47;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-button:hover {
@@ -147,13 +159,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     margin-top: 20px;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-logout:hover {
-    background-color: #652347;
+    background-color: #52d0e1;
     transform: translateY(-3px);
 }
 

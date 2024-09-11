@@ -87,21 +87,28 @@
 }
 
 .btn-save {
-    background-color: #27ae60;
+    background-color: #3E1F47;
     color: white;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .btn-save:hover {
-    background-color: #2ecc71;
+    background-color: #52d0e1;
+    color: #2c3e50;
+    font-weight: bold;
 }
 
 .btn-cancel {
-    background-color: #e74c3c;
+    background-color: #3E1F47;
     color: white;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .btn-cancel:hover {
-    background-color: #c0392b;
+    background-color: #52d0e1;
+    color: #2c3e50;
 }
 
 @media screen and (max-width: 768px) {
