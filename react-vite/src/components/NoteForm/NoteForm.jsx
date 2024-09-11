@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { thunkCreateNote, thunkUpdateNote, thunkGetNote } from '../../redux/notes';
 import QuillEditor from './QuillEditor';
+import Loader from '../Loader/Loader';
 import 'react-quill/dist/quill.snow.css';
 import './NoteForm.css';
 
@@ -40,10 +41,22 @@ const NoteForm = () => {
         }
     }, [noteId, note]);
 
+    const validateFields = () => {
+        const newErrors = {};
+        if (!title.trim()) newErrors.title = "Title is required.";
+        return newErrors;
+    };
+
 
     // handle submit
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formErrors = validateFields();
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+            return;
+        }
 
         const formData = new FormData();
         formData.append("title", title);
@@ -55,6 +68,7 @@ const NoteForm = () => {
             formData.append("removeImage", "true");
         }
 
+        setIsLoaded(false);
         setImageLoading(true);
 
         // creating note
@@ -63,6 +77,7 @@ const NoteForm = () => {
 
             if (result.error) {
                 setErrors(result.error);
+                setIsLoaded(true);
             } else {
                 navigate(`/client/${user.id}/notes/${result.id}`);
             }
@@ -72,6 +87,7 @@ const NoteForm = () => {
 
             if (result && result.error) {
                 setErrors(result.error);
+                setIsLoaded(true);
             } else {
                 navigate(`/client/${user.id}/notes/${noteId}`);
             }
@@ -94,7 +110,7 @@ const NoteForm = () => {
 
 
     return isLoaded ? (
-        <div>
+        <div className="note-form-wrapper">
             <div className="note-form-container">
                 <h1>{noteId ? "Edit Note" : "Create Note"}</h1>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -119,7 +135,7 @@ const NoteForm = () => {
                         {errors.url && <p className="error-message">{errors.url}</p>}
                     </div>
                     {noteId && note?.url && (
-                        <div className="form-group">
+                        <div className="form-group checkbox-group">
                             <label htmlFor="removeImage">Remove existing image</label>
                             <input
                                 type="checkbox"
@@ -131,17 +147,19 @@ const NoteForm = () => {
                     )}
                     <div className="form-group">
                         <label htmlFor="content">Content</label>
-                        <QuillEditor content={content} setContent={setContent} />
+                        <QuillEditor content={content} setContent={setContent} placeholder = 'Capture your journey here...'/>
                         {errors.content && <p className="error-message">{errors.content}</p>}
                     </div>
-                    <button type="submit" className="btn-save">Save</button>
-                    <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
+                    <div className="form-buttons">
+                        <button type="submit" className="btn-save">Save</button>
+                        <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
+                    </div>
                     {imageLoading && <p>Loading...</p>}
                 </form>
             </div>
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <Loader />
     )
 };
 
