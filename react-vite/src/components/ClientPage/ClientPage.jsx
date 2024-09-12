@@ -74,7 +74,7 @@ const ClientPage = () => {
         <div className="client-page">
             <TopNav userId={user.id} />
             <div className="client-info">
-                <h1 className='client-page-title'>Welcome, {user.username}</h1>
+                <h1 className='client-page-title'>Hello, {user.username}</h1>
             </div>
 
             {isDashboard && (

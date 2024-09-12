@@ -34,8 +34,18 @@ const NotesPage = () => {
 
     return isLoaded ? (
         <div className='notes-page'>
-            <Link onClick={handleNewNote}>Create New Note</Link>
-            <Tiles items={sortedNotes} type="note" onTileClick={handleClick} />
+            {notes.length === 0 ? (
+                <div className="notes-empty-state">
+                    <p>It looks like you haven't created any notes yet. Start by clicking the button below!</p>
+                    <button className="empty-create-button" onClick={handleNewNote}>Create Your First Note</button>
+                    <img src="/empty-state.png" alt="Empty Notes" className="empty-image" />
+                </div>
+            ) : (
+                <>
+                    <Link onClick={handleNewNote}>Create New Note</Link>
+                    <Tiles items={sortedNotes} type="note" onTileClick={handleClick} />
+                </>
+            )}
         </div>
     ) : (
         <Loader />
