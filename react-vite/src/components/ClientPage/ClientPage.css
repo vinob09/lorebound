@@ -5,6 +5,8 @@
     flex-direction: column;
     min-height: 100vh;
     background-color: #1B3A4B;
+    font-family: 'Cormorant Upright', serif;
+    color: #ddd;
 }
 
 .client-dashboard-content {
@@ -13,10 +15,67 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 40px 20px;
+    padding: 20px;
     font-family: "Cormorant Upright", serif;
     font-weight: 700;
     background-color: #1B3A4B;
+    overflow: hidden;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.quote-section {
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 350px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.quote-section h2 {
+    font-size: 1.8rem;
+    color: #212F45;
+    margin-bottom: 15px;
+}
+
+.quote-section p {
+    max-height: 180px;
+    overflow-y: auto;
+    font-size: 1.2rem;
+    color: #555;
+    font-style: italic;
+    margin-top: 15px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    padding-right: 10px; 
+}
+
+.quote-section button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #3E1F47;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.quote-section button:hover {
+    background-color: #4f5657;
 }
 
 .client-main-content {
@@ -35,37 +94,46 @@
 }
 
 .calendar-section {
+    text-align: center;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
     background-color: #f9f9f9;
-    max-width: 350px;
-    margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: "Cormorant Upright", serif;
-    font-weight: 700;
+    max-width: 350px;
+    color: #1B3A4B;
 }
 
 .calendar-section h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: #212F45;
-    text-align: center;
     margin-bottom: 15px;
 }
 
-.calendar-section .selected-date {
-    text-align: center;
-    font-size: 1rem;
-    color: #555;
-    margin-top: 10px;
+.react-calendar__tile {
+    padding: 10px;
+    background-color: #fff;
+    color: #3E1F47;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.react-calendar__tile--now {
+    background-color: #6A0DAD !important;
+    color: #fff !important;
+}
+
+.react-calendar__tile--active {
+    background-color: #2E2E2E !important;
+    color: #fff !important;
 }
 
 .create-content-links {
-    margin-top: auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    margin-top: 20px;
 }
 
 .create-content-links h3 {
@@ -86,6 +154,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
     width: 150px;
     text-align: center;
+    margin-top: 10px;
 }
 
 .create-content-links a:hover {
@@ -148,6 +217,10 @@
         font-size: 0.9rem;
         padding: 8px 10px;
     }
+    .content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
 }
 
 /* larger screens */
@@ -174,5 +247,25 @@
         font-size: 0.9rem;
         padding: 10px 12px;
         width: 150px;
+    }
+}
+
+@media (max-width: 600px) {
+    .content-wrapper {
+        padding: 20px;
+    }
+
+    .calendar-section, .quote-section {
+        max-width: 90%;
+    }
+
+    .create-content-links {
+        gap: 10px;
+    }
+
+    .create-content-links a {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+        width: 100%;
     }
 }
