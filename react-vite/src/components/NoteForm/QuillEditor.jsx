@@ -2,7 +2,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './QuillEditor.css';
 
-const QuillEditor = ({ content, setContent }) => {
+const QuillEditor = ({ content, setContent, placeholder }) => {
+
     const modules = {
         toolbar: [
             [{ 'header': '1' }, { 'header': '2' }],
@@ -26,6 +27,7 @@ const QuillEditor = ({ content, setContent }) => {
             modules={modules}
             formats={formats}
             className='custom-quill-editor'
+            placeholder={placeholder}
         />
     );
 };

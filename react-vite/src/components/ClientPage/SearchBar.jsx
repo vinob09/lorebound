@@ -54,22 +54,27 @@ const SearchBar = () => {
     const filterBy = () => true;
 
     return (
-        <AsyncTypeahead
-            ref={typeaheadRef}
-            filterBy={filterBy}
-            id="async-search"
-            isLoading={isLoading}
-            minLength={3}
-            onSearch={handleSearch}
-            options={options}
-            placeholder="Search for a note or character..."
-            labelKey={(option) => option.type === 'note' ? option.title : option.characterName}
-            renderMenuItemChildren={result => (
-                <button onClick={(e) => selectResult(e, result)} className="search-result-button">
-                    {result.type === 'note' ? `Note: ${result.title}` : `Character: ${result.characterName}`}
-                </button>
-            )}
-        />
+        <div>
+            <label htmlFor="async-search"></label>
+            <AsyncTypeahead
+                ref={typeaheadRef}
+                filterBy={filterBy}
+                id="async-search"
+                inputProps={{ id: "search-bar-input", name: "search" }}
+                isLoading={isLoading}
+                minLength={3}
+                onSearch={handleSearch}
+                options={options}
+                placeholder="Search for a note or character..."
+                labelKey={(option) => option.type === 'note' ? option.title : option.characterName}
+                renderMenuItemChildren={result => (
+                    <button onClick={(e) => selectResult(e, result)} className="search-result-button">
+                        {result.type === 'note' ? `Note: ${result.title}` : `Character: ${result.characterName}`}
+                    </button>
+                )}
+                autocomplete="on"
+            />
+        </div>
     );
 };
 

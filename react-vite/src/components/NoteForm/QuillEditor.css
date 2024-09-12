@@ -5,15 +5,51 @@
     overflow-y: auto;
     padding: 10px;
     position: relative;
+    background-color: #5d7084;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.custom-quill-editor .ql-container:focus-within .ql-editor.ql-blank::before {
+    content: "";
 }
 
 .custom-quill-editor .ql-editor {
+    color: #ecf0f1;
+    font-size: 1.2rem;
+    line-height: 1.6;
     padding: 15px;
-    overflow: visible;
+    background-color: transparent;
+}
+
+.custom-quill-editor .ql-editor.ql-blank::before {
+    color: #b0bec5;
+    font-style: italic;
+    content: attr(data-placeholder);
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    font-size: 15px;
 }
 
 .custom-quill-editor .ql-tooltip {
     z-index: 1000;
     left: auto !important;
     right: 0;
+}
+
+.custom-quill-editor .ql-toolbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #bdc3c7;
+    color: antiquewhite;
+}
+
+.custom-quill-editor .ql-toolbar .ql-picker-label,
+.custom-quill-editor .ql-toolbar button {
+    color: #ecf0f1;
+}
+
+.custom-quill-editor .ql-toolbar button:hover {
+    background-color: #b8d2e8;
 }

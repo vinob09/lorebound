@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
 /* TOPNAV */
 .top-nav {
     display: flex;
@@ -19,7 +21,9 @@
 
 .top-nav-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
+    font-family: "Cinzel", serif;
 }
 
 .top-nav-links a {
@@ -62,13 +66,13 @@
     left: 0;
     width: 250px;
     height: 100%;
-    background-color: #0B525B;
+    background-color: #212F45;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
-.search-bar {
+.async-search {
     flex-grow: 1;
     max-width: 600px;
     text-align: center;
@@ -82,6 +86,7 @@
     border-radius: 10px;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     background-color: #f0f8ff;
+    font-family: "Cinzel", serif;
 }
 
 .search-bar input:focus {
@@ -90,7 +95,7 @@
     outline: none;
 }
 
-.search-bar button {
+.async-search button {
     background-color: #EBEBEB;
     border: none;
     color: #5A7684;
@@ -104,7 +109,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.322);
 }
 
-.search-bar button:hover {
+.async-search button:hover {
     background-color: #7395a7;
     transform: scale(1.05);
     color: white;
@@ -148,6 +153,14 @@
     }
 
     .search-result-button {
-        font-size: 0.9rem;     
+        font-size: 0.9rem;
+    }
+}
+
+
+/* hide TopNav links on smaller screens */
+@media (max-width: 1024px) {
+    .top-nav-links {
+        display: none;
     }
 }

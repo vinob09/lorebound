@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -5,79 +7,169 @@
     height: 100vh;
     width: 250px;
     background-color: #0B525B;
-    padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.search-bar {
-    margin-bottom: 10px; 
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-welcome {
-    margin-bottom: 20px;
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-style: italic;
     color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #626775;
+    padding-bottom: 20px;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
-.client-nav-search {
-    margin-bottom: 15px;
-    padding: 10px;
+.client-nav-dropdown {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
+}
+
+.client-nav-dropdown:hover {
+    color: #52d0e1;
+}
+
+.client-nav-search-bar {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #626775;
     width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.client-nav-search-bar input {
+    width: 100%;
+    padding: 8px 10px;
     font-size: 1em;
-    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #3E3A58;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
+}
+
+.client-nav-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #626775;
 }
 
 .client-nav-button {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     padding: 12px;
     width: 100%;
     font-size: 1em;
-    background-color: #52d0e1;
+    background-color: #3E1F47;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
 .client-nav-button:hover {
-    background-color: #41b1c4;
+    background-color: #4f5657;
+    transform: translateY(-3px);
 }
 
 .client-nav-section {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #626775;
+    display: flex;
+    flex-direction: column;
 }
 
 .client-nav-section h3 {
     margin-bottom: 10px;
     color: #fff;
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+
+    padding-left: 5px;
 }
 
-.client-nav-section ul {
+.section-icon {
+    margin-right: 8px;
+    color: #52d0e1;
+}
+
+.section-title {
+    font-weight: bold;
+    text-decoration: none;
+    color: #FFFFFF;
+    transition: color 0.3s ease;
+}
+
+.section-title:hover {
+    color: #52d0e1;
+}
+
+.client-nav-list {
     list-style: none;
     padding: 0;
-    margin-left: 15px;
+    padding-bottom: 20px;
 }
 
-.client-nav-section ul li a {
-    color: #fff;
+.nav-item {
+    margin-bottom: 8px;
+}
+
+.nav-link {
+    color: #FFFFFF;
     text-decoration: none;
+    padding: 5px 0;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.2s ease;
 }
 
-.client-nav-section ul li a:hover {
-    text-decoration: underline;
+.nav-link:hover {
+    color: #52d0e1;
+    transform: translateX(5px);
 }
 
 .client-nav-logout {
-    margin-top: auto;
     padding: 10px;
     background-color: #3E1F47;
     border: none;
     color: white;
     cursor: pointer;
+    width: 100%;
+    font-size: 1em;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 700;
 }
 
+.client-nav-logout:hover {
+    background-color: #4f5657;
+    transform: translateY(-3px);
+}
+
+/* mobile */
 @media (max-width: 768px) {
     .sidebar {
         width: 200px;
@@ -86,5 +178,9 @@
 
     .client-nav-button {
         font-size: 0.9em;
+    }
+
+    .client-nav-search-bar input {
+        width: 85%;
     }
 }

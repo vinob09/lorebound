@@ -4,6 +4,7 @@ import { useParams, useNavigate, Outlet, useLocation, Link } from 'react-router-
 import { thunkUserById } from '../../redux/session';
 import { thunkAllNotes } from '../../redux/notes';
 import { thunkGetAllCharacters } from '../../redux/characterSheets';
+import { allQuotes } from './quotes';
 import TopNav from './TopNav';
 import Calendar from 'react-calendar';
 import Loader from '../Loader/Loader';
@@ -20,6 +21,7 @@ const ClientPage = () => {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [date, setDate] = useState(new Date());
+    const [quote, setQuote] = useState(allQuotes[0]);
 
     useEffect(() => {
         // fetch user if not loaded
@@ -57,6 +59,16 @@ const ClientPage = () => {
     // check if on the main ClientPage
     const isDashboard = location.pathname === `/client/${userId}`;
 
+    // fetch random quote from import
+    const fetchRandomQuote = () => {
+        const randomIndex = Math.floor(Math.random() * allQuotes.length);
+        setQuote(allQuotes[randomIndex]);
+    };
+
+    // handle date click with window alert
+    const handleDateClick = () => {
+        window.alert("Feature coming soon!");
+    };
 
     return isLoaded && user ? (
         <div className="client-page">
@@ -67,10 +79,18 @@ const ClientPage = () => {
 
             {isDashboard && (
                 <div className="client-dashboard-content">
-                    <div className="calendar-section">
-                        <h2>Your Calendar</h2>
-                        <Calendar onChange={setDate} value={date} />
-                        <p>Selected Date: {date.toDateString()}</p>
+                    <div className="content-wrapper">
+                        <div className="quote-section">
+                            <h2>Echoes of the Past</h2>
+                            <p>&quot;{quote}&quot;</p>
+                            <button onClick={fetchRandomQuote}>Get New Quote</button>
+                        </div>
+
+                        <div className="calendar-section">
+                            <h2>Fate&apos;s Ledger</h2>
+                            <Calendar onChange={setDate} value={date} onClickDay={handleDateClick} />
+                            <p>Selected Date: {date.toDateString()}</p>
+                        </div>
                     </div>
 
                     <div className="create-content-links">

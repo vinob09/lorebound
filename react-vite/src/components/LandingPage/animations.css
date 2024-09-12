@@ -1,0 +1,62 @@
+/* animations for landing page */
+.animate-fly-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: flyInLeft 1.5s forwards;
+}
+
+.animate-fly-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    animation: flyInRight 1.5s forwards;
+}
+
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+.animate-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 1.5s forwards;
+}
+
+.animate-zoom-in {
+    opacity: 0;
+    transform: scale(0.95);
+    animation: zoomIn 1.5s forwards;
+}
+
+/* animation keyframes */
+@keyframes flyInLeft {
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes flyInRight {
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

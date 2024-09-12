@@ -82,7 +82,7 @@ const CharacterDetailsPage = () => {
         }
 
         return (
-            <ul>
+            <ul className='weapons'>
                 {weapons.map((weapon, index) => (
                     <li key={index}>
                         {weapon.name}
@@ -137,48 +137,56 @@ const CharacterDetailsPage = () => {
             {character.deltaGreenCharacter && (
                 <div className='delta-green-character-details'>
                     <h2>Delta Green Details</h2>
-                    <p>Profession: {displayValue(character.deltaGreenCharacter.profession)}</p>
-                    <p>Employer: {displayValue(character.deltaGreenCharacter.employer)}</p>
-                    <p>Nationality: {displayValue(character.deltaGreenCharacter.nationality)}</p>
-                    <p>Sex: {displayValue(character.deltaGreenCharacter.sex)}</p>
-                    <p>Age & DOB: {displayValue(character.deltaGreenCharacter.ageDOB)}</p>
-                    <p>Education or Occupation: {displayValue(character.deltaGreenCharacter.educationOccupation)}</p>
-                    <p>Personal Details & Notes: {displayValue(character.deltaGreenCharacter.personalDetailsNotes)}</p>
-                    <p>Physical Description: {displayValue(character.deltaGreenCharacter.physicalDescription)}</p>
-                    <p>Motivations & Mental Disorders: {displayValue(character.deltaGreenCharacter.motivationsMentalDisorders)}</p>
-                    <p>Incidents - Violence: {displayValue(character.deltaGreenCharacter.incidentsViolence)}</p>
-                    <p>Incidents - Helplessness: {displayValue(character.deltaGreenCharacter.incidentsHelplessness)}</p>
-                    <p>Wounds & Ailments: {displayValue(character.deltaGreenCharacter.woundsAilments)}</p>
-                    <p>Armor & Gear: {displayValue(character.deltaGreenCharacter.armorGear)}</p>
-                    <p>Developments at Home & Family: {displayValue(character.deltaGreenCharacter.developmentHomeFamily)}</p>
-                    <p>Special Training: {displayValue(character.deltaGreenCharacter.specialTraining)}</p>
-                    <p>Skill/Stat Used: {displayValue(character.deltaGreenCharacter.skillStatUsed)}</p>
-                    <div className='character-bonds'>
-                        <h3>Bonds</h3>
-                        {renderBonds(character.deltaGreenCharacter.bonds, character.deltaGreenCharacter.bondsScore)}
+                    <div className='delta-green-character-grid'>
+                        <p>Profession: {displayValue(character.deltaGreenCharacter.profession)}</p>
+                        <p>Employer: {displayValue(character.deltaGreenCharacter.employer)}</p>
+                        <p>Nationality: {displayValue(character.deltaGreenCharacter.nationality)}</p>
+                        <p>Sex: {displayValue(character.deltaGreenCharacter.sex)}</p>
+                        <p>Age & DOB: {displayValue(character.deltaGreenCharacter.ageDOB)}</p>
+                        <p>Education or Occupation: {displayValue(character.deltaGreenCharacter.educationOccupation)}</p>
+                        <p>Personal Details & Notes: {displayValue(character.deltaGreenCharacter.personalDetailsNotes)}</p>
+                        <p>Physical Description: {displayValue(character.deltaGreenCharacter.physicalDescription)}</p>
+                        <p>Motivations & Mental Disorders: {displayValue(character.deltaGreenCharacter.motivationsMentalDisorders)}</p>
+                        <p>Incidents - Violence: {displayValue(character.deltaGreenCharacter.incidentsViolence)}</p>
+                        <p>Incidents - Helplessness: {displayValue(character.deltaGreenCharacter.incidentsHelplessness)}</p>
+                        <p>Wounds & Ailments: {displayValue(character.deltaGreenCharacter.woundsAilments)}</p>
+                        <p>Armor & Gear: {displayValue(character.deltaGreenCharacter.armorGear)}</p>
+                        <p>Developments at Home & Family: {displayValue(character.deltaGreenCharacter.developmentHomeFamily)}</p>
+                        <p>Special Training: {displayValue(character.deltaGreenCharacter.specialTraining)}</p>
+                        <p>Skill/Stat Used: {displayValue(character.deltaGreenCharacter.skillStatUsed)}</p>
                     </div>
-                    <div className='character-stats'>
-                        <h3>Stats</h3>
-                        <ul>
-                            <li><p>Strength: {displayValue(character.deltaGreenCharacter.strengthx5)}, {displayValue(character.deltaGreenCharacter.strengthFeatures)}</p></li>
-                            <li><p>Constitution: {displayValue(character.deltaGreenCharacter.constitutionx5)}, {displayValue(character.deltaGreenCharacter.constitutionFeatures)}</p></li>
-                            <li><p>Dexterity: {displayValue(character.deltaGreenCharacter.dexterityx5)}, {displayValue(character.deltaGreenCharacter.dexterityFeatures)}</p></li>
-                            <li><p>Intelligence: {displayValue(character.deltaGreenCharacter.intelligencex5)}, {displayValue(character.deltaGreenCharacter.intelligenceFeatures)}</p></li>
-                            <li><p>Power: {displayValue(character.deltaGreenCharacter.powerx5)}, {displayValue(character.deltaGreenCharacter.powerFeatures)}</p></li>
-                            <li><p>Charisma: {displayValue(character.deltaGreenCharacter.charismax5)}, {displayValue(character.deltaGreenCharacter.charismaFeatures)}</p></li>
-                            <li><p>Hit Points Current: {displayValue(character.deltaGreenCharacter.hitPointsCurrent)}</p></li>
-                            <li><p>Willpower Points Current: {displayValue(character.deltaGreenCharacter.willpowerPointsCurrent)}</p></li>
-                            <li><p>Sanity Points Current: {displayValue(character.deltaGreenCharacter.sanityPointsCurrent)}</p></li>
-                            <li><p>Breaking Point Current: {displayValue(character.deltaGreenCharacter.breakingPointCurrent)}</p></li>
-                        </ul>
-                    </div>
-                    <div className='character-weapons'>
-                        <h3>Weapons</h3>
-                        {renderWeapons(character.weapons)}
-                    </div>
-                    <div className='character-skills'>
-                        <h3>Skills</h3>
-                        {renderSkills(character.skills)}
+
+                    <div className='character-sections-flex'>
+                        <div className='character-section bonds'>
+                            <h3>Bonds</h3>
+                            {renderBonds(character.deltaGreenCharacter.bonds, character.deltaGreenCharacter.bondsScore)}
+                        </div>
+
+                        <div className='character-section stats'>
+                            <h3>Stats</h3>
+                            <ul>
+                                <li><p>Strength: {displayValue(character.deltaGreenCharacter.strengthx5)}, {displayValue(character.deltaGreenCharacter.strengthFeatures)}</p></li>
+                                <li><p>Constitution: {displayValue(character.deltaGreenCharacter.constitutionx5)}, {displayValue(character.deltaGreenCharacter.constitutionFeatures)}</p></li>
+                                <li><p>Dexterity: {displayValue(character.deltaGreenCharacter.dexterityx5)}, {displayValue(character.deltaGreenCharacter.dexterityFeatures)}</p></li>
+                                <li><p>Intelligence: {displayValue(character.deltaGreenCharacter.intelligencex5)}, {displayValue(character.deltaGreenCharacter.intelligenceFeatures)}</p></li>
+                                <li><p>Power: {displayValue(character.deltaGreenCharacter.powerx5)}, {displayValue(character.deltaGreenCharacter.powerFeatures)}</p></li>
+                                <li><p>Charisma: {displayValue(character.deltaGreenCharacter.charismax5)}, {displayValue(character.deltaGreenCharacter.charismaFeatures)}</p></li>
+                                <li><p>Hit Points Current: {displayValue(character.deltaGreenCharacter.hitPointsCurrent)}</p></li>
+                                <li><p>Willpower Points Current: {displayValue(character.deltaGreenCharacter.willpowerPointsCurrent)}</p></li>
+                                <li><p>Sanity Points Current: {displayValue(character.deltaGreenCharacter.sanityPointsCurrent)}</p></li>
+                                <li><p>Breaking Point Current: {displayValue(character.deltaGreenCharacter.breakingPointCurrent)}</p></li>
+                            </ul>
+                        </div>
+
+                        <div className='character-section weapons'>
+                            <h3>Weapons</h3>
+                            {renderWeapons(character.weapons)}
+                        </div>
+
+                        <div className='character-section skills'>
+                            <h3>Skills</h3>
+                            {renderSkills(character.skills)}
+                        </div>
                     </div>
                 </div>
             )}

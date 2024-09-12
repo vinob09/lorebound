@@ -1,16 +1,23 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { thunkLogout } from '../../redux/session';
+import { FaUserAlt, FaStickyNote, FaSignOutAlt, FaCaretDown } from 'react-icons/fa';
+import { useState } from 'react';
 import SearchBar from './SearchBar';
 import './ClientNav.css';
 
-const ClientNav = () => {
+const ClientNav = ({ isMobileOrTablet }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const user = useSelector(state => state.session.user);
     const notes = useSelector(state => state.notes.allNotes);
     const characters = useSelector(state => state.characters.characters);
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    // handle dropdown toggle
+    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
     // handle new note button
     const handleNewNote = () => {
@@ -48,30 +55,96 @@ const ClientNav = () => {
                 <div className='client-nav-welcome'>
                     {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
                 </div>
-                <div className='search-bar'><SearchBar /></div>
-                <button className='client-nav-button' onClick={handleNewCharacter}>New Character</button>
-                <button className='client-nav-button' onClick={handleNewNote}>New Note</button>
+                <div className='client-nav-search-bar'>
+                    <SearchBar />
+                </div>
+
+                {/* dropdown for TopNav links if on mobile/tablet */}
+                {isMobileOrTablet && (
+                    <div className='client-nav-section'>
+                        <button onClick={toggleDropdown} className='client-nav-dropdown'>
+                            Links <FaCaretDown />
+                        </button>
+                        {dropdownOpen && (
+                            <ul className='client-nav-list'>
+                                <li className='nav-item'>
+                                    <Link to={`/client/${user.id}`} className='nav-link'>
+                                        Dashboard
+                                    </Link>
+                                </li>
+                                <li className='nav-item'>
+                                    <Link to={`/client/${user.id}/notes`} className='nav-link'>
+                                        Notes
+                                    </Link>
+                                </li>
+                                <li className='nav-item'>
+                                    <Link to={`/client/${user.id}/characters`} className='nav-link'>
+                                        Characters
+                                    </Link>
+                                </li>
+                                <li className='nav-item'>
+                                    <Link to="/" onClick={logout} className='nav-link'>
+                                        Logout
+                                    </Link>
+                                </li>
+                            </ul>
+                        )}
+                    </div>
+                )}
+
+                <div className='client-nav-buttons'>
+                    <button
+                        className='client-nav-button'
+                        onClick={handleNewCharacter}
+                        id='client-nav-button'
+                        name='newCharacter'>
+                        <FaUserAlt /> New Character
+                    </button>
+                    <button
+                        className='client-nav-button'
+                        onClick={handleNewNote}
+                        id='client-nav-button'
+                        name='newNote'>
+                        <FaStickyNote /> New Note
+                    </button>
+                </div>
                 <div className='client-nav-section'>
-                    <h3><Link to={`/client/${user.id}/characters`}>Characters</Link></h3>
-                    <ul>
+                    <h3>
+                        <FaUserAlt className='section-icon' />
+                        <Link to={`/client/${user.id}/characters`} className='section-title'>
+                            Characters
+                        </Link>
+                    </h3>
+                    <ul className='client-nav-list'>
                         {latestCharacters.map(character => (
-                            <li key={character.id}>
-                                <Link to={`/client/${user.id}/characters/${character.id}`}>{character.characterName}</Link>
+                            <li key={character.id} className='nav-item'>
+                                <Link to={`/client/${user.id}/characters/${character.id}`} className='nav-link'>
+                                    {character.characterName}
+                                </Link>
                             </li>
                         ))}
                     </ul>
                 </div>
                 <div className='client-nav-section'>
-                    <h3><Link to={`/client/${user.id}/notes`}>Grimoires</Link></h3>
-                    <ul>
+                    <h3>
+                        <FaStickyNote className='section-icon' />
+                        <Link to={`/client/${user.id}/notes`} className='section-title'>
+                            Grimoires
+                        </Link>
+                    </h3>
+                    <ul className='client-nav-list'>
                         {latestNotes.map(note => (
-                            <li key={note.id}>
-                                <Link to={`/client/${user.id}/notes/${note.id}`}>{note.title}</Link>
+                            <li key={note.id} className='nav-item'>
+                                <Link to={`/client/${user.id}/notes/${note.id}`} className='nav-link'>
+                                    {note.title}
+                                </Link>
                             </li>
                         ))}
                     </ul>
                 </div>
-                <button className='client-nav-logout' onClick={logout}>Logout</button>
+                <button className='client-nav-logout' onClick={logout}>
+                    <FaSignOutAlt /> Logout
+                </button>
             </div>
         </>
     )

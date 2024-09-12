@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
+import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
-import { thunkLogout } from "../../redux/session";
 import "./Navigation.css";
 
 function Navigation() {
