@@ -16,9 +16,27 @@ def seed_characters():
         character_name = "Robert Johnson",
         url = "https://chansbucket.s3.us-east-2.amazonaws.com/Notes-Images/agent-2.png"
     )
+    dg3 = Character(
+        game_id=1,
+        player_id=1,
+        character_name="Sophia Davis",
+        url="https://chansbucket.s3.us-east-2.amazonaws.com/Notes-Images/psych.png"
+    )
+    dg4 = Character(
+        game_id=1,
+        player_id=1,
+        character_name="Johnathan Reed",
+        url="https://chansbucket.s3.us-east-2.amazonaws.com/Notes-Images/contractor.png"
+    )
+    dg5 = Character(
+        game_id=1,
+        player_id=1,
+        character_name="Margaret Fisher",
+        url="https://chansbucket.s3.us-east-2.amazonaws.com/Notes-Images/scientist.png"
+    )
 
     all_characters = [
-        dg1, dg2
+        dg1, dg2, dg3, dg4, dg5
     ]
 
     db.session.bulk_save_objects(all_characters)

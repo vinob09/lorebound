@@ -43,6 +43,56 @@ def seed_characters_skills():
         "Unarmed Combat": 60
     }
 
+    # sophia specific skills
+    sophia_skills = {
+        "Alertness": 60,
+        "Anthropology": 40,
+        "Bureaucracy": 50,
+        "Criminology": 45,
+        "First Aid": 50,
+        "HUMINT": 70,
+        "Law": 30,
+        "Occult": 40,
+        "Persuade": 60,
+        "Psychotherapy": 80,
+        "Search": 55,
+        "Stealth": 30,
+        "Unarmed Combat": 40
+    }
+
+    # johnathan specific skills
+    johnathan_skills = {
+        "Alertness": 70,
+        "Athletics": 60,
+        "Bureaucracy": 30,
+        "Demolitions": 40,
+        "Firearms": 70,
+        "First Aid": 40,
+        "Heavy Weapons": 60,
+        "Melee Weapons": 65,
+        "Military Science": 60,
+        "Persuade": 50,
+        "Stealth": 55,
+        "Survival": 50,
+        "Unarmed Combat": 70
+    }
+
+    # margaret specific skills
+    margaret_skills = {
+        "Alertness": 55,
+        "Bureaucracy": 60,
+        "Criminology": 75,
+        "Forensics": 80,
+        "Firearms": 40,
+        "HUMINT": 50,
+        "Medicine": 40,
+        "Persuade": 45,
+        "Science": 70,
+        "Search": 65,
+        "Stealth": 30,
+        "Unarmed Combat": 35
+    }
+
     # fetch all skills
     skills = Skill.query.all()
 
@@ -65,6 +115,36 @@ def seed_characters_skills():
             character_id = 2,
             skill_id = skill.id,
             skill_level = skill_level
+        )
+        character_skills.append(character_skill)
+
+    # add sophia's skills
+    for skill in skills:
+        skill_level = sophia_skills.get(skill.name, skill.base_value)
+        character_skill = CharacterSkill(
+            character_id=3,
+            skill_id=skill.id,
+            skill_level=skill_level
+        )
+        character_skills.append(character_skill)
+
+    # add johnathan's skills
+    for skill in skills:
+        skill_level = johnathan_skills.get(skill.name, skill.base_value)
+        character_skill = CharacterSkill(
+            character_id=4,
+            skill_id=skill.id,
+            skill_level=skill_level
+        )
+        character_skills.append(character_skill)
+
+    # add margaret's skills
+    for skill in skills:
+        skill_level = margaret_skills.get(skill.name, skill.base_value)
+        character_skill = CharacterSkill(
+            character_id=5,
+            skill_id=skill.id,
+            skill_level=skill_level
         )
         character_skills.append(character_skill)
 

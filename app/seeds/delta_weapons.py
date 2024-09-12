@@ -42,7 +42,106 @@ def seed_characters_weapons():
         ammo=None
     )
 
-    weapons = [dale_fists, dale_glock, robert_fists]
+    # sophia's weapons
+    sophia_fists = DeltaWeapon(
+        character_id=3,
+        name="Fists",
+        skill_percentage=40,
+        base_range=None,
+        damage="1d4 - 1",
+        armor_piercing=None,
+        lethality=None,
+        kill_radius="",
+        ammo=None
+    )
+
+    sophia_pistol = DeltaWeapon(
+        character_id=3,
+        name="Sig Sauer P320",
+        skill_percentage=50,
+        base_range="20 meters",
+        damage="1d10",
+        armor_piercing=None,
+        lethality=None,
+        kill_radius="",
+        ammo=15
+    )
+
+    # johnathan's weapons
+    johnathan_fists = DeltaWeapon(
+        character_id=4,
+        name="Fists",
+        skill_percentage=70,
+        base_range=None,
+        damage="1d4",
+        armor_piercing=None,
+        lethality=None,
+        kill_radius="",
+        ammo=None
+    )
+
+    johnathan_rifle = DeltaWeapon(
+        character_id=4,
+        name="M4 Carbine",
+        skill_percentage=70,
+        base_range="500 meters",
+        damage="2d8",
+        armor_piercing=None,
+        lethality=None,
+        kill_radius="",
+        ammo=30
+    )
+
+    johnathan_knife = DeltaWeapon(
+        character_id=4,
+        name="Combat Knife",
+        skill_percentage=65,
+        base_range=None,
+        damage="1d6",
+        armor_piercing=None,
+        lethality=None,
+        kill_radius="",
+        ammo=None
+    )
+
+    # margaret's weapons
+    margaret_fists = DeltaWeapon(
+        character_id=5,
+        name="Fists",
+        skill_percentage=35,
+        base_range=None,
+        damage="1d4 - 1",
+        armor_piercing=None,
+        lethality=None,
+        kill_radius="",
+        ammo=None
+    )
+
+    margaret_glock = DeltaWeapon(
+        character_id=5,
+        name="Glock 19",
+        skill_percentage=40,
+        base_range="50 meters",
+        damage="1d10",
+        armor_piercing=None,
+        lethality=None,
+        kill_radius="",
+        ammo=15
+    )
+
+    weapons = [
+        dale_fists,
+        dale_glock,
+        robert_fists,
+        sophia_fists,
+        sophia_pistol,
+        johnathan_fists,
+        johnathan_rifle,
+        johnathan_knife,
+        margaret_fists,
+        margaret_glock
+    ]
+    
     db.session.bulk_save_objects(weapons)
     db.session.commit()
     print("All character weapons have been added.")
