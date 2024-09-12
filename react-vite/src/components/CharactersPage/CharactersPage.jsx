@@ -34,8 +34,18 @@ const CharactersPage = () => {
 
     return isLoaded ? (
         <div className='characters-page'>
-            <Link onClick={handleNewCharacter}>Create New Character</Link>
-            <Tiles items={sortedCharacters} type="character" onTileClick={handleClick} />
+            {characters.length === 0 ? (
+                <div className="characters-empty-state">
+                    <p>It looks like you haven&apos;t created any characters yet. Start by clicking the button below!</p>
+                    <button className="empty-create-button" onClick={handleNewCharacter}>Create Your First Character</button>
+                    <img src="/empty-state.png" alt="Empty Characters" className="empty-image" />
+                </div>
+            ) : (
+                <>
+                    <Link onClick={handleNewCharacter}>Create New Character</Link>
+                    <Tiles items={sortedCharacters} type="character" onTileClick={handleClick} />
+                </>
+            )}
         </div>
     ) : (
         <Loader />
