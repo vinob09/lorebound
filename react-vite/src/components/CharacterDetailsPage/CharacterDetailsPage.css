@@ -22,6 +22,11 @@
     color: antiquewhite;
 }
 
+.character-details-container p {
+    font-size: 17px;
+    font-family: 'Merriweather', serif;
+}
+
 .delta-green-character-details {
     margin-bottom: 40px;
     background-color: rgba(255, 255, 255, 0.1);
@@ -33,6 +38,7 @@
     text-align: center;
     text-decoration: underline;
     margin-bottom: 30px;
+    font-size: 40px;
 }
 
 .delta-green-character-grid {
@@ -62,7 +68,7 @@
 }
 
 .character-section h3 {
-    font-size: 28px;
+    font-size: 30px;
     color: #F5F5F5;
     margin-bottom: 10px;
     text-align: center;
@@ -71,6 +77,8 @@
 .character-section ul {
     list-style-type: none;
     padding: 0;
+    font-size: 16px;
+    font-family: 'Merriweather', serif;
 }
 
 .character-section ul li {

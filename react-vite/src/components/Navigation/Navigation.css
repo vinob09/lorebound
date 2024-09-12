@@ -1,17 +1,14 @@
 .navbar {
   position: fixed;
   width: 100%;
-  background-color: #686464;
+  background-color: rgba(104, 104, 104);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 2;
   padding: 15px;
-  box-sizing: border-box;
-  top: 0;
-  left: 0;
-  right: 0;
-  overflow-x: hidden;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
 }
 
+/* navigation List */
 .nav-list {
   list-style-type: none;
   padding: 0;
@@ -25,13 +22,39 @@
 .nav-link {
   text-decoration: none;
   font-weight: bold;
-  color: #333;
-  font-size: 16px;
+  color: white;
+  font-size: 20px;
   margin-left: 50px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-link a {
+  color: #051f21;
+}
+
+.nav-link::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #380b61;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .nav-link:hover {
-  color: #555;
+  color: #363738 !important;
+}
+
+.nav-link.active {
+  color: #051f21;
 }
 
 .nav-button {
@@ -42,17 +65,18 @@
   padding: 5px 15px;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .nav-button:hover {
-  background-color: #0056b3;
+  transform: translateY(-3px);
+  background-color: #363738;
 }
 
-.nav-link:hover {
-  color: #555;
+.nav-button:active {
+  transform: scale(0.95);
 }
-
 
 @media (max-width: 768px) {
   .navbar {
