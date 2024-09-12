@@ -390,7 +390,7 @@ def get_character_skills(character_id):
     if not character_skills:
         return jsonify({"errors": "No skills found for this character"}), 404
 
-    # Transform to a dict structure
+    # transform to a dict structure
     skill_data = [{
         'id': cs.id,
         'characterId': cs.character_id,
@@ -614,7 +614,7 @@ def export_character_pdf(character_id):
     if skills:
         y = add_text(pdf, "Skills:", y)
         for i, skill in enumerate(skills, start=1):
-            skill_name = skill.skill.name  # Access the related Skill model to get the name
+            skill_name = skill.skill.name  
             y = add_text(pdf, f"  {i}. {skill_name} - Level {skill.skill_level}", y)
 
     # save PDF to the byte stream and return it as a file

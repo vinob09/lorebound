@@ -23,17 +23,19 @@
 }
 
 .note-action-buttons button {
-    background-color: #007bff;
+    background-color: #3E1F47;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+    font-family: 'Cormorant Upright', serif;
+    font-weight: 700;
 }
 
 .note-action-buttons button:hover {
-    background-color: #0056b3;
+    background-color: #4f5657;
 }
 
 .note-details-image {
@@ -44,13 +46,12 @@
 }
 
 .note-details-image img {
-    max-width: 100%;
+    max-width: 500px;
     height: auto;
     border-radius: 8px;
 }
 
 .note-details-content {
-    font-size: 1.2rem;
     line-height: 1.6;
     text-align: left;
     width: 100%;
@@ -58,7 +59,7 @@
     margin: 0 auto;
     font-family: "Cormorant Upright", serif;
     color: antiquewhite;
-    font-size: 40px;
+    font-size: 25px;
 }
 
 @media (min-width: 768px) {
