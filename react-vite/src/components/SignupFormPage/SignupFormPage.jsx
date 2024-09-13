@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
@@ -15,13 +15,22 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // check for all fields populated
+  useEffect(() => {
+    if (email && username && password && confirmPassword) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [email, username, password, confirmPassword]);
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsLoaded(true);
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
@@ -91,7 +100,7 @@ function SignupFormPage() {
             />
           </label>
           {errors.confirmPassword && <p className="signup-page-errors">{errors.confirmPassword}</p>}
-          <button type="submit" className="signup-page-submit">Sign Up</button>
+          <button type="submit" className="signup-page-submit" disabled={!isFormValid}>Sign Up</button>
           {isLoaded && <Loader />}
         </form>
       </div>

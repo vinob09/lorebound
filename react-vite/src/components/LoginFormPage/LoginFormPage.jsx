@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -13,13 +13,22 @@ function LoginFormPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // check for all fields populated
+  useEffect(() => {
+    if (email && password) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [password, email]);
 
   if (sessionUser) return <Navigate to={`/client/${sessionUser.id}`} replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsLoaded(true);
     const serverResponse = await dispatch(
       thunkLogin({
         email,
@@ -62,7 +71,7 @@ function LoginFormPage() {
             />
           </label>
           {errors.password && <p className="login-page-errors">{errors.password}</p>}
-          <button type="submit" className="login-page-submit">Log In</button>
+          <button type="submit" className="login-page-submit" disabled={!isFormValid}>Log In</button>
           {isLoaded && <Loader />}
         </form>
       </div>

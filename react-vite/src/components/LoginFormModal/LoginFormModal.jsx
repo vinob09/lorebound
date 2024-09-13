@@ -15,8 +15,18 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const user = useSelector(state => state.session.user);
+
+  // check for all fields populated
+  useEffect(() => {
+    if (email && password) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [password, email]);
 
   useEffect(() => {
     if (user) {
@@ -28,7 +38,6 @@ function LoginFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsLoaded(true);
     const serverResponse = await dispatch(
       thunkLogin({
         email,
@@ -50,9 +59,6 @@ function LoginFormModal() {
     if (field === "email") setEmail(e.target.value);
     if (field === "password") setPassword(e.target.value);
   };
-
-  // check for all fields populated
-  const isFormValid = email && password;
 
   // handle demo user
   const handleDemo = async (e) => {

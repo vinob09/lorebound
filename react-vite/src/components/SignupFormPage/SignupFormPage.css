@@ -60,6 +60,7 @@
     margin-top: 5px;
     min-height: 18px;
     font-family: 'Cinzel', serif;
+    font-weight: bold;
 }
 
 .signup-page-title {
@@ -87,6 +88,18 @@
 
 .signup-page-submit:hover {
     background-color: #004a99;
+}
+
+.signup-page-submit:disabled {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
+}
+
+.signup-page-submit:disabled:hover {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
 }
 
 .signup-page-image-section {
