@@ -31,7 +31,7 @@
 ## Features
 -   **Create TTRPG Character Sheets**: Build and manage character sheets with ease.
 -   **Note-Taking**: Keep detailed campaign notes using a built-in rich text editor.
--   **PDF Export**: Export character sheets and notes to PDF format.
+-   **PDF Export**: Export character sheets to PDF format.
 -   **Real-time updates**: Save and update your work instantly.
 
 ## Tech Stack
