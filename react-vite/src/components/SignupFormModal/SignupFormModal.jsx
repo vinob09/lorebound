@@ -16,8 +16,18 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const user = useSelector(state => state.session.user);
+
+  // check for all fields populated
+  useEffect(() => {
+    if (email && username && password && confirmPassword) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [email, username, password, confirmPassword]);
 
   useEffect(() => {
     if (user) {
@@ -29,7 +39,7 @@ function SignupFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsLoaded(true);
+    
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
@@ -63,9 +73,6 @@ function SignupFormModal() {
     if (field === "password") setPassword(e.target.value);
     if (field === "confirmPassword") setConfirmPassword(e.target.value);
   };
-
-  // check for all fields populated
-  const isFormValid = email && username && password && confirmPassword;
 
   return (
     <div className="signup-modal-container">

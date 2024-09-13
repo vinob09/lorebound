@@ -36,7 +36,7 @@ const NotesPage = () => {
         <div className='notes-page'>
             {notes.length === 0 ? (
                 <div className="notes-empty-state">
-                    <p>It looks like you haven't created any notes yet. Start by clicking the button below!</p>
+                    <p>It looks like you haven&apos;t created any notes yet. Start by clicking the button below!</p>
                     <button className="empty-create-button" onClick={handleNewNote}>Create Your First Note</button>
                     <img src="/empty-state.png" alt="Empty Notes" className="empty-image" />
                 </div>

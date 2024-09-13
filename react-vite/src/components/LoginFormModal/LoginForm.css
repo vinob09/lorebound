@@ -58,6 +58,7 @@
     margin-top: 5px;
     min-height: 18px;
     font-family: 'Cinzel', serif;
+    font-weight: bold;
 }
 
 .login-form-title {
@@ -87,6 +88,18 @@
     background-color: #004a99;
 }
 
+.login-submit:disabled {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
+}
+
+.login-submit:disabled:hover {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
+}
+
 .login-image-section {
     flex: 1.2;
     display: flex;
@@ -99,6 +112,10 @@
     height: 100%;
     object-fit: cover;
     border-radius: 0 8px 8px 0;
+}
+
+.demo-user-link {
+    margin-top: 25px;
 }
 
 @media (max-width: 768px) {

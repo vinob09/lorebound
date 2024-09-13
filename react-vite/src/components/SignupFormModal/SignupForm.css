@@ -58,6 +58,7 @@
     margin-top: 5px;
     min-height: 18px;
     font-family: 'Cinzel', serif;
+    font-weight: bold;
 }
 
 .signup-form-title {
@@ -86,6 +87,19 @@
 .signup-submit:hover {
     background-color: #004a99;
 }
+
+.signup-submit:disabled {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
+}
+
+.signup-submit:disabled:hover {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
+}
+
 
 .signup-image-section {
     flex: 1.2;

@@ -60,6 +60,7 @@
     margin-top: 5px;
     min-height: 18px;
     font-family: 'Cinzel', serif;
+    font: bold;
 }
 
 .login-page-title {
@@ -87,6 +88,18 @@
 
 .login-page-submit:hover {
     background-color: #004a99;
+}
+
+.login-page-submit:disabled {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
+}
+
+.login-page-submit:disabled:hover {
+    background-color: #ddd;
+    color:#868788;
+    cursor: not-allowed;
 }
 
 .login-page-image-section {
@@ -159,6 +172,6 @@
     }
 
     .login-page-image-section {
-        display: flex; 
+        display: flex;
     }
 }
