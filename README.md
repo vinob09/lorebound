@@ -64,8 +64,6 @@ Follow these steps to clone and run Lorebound locally:
 
 1.  Install [Python](https://www.python.org/downloads/).
 2.  Install [Node.js](https://nodejs.org/en/download/package-manager).
-3.  Install [Docker](https://www.docker.com/).
-4.  Install [PostgreSQL](https://www.postgresql.org/download/).
 
 ### Clone the Repository
 To clone the project:
