@@ -48,41 +48,39 @@ const LandingPage = () => {
     };
 
     return (
-        <div>
-            <header>
+        <>
+            <nav>
                 <Navigation />
-                <section className="landing-container">
-                    <div id="intro" className="video-wrapper">
-                        <video className="background-video" playsInline autoPlay muted loop>
-                            <source src="/Bookv2.mp4" type="video/mp4" />
-                        </video>
-                        <div className="mask">
-                            <section className="landing-page">
-                                <div className="landing-card animate-fly-in-left">
-                                    <h1 className="landing-name animate-fade-in">Hello, adventurer...</h1>
-                                    <h2 className="landing-subtitle animate-fly-in-right">
-                                        Organize Your TTRPG Adventures with Ease
-                                    </h2>
-                                    <div className="button-group animate-fade-in">
-                                        {user ? (
-                                            <button className="cta-button" onClick={handleUserDashboard}>
-                                                Dashboard
-                                            </button>
-                                        ) : (
-                                            <button className="cta-button">
-                                                <OpenModalMenuItem itemText="Signup" modalComponent={<SignupFormModal />} />
-                                            </button>
-                                        )}
-                                        <button className="cta-button demo-button" onClick={handleTryDemoClick}>Try a Demo</button>
-                                        {isLoaded && <Loader />}
-                                    </div>
-                                    <div className="gradient-line"></div>
-                                </div>
-                            </section>
+            </nav>
+
+            {/* Initial Header Video */}
+            <section className="landing-container">
+                <div id="intro" className="video-wrapper">
+                    <video className="background-video" playsInline autoPlay muted loop>
+                        <source src="/Bookv2.mp4" type="video/mp4" />
+                    </video>
+                    <div className="mask">
+                        <h1 className="landing-name animate-fade-in">Hello, adventurer...</h1>
+                        <h2 className="landing-subtitle animate-fly-in-right">
+                            Organize Your TTRPG Adventures with Ease
+                        </h2>
+                        <div className="button-group animate-fade-in">
+                            {user ? (
+                                <button className="cta-button" onClick={handleUserDashboard}>
+                                    Dashboard
+                                </button>
+                            ) : (
+                                <button className="cta-button">
+                                    <OpenModalMenuItem itemText="Signup" modalComponent={<SignupFormModal />} />
+                                </button>
+                            )}
+                            <button className="cta-button demo-button" onClick={handleTryDemoClick}>Try a Demo</button>
+                            {isLoaded && <Loader />}
                         </div>
+                        <div className="gradient-line"></div>
                     </div>
-                </section>
-            </header>
+                </div>
+            </section>
 
             {/* Introductory Section */}
             <section className="intro-section animate-slide-up">
@@ -179,7 +177,7 @@ const LandingPage = () => {
                     </button>
                 </div>
             </section>
-        </div>
+        </>
     );
 };
 

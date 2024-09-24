@@ -16,7 +16,7 @@ function Navigation() {
   return (
     <nav className="navbar">
       <ul className="nav-list">
-        <li className="nav-item">
+        <li>
           {user ? (
             <a href={`/client/${user.id}`} className="nav-link">
               Dashboard
@@ -28,7 +28,7 @@ function Navigation() {
           )}
         </li>
 
-        <li className="button-item">
+        <li>
           {user ? (
             <button className="nav-button" onClick={handleLogout}>
               Log Out
