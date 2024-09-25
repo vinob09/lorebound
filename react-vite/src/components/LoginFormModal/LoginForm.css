@@ -8,7 +8,7 @@
     margin: 0 auto;
     background-color: #fff;
     border-radius: 8px;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-form-section {
@@ -17,13 +17,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-form-modal {
     display: flex;
     flex-direction: column;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-form-modal label {
@@ -31,7 +31,7 @@
     font-size: 16px;
     font-weight: 500;
     color: #333;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-form-modal input {
@@ -43,13 +43,13 @@
     width: 100%;
     box-sizing: border-box;
     transition: border-color 0.3s ease-in-out;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-form-modal input:focus {
-    border-color: #0066cc;
+    border-color: #5fcc00;
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+    box-shadow: 0 0 5px rgba(102, 204, 0, 0.5);
 }
 
 .login-form-errors {
@@ -57,7 +57,7 @@
     font-size: 12px;
     margin-top: 5px;
     min-height: 18px;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
 
@@ -66,7 +66,7 @@
     font-size: 28px;
     font-weight: 600;
     margin-bottom: 20px;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
     color: #212F45;
 }
 
@@ -81,7 +81,7 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-family: 'Cinzel', serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-submit:hover {
@@ -116,6 +116,13 @@
 
 .demo-user-link {
     margin-top: 25px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #3ea443 !important;
+}
+
+.demo-user-link:hover {
+    color: #0d6111 !important;
 }
 
 @media (max-width: 768px) {
