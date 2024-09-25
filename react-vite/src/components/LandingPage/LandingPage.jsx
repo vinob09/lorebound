@@ -19,12 +19,12 @@ const LandingPage = () => {
     const user = useSelector(state => state.session.user);
 
     // intro animation
-    useEffect(() => {
-        const intro = document.getElementById('intro');
-        setTimeout(() => {
-            intro.classList.add('show-intro');
-        }, 500);
-    }, []);
+    // useEffect(() => {
+    //     const intro = document.getElementById('intro');
+    //     setTimeout(() => {
+    //         intro.classList.add('show-intro');
+    //     }, 500);
+    // }, []);
 
     // handle demo button
     const handleTryDemoClick = async (e) => {
@@ -56,9 +56,9 @@ const LandingPage = () => {
             {/* Initial Header Video */}
             <section className="landing-container">
                 <div id="intro" className="video-wrapper">
-                    <video className="background-video" playsInline autoPlay muted loop>
+                    {/* <video className="background-video" playsInline autoPlay muted loop>
                         <source src="/Bookv2.mp4" type="video/mp4" />
-                    </video>
+                    </video> */}
                     <div className="mask">
                         <h1 className="landing-name animate-fade-in">Hello, adventurer...</h1>
                         <h2 className="landing-subtitle animate-fly-in-right">
