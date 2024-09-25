@@ -1,7 +1,7 @@
 import { thunkLogin } from '../../redux/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FaDiceD20, FaMapMarkedAlt } from 'react-icons/fa';
 import { AiFillDashboard } from 'react-icons/ai';
 import Navigation from '../Navigation';

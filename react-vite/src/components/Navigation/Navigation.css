@@ -1,11 +1,11 @@
 /* navigation bar */
-/* nav {
+nav {
   position: sticky;
   top: 0;
   z-index: 10;
   box-sizing: border-box;
   background: linear-gradient(45deg, rgba(64, 64, 64, 0.85), rgba(32, 32, 32, 0.85));
-} */
+}
 
 .navbar {
   /* position: sticky; */
