@@ -1,8 +1,7 @@
 #features {
     background: #ffffff;
-    padding: 15rem 0 9rem;
+    padding: 8rem 0 9rem;
     text-align: center;
-    min-height: 600px;
 }
 
 #features h1::before {

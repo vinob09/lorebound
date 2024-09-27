@@ -14,7 +14,6 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                {/* end footer-bottom */}
             </div>
         </footer>
     )

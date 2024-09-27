@@ -1,6 +1,5 @@
 footer {
-    padding-top: 9rem;
-    padding-bottom: 4.2rem;
+    padding-bottom: 2rem;
     font-size: 1.5rem;
     line-height: 2.7rem;
     color: rgba(255, 255, 255, 0.25);
@@ -17,7 +16,7 @@ footer a:focus {
 }
 
 .footer-bottom {
-    margin-top: 6.6rem;
+    margin-top: 3rem;
     text-align: center;
 }
 
