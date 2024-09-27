@@ -47,7 +47,7 @@ const Features = () => {
         <section id="features">
             <div className="row">
                 <div className="col-twelve">
-                    <h1 className="intro-header">Features of Our App</h1>
+                    <h1 className="intro-header">Upcoming Features</h1>
                 </div>
             </div>
             <div className="row embla">
