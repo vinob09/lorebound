@@ -1,0 +1,56 @@
+#community {
+    background: #39b54a;
+    color: #b2fabc;
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+    text-align: center;
+}
+
+#community h1 {
+    color: #ffffff;
+}
+
+#community .lead {
+    color: #b2fabc;
+    margin-top: 4.8rem;
+}
+
+#community .row {
+    max-width: 800px;
+}
+
+#community .community-badges {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#community .community-badges li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+#community .community-badges li a {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1.6rem;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#community .community-badges li a:hover,
+#community .community-badges li a:focus {
+    background-color: #ffffff;
+    color: #39b54a;
+}
+
+@media only screen and (max-width: 768px) {
+    #community .community-badges li a {
+        font-size: 1.4rem;
+        padding: 10px 20px;
+    }
+}

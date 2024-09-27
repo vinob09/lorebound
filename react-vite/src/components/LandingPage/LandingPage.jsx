@@ -2,12 +2,10 @@ import Header from './Partials/Header';
 import Home from './Partials/Home';
 import About from './Partials/About';
 import Features from './Partials/Features';
-import SignupFormModal from '../SignupFormModal';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import Community from './Partials/Community';
+import Footer from './Partials/Footer';
 import './main.css';
 import './base.css';
-import './LandingPage.css';
-import './animations.css';
 
 const LandingPage = () => {
 
@@ -17,6 +15,8 @@ const LandingPage = () => {
             <Home />
             <About />
             <Features />
+            <Community />
+            <Footer />
 
             {/* Features Section */}
             {/* <section className="features-section animate-slide-up">
@@ -52,17 +52,8 @@ const LandingPage = () => {
                 </div>
             </section> */}
 
-            {/* Community Section */}
-            <section className="community-section animate-slide-up">
-                <h2>Explore the Community</h2>
-                <p>Join the thriving world of TTRPG enthusiasts, explore resources, and enhance your campaign tracking and character management experience.</p>
-                <a href="https://www.dndbeyond.com/" className="cta-button" target="_blank" rel="noopener noreferrer">Visit D&D Beyond</a>
-                <a href="https://www.reddit.com/r/rpg/" className="cta-button" target="_blank" rel="noopener noreferrer">Join the r/RPG Community</a>
-                <a href="https://www.gmbinder.com/" className="cta-button" target="_blank" rel="noopener noreferrer">Check Out GM Binder</a>
-            </section>
-
             {/* Call to Action Section */}
-            <section className="cta-section animate-slide-up">
+            {/* <section className="cta-section animate-slide-up">
                 <div className="cta-content">
                     <h2>Ready to Begin Your Adventure?</h2>
                     <p>Sign up now and start exploring the countless possibilities that await.</p>
@@ -73,7 +64,8 @@ const LandingPage = () => {
                         />
                     </button>
                 </div>
-            </section>
+            </section> */}
+            
         </div>
     );
 };
