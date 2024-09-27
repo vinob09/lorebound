@@ -1,0 +1,102 @@
+#features {
+    background: #abcfbb;
+    padding: 15rem 0 9rem;
+    text-align: center;
+    min-height: 600px;
+}
+
+#features h1::before {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.embla {
+    width: 80%;
+    max-width: 900px;
+    margin: 4.2rem auto 0;
+    position: relative;
+}
+
+.embla__viewport {
+    overflow: hidden;
+}
+
+.embla__container {
+    display: flex;
+}
+
+.embla__slide {
+    min-width: 100%;
+    padding: 2rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+}
+
+.feature-content {
+    margin-left: 1.5rem;
+}
+
+.feature-content h3 {
+    margin: 0 0 1rem 0;
+    font-size: 2rem;
+    color: #3e1f47;
+}
+
+.feature-content p {
+    font-size: 1.6rem;
+    color: #303030;
+}
+
+.embla__dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.embla__dot {
+    width: 10px;
+    height: 10px;
+    background-color: #959595;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.embla__dot.is-selected {
+    background-color: #39b54a;
+}
+
+@media only screen and (max-width: 768px) {
+    .feature-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .feature-content {
+        margin-left: 0;
+        margin-top: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .embla {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .embla {
+        width: 100%;
+    }
+}
