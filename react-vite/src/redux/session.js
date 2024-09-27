@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 // action types
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -19,11 +21,15 @@ export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
 	if (response.ok) {
 		const data = await response.json();
+    if (data.user) {
+      dispatch(setUser(data));
+    } else {
+      dispatch(thunkLogout());
+    }
+
 		if (data.errors) {
 			return;
 		}
-
-		dispatch(setUser(data));
 	}
 };
 
@@ -66,6 +72,7 @@ export const thunkSignup = (user) => async (dispatch) => {
 export const thunkLogout = () => async (dispatch) => {
   await fetch("/api/auth/logout");
   dispatch(removeUser());
+  Cookies.remove('XSRF-TOKEN');
 };
 
 export const thunkUserById = (userId) => async (dispatch) => {
@@ -75,7 +82,7 @@ export const thunkUserById = (userId) => async (dispatch) => {
       const data = await response.json();
       dispatch(setUser(data));
       return data;
-    } 
+    }
   } catch (error) {
     console.error("Error fetching user data:", error);
     return null;
