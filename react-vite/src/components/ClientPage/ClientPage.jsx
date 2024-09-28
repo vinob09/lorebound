@@ -21,6 +21,7 @@ const ClientPage = () => {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [date, setDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
     const [quote, setQuote] = useState(allQuotes[0]);
 
     useEffect(() => {
@@ -66,14 +67,15 @@ const ClientPage = () => {
     };
 
     // handle date click with window alert
-    const handleDateClick = () => {
+    const handleDateClick = (value) => {
         window.alert("Feature coming soon!");
+        setSelectedDate(value);
     };
 
     return isLoaded && user ? (
         <div className="client-page">
             <TopNav userId={user.id} />
-            <div className="client-info">
+            <div id="top-page" className="client-info">
                 <h1 className='client-page-title'>Hello, {user.username}</h1>
             </div>
 
@@ -88,16 +90,25 @@ const ClientPage = () => {
 
                         <div className="calendar-section">
                             <h2>Fate&apos;s Ledger</h2>
-                            <Calendar onChange={setDate} value={date} onClickDay={handleDateClick} />
+                            <Calendar
+                                onChange={setDate}
+                                value={date}
+                                onClickDay={handleDateClick}
+                                tileClassName={({ date }) =>
+                                    date.toDateString() === (selectedDate ?
+                                        selectedDate.toDateString() : '') ? 'selected-date' : null
+                                }
+                            />
                             <p>Selected Date: {date.toDateString()}</p>
                         </div>
                     </div>
 
                     <div className="create-content-links">
                         <h3>Start your adventure now!</h3>
-                        <Link to={`/client/${user.id}/note/new`}>Add a New Note</Link>
-                        {"   "}
-                        <Link to={`/client/${user.id}/character/new`}>Add a New Character</Link>
+                        <div className="content-links">
+                            <Link to={`/client/${user.id}/note/new`}>Add a New Note</Link>
+                            <Link to={`/client/${user.id}/character/new`}>Add a New Character</Link>
+                        </div>
                     </div>
                 </div>
             )}

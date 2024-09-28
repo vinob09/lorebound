@@ -16,18 +16,18 @@
 .menu-icon {
     cursor: pointer;
     font-size: 1.5em;
-    color: #52d0e1;
+    color: #41765A;
 }
 
 .top-nav-links {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    font-family: "Cinzel", serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .top-nav-links a {
-    color: #6A1B9A;
+    color: #0B3311;
     text-decoration: none;
     font-weight: bold;
     font-size: 18px;
@@ -40,7 +40,7 @@
     display: block;
     width: 0;
     height: 2px;
-    background: #a855f7;
+    background: #41765A;
     transition: width 0.3s;
     position: absolute;
     bottom: -5px;
@@ -56,7 +56,7 @@
 }
 
 .top-nav-links a.active {
-    color: #52d0e1;
+    color: #8dd1ad;
 }
 
 /* SIDEBAR & SEARCHBAR */
@@ -66,7 +66,7 @@
     left: 0;
     width: 250px;
     height: 100%;
-    background-color: #212F45;
+    background-color: #0B3311;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -86,11 +86,11 @@
     border-radius: 10px;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     background-color: #f0f8ff;
-    font-family: "Cinzel", serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .search-bar input:focus {
-    border-color: #bef4fa;
+    border-color: #41765A;
     background-color: #f0f8ff;
     outline: none;
 }
@@ -98,7 +98,7 @@
 .async-search button {
     background-color: #EBEBEB;
     border: none;
-    color: #5A7684;
+    color: #41765A;
     font-weight: bolder;
     cursor: pointer;
     padding: 10px 20px;
@@ -110,7 +110,7 @@
 }
 
 .async-search button:hover {
-    background-color: #7395a7;
+    background-color: #41765A;
     transform: scale(1.05);
     color: white;
 }

@@ -22,7 +22,7 @@ const About = () => {
                 <div className="features-list block-1-3 block-m-1-2 block-mob-full group">
                     <div className="bgrid feature">
                         <span className="icon">
-                            <FaFileAlt size={48} color="#39b54a" />
+                            <FaFileAlt size={48} color="#41765A" />
                         </span>
                         <div className="service-content">
                             <h3>Session Notes</h3>
@@ -35,7 +35,7 @@ const About = () => {
                     </div>
                     <div className="bgrid feature">
                         <span className="icon">
-                            <FaWindowMaximize size={48} color="#39b54a" />
+                            <FaWindowMaximize size={48} color="#41765A" />
                         </span>
                         <div className="service-content">
                             <h3>Character Sheets</h3>
@@ -48,7 +48,7 @@ const About = () => {
                     </div>
                     <div className="bgrid feature">
                         <span className="icon">
-                            <FaSlidersH size={48} color="#39b54a" />
+                            <FaSlidersH size={48} color="#41765A" />
                         </span>
                         <div className="service-content">
                             <h3>Feature-rich Tools</h3>

@@ -148,7 +148,7 @@
 .home-social-list li a:hover,
 .home-social-list li a:focus,
 .home-social-list li a:active {
-    color: #6aaf73;
+    color: #41765A;
 }
 
 .home-scrolldown {
@@ -170,7 +170,7 @@
 
 .home-scrolldown a:hover,
 .home-scrolldown a:focus {
-    color: #5ebe6b !important;
+    color: #41765A!important;
 }
 
 html[data-useragent*='MSIE 10.0'] .home-scrolldown,
