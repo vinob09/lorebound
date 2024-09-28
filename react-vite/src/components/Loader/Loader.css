@@ -15,7 +15,7 @@
     width: 20px;
     margin-right: 10px;
     border-radius: 10px;
-    background-color: #b3d4fc;
+    background-color: #41765A;
     animation: pulse 1.5s infinite ease-in-out;
 }
 
@@ -38,19 +38,19 @@
 @keyframes pulse {
     0% {
         transform: scale(0.8);
-        background-color: #0B525B;
+        background-color: #0B3311;
         box-shadow: 0 0 0 0 rgba(178, 252, 219, 0.7);
     }
 
     50% {
         transform: scale(1.2);
-        background-color: #144552;
+        background-color: #1c7e2b;
         box-shadow: 0 0 0 10px rgba(178, 252, 180, 0);
     }
 
     100% {
         transform: scale(0.8);
-        background-color: #1B3A4B;
+        background-color: #28cd41;
         box-shadow: 0 0 0 0 rgba(178, 252, 224, 0.7);
     }
 }

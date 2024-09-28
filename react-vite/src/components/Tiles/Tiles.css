@@ -3,7 +3,7 @@
 .tiles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 30px;
     justify-items: center;
     margin-top: 20px;
 }
@@ -17,9 +17,7 @@
     padding: 20px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    max-width: 300px;
-    min-height: 400px;
-    overflow: hidden;
+    max-width: 400px;
 }
 
 .tile:hover {
@@ -43,13 +41,13 @@
     flex-grow: 1;
     justify-content: space-between;
     text-align: left;
-    margin-bottom: 10px;
 }
 
 .tile-content h2 {
     font-size: 1.6em;
     color: #222;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .tile-content p {
@@ -66,7 +64,9 @@
 
 .tile-buttons {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
     margin-top: 10px;
 }
 
@@ -78,16 +78,17 @@
 
 .tile-buttons button {
     font-family: 'Merriweather', serif;
-    background-color: #1B3A4B;
+    background-color: #0B3311;
     color: #f0f0f0;
     border: none;
     padding: 8px 12px;
     border-radius: 5px;
     transition: background-color 0.2s ease-in-out;
+    font-size: 20px;
 }
 
 .tile-buttons button:hover {
-    background-color: #555;
+    background-color: #AEAEAA;
 }
 
 
@@ -97,14 +98,18 @@
     background-color: #2d3a4b !important;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    max-width: 400px;
-    width: 90%;
-    margin: 0 auto;
-    position: relative;
+    max-width: 400px !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+    position: relative !important;
 }
 
 .delete-modal p {
     font-size: 30px !important;
+}
+
+.delete-modal .modal-buttons {
+    padding-top: 10px;
 }
 
 
@@ -112,9 +117,9 @@
     background-color: #d9534f;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 15px 20px;
     border-radius: 5px;
-    margin-left: 250px;
+    margin-left: 150px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
@@ -139,12 +144,4 @@
 
 .delete-cancel-button:hover {
     background-color: #e0e0e0;
-}
-
-
-.tiles-grid .delete-modal .modal-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
 }

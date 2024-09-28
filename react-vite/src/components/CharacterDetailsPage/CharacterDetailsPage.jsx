@@ -103,10 +103,12 @@ const CharacterDetailsPage = () => {
     // delete confirmation modal
     const DeleteCharacterConfirmationModal = ({ characterId }) => {
         return (
-            <div>
+            <div className='delete-modal'>
                 <p>Are you sure you want to delete this character?</p>
-                <button onClick={() => handleDeleteCharacter(characterId)}>Confirm Delete</button>
-                <button onClick={closeModal}>Cancel</button>
+                <div className='modal-buttons'>
+                    <button className='delete-confirmation-button' onClick={() => handleDeleteCharacter(characterId)}>Confirm Delete</button>
+                    <button className='delete-cancel-button' onClick={closeModal}>Cancel</button>
+                </div>
             </div>
         );
     };
