@@ -60,6 +60,13 @@ const ClientPage = () => {
     // check if on the main ClientPage
     const isDashboard = location.pathname === `/client/${userId}`;
 
+    // handle scrolling to top
+    useEffect(() => {
+        if (isDashboard) {
+            window.scrollTo(0, 0);
+        }
+    }, [isDashboard]);
+
     // fetch random quote from import
     const fetchRandomQuote = () => {
         const randomIndex = Math.floor(Math.random() * allQuotes.length);
@@ -75,45 +82,45 @@ const ClientPage = () => {
     return isLoaded && user ? (
         <div className="client-page">
             <TopNav userId={user.id} />
-            <div id="top-page" className="client-info">
-                <h1 className='client-page-title'>Hello, {user.username}</h1>
-            </div>
-
-            {isDashboard && (
-                <div className="client-dashboard-content">
-                    <div className="content-wrapper">
-                        <div className="quote-section">
-                            <h2>Echoes of the Past</h2>
-                            <p>&quot;{quote}&quot;</p>
-                            <button onClick={fetchRandomQuote}>Get New Quote</button>
-                        </div>
-
-                        <div className="calendar-section">
-                            <h2>Fate&apos;s Ledger</h2>
-                            <Calendar
-                                onChange={setDate}
-                                value={date}
-                                onClickDay={handleDateClick}
-                                tileClassName={({ date }) =>
-                                    date.toDateString() === (selectedDate ?
-                                        selectedDate.toDateString() : '') ? 'selected-date' : null
-                                }
-                            />
-                            <p>Selected Date: {date.toDateString()}</p>
-                        </div>
-                    </div>
-
-                    <div className="create-content-links">
-                        <h3>Start your adventure now!</h3>
-                        <div className="content-links">
-                            <Link to={`/client/${user.id}/note/new`}>Add a New Note</Link>
-                            <Link to={`/client/${user.id}/character/new`}>Add a New Character</Link>
-                        </div>
-                    </div>
+            <div className="client-content">
+                <div id="top-page" className="client-info">
+                    <h1 className='client-page-title'>Hello, {user.username}</h1>
                 </div>
-            )}
-            <div className="client-main-content">
-                <Outlet />
+
+                {isDashboard && (
+                    <div className="client-dashboard-content">
+                        <div className="content-wrapper">
+                            <div className="quote-section">
+                                <h2>Echoes of the Past</h2>
+                                <p>&quot;{quote}&quot;</p>
+                                <button onClick={fetchRandomQuote}>Get New Quote</button>
+                            </div>
+                            <div className="calendar-section">
+                                <h2>Fate&apos;s Ledger</h2>
+                                <Calendar
+                                    onChange={setDate}
+                                    value={date}
+                                    onClickDay={handleDateClick}
+                                    tileClassName={({ date }) =>
+                                        date.toDateString() === (selectedDate ?
+                                            selectedDate.toDateString() : '') ? 'selected-date' : null
+                                    }
+                                />
+                                <p>Selected Date: {date.toDateString()}</p>
+                            </div>
+                        </div>
+                        <div className="create-content-links">
+                            <h3>Start your adventure now!</h3>
+                            <div className="content-links">
+                                <Link to={`/client/${user.id}/note/new`}>Add a New Note</Link>
+                                <Link to={`/client/${user.id}/character/new`}>Add a New Character</Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                <div className="client-main-content">
+                    <Outlet />
+                </div>
             </div>
         </div>
     ) : (
