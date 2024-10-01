@@ -6,19 +6,15 @@
     align-items: center;
     padding: 40px;
     margin: 40px;
-    background-color: #24313C;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     max-width: 1200px;
     margin: auto;
-    color: antiquewhite;
 }
 
 .character-details-container h1 {
     font-size: 48px;
     margin-bottom: 20px;
     text-align: center;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     color: antiquewhite;
 }
 
@@ -29,7 +25,7 @@
 
 .delta-green-character-details {
     margin-bottom: 40px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #0B3311;
     padding: 20px;
     border-radius: 10px;
 }
@@ -39,6 +35,7 @@
     text-decoration: underline;
     margin-bottom: 30px;
     font-size: 40px;
+    color: antiquewhite;
 }
 
 .delta-green-character-grid {
@@ -54,6 +51,7 @@
     justify-content: space-between;
     gap: 20px;
     width: 100%;
+    background-color: #0B3311;
 }
 
 .character-section {
@@ -69,9 +67,9 @@
 
 .character-section h3 {
     font-size: 30px;
-    color: #F5F5F5;
     margin-bottom: 10px;
     text-align: center;
+    color: antiquewhite;
 }
 
 .character-section ul {
@@ -93,20 +91,20 @@
 }
 
 .character-action-buttons button {
-    background-color: #3E1F47;
+    background-color: #0B3311;
     color: white;
     border: none;
     padding: 12px 25px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.1rem;
-    font-family: 'Cormorant Upright', serif;
+    font-size: 1.5rem;
+    font-family: 'Merriweather', serif;
     font-weight: 600;
     transition: background-color 0.3s ease;
 }
 
 .character-action-buttons button:hover {
-    background-color: #4f5657;
+    background-color: #AEAEAA;
 }
 
 .character-details-image {
@@ -122,6 +120,60 @@
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+
+.character-details-container .delte-modal {
+    text-align: center;
+    padding: 20px;
+    background-color: #2d3a4b !important;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-width: 400px !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+    position: relative !important;
+}
+
+.delete-modal p {
+    font-size: 30px !important;
+}
+
+.delete-modal .modal-buttons {
+    padding-top: 10px;
+}
+
+.delete-confirmation-button {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-left: 150px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+
+.delete-confirmation-button:hover {
+    background-color: #c9302c;
+}
+
+
+.delete-cancel-button {
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+
+.delete-cancel-button:hover {
+    background-color: #e0e0e0;
+}
+
 
 
 @media (max-width: 768px) {

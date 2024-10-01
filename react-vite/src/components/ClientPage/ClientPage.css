@@ -4,9 +4,33 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #1B3A4B;
-    font-family: 'Cormorant Upright', serif;
+    background-color: #121717;
+    font-family: Arial, Helvetica, sans-serif;
     color: #ddd;
+}
+
+.client-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-top: 60px;
+}
+
+.client-dashboard-content,
+.client-main-content {
+    min-height: 100%;
+}
+
+.client-page-title {
+    display: flex;
+    justify-content: center;
+    font-size: 45px !important;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    color: #ddd;
+    font-style: italic;
 }
 
 .client-dashboard-content {
@@ -15,11 +39,11 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 20px;
-    font-family: "Cormorant Upright", serif;
+    padding-top: 30px;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
-    background-color: #1B3A4B;
-    overflow: hidden;
+    background-color: #AEAEAA;
 }
 
 .content-wrapper {
@@ -36,37 +60,35 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
+    margin-top: 40px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 350px;
-    height: 300px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .quote-section h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: #212F45;
-    margin-bottom: 15px;
 }
 
 .quote-section p {
     max-height: 180px;
     overflow-y: auto;
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     color: #555;
     font-style: italic;
-    margin-top: 15px;
     line-height: 1.4;
     word-wrap: break-word;
-    padding-right: 10px; 
+    padding-right: 10px;
 }
 
 .quote-section button {
-    margin-top: 15px;
     padding: 10px 20px;
-    background-color: #3E1F47;
+    background-color: #41765A;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -75,57 +97,80 @@
 }
 
 .quote-section button:hover {
-    background-color: #4f5657;
+    background-color: #121717;
 }
 
 .client-main-content {
     flex-grow: 1;
 }
 
-.client-page-title {
-    display: flex;
-    justify-content: center;
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 30px;
-    font-family: "Cormorant Upright", serif;
-    font-weight: 700;
-    color: #ddd;
-}
-
-.calendar-section {
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 350px;
-    color: #1B3A4B;
+.react-calendar {
+    width: 100%;
+    padding: 15px;
+    border-radius: 20px;
 }
 
 .calendar-section h2 {
-    font-size: 1.8rem;
-    color: #212F45;
+    text-align: center;
+    font-size: 20px;
     margin-bottom: 15px;
 }
 
+.calendar-section p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.6rem;
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+}
+
+
 .react-calendar__tile {
-    padding: 10px;
     background-color: #fff;
-    color: #3E1F47;
-    border-radius: 5px;
+    color: #0B3311;
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1.3rem;
 }
 
 .react-calendar__tile--now {
-    background-color: #6A0DAD !important;
-    color: #fff !important;
+    background-color: #0B3311 !important;
+    font-size: 1.6rem;
 }
 
 .react-calendar__tile--active {
-    background-color: #2E2E2E !important;
-    color: #fff !important;
+    background-color: #88d1aa !important;
+    color: white !important;
+}
+
+.selected-date {
+    background-color: #88d1aa !important;
+    color: white !important;
+}
+
+.react-calendar__navigation {
+    margin-bottom: 10px;
+}
+
+.react-calendar__navigation button {
+    background-color: #41765A;
+    color: #fff;
+    border: none;
+    width: auto;
+    height: 30px;
+    margin: 0 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.react-calendar__navigation button:hover {
+    background-color: #121717;
+    color: #fff;
+}
+
+.react-calendar__navigation__label {
+    font-size: 1.3rem;
+    text-align: center;
+    width: 100%;
 }
 
 .create-content-links {
@@ -138,28 +183,37 @@
 
 .create-content-links h3 {
     color: #FFFFFF;
-    font-size: 1.5rem;
+    font-size: 20px;
     font-weight: bolder;
+}
+
+.content-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .create-content-links a {
-    font-size: 0.9rem;
+    font-size: 15px;
     color: #FFFFFF;
     text-decoration: none;
     font-weight: bold;
     padding: 8px 12px;
-    background-color: #3E1F47;
+    background-color: #41765A;
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    width: 150px;
+    width: 200px;
     text-align: center;
     margin-top: 10px;
 }
 
 .create-content-links a:hover {
     text-decoration: underline;
-    background-color: #4f5657;
+    background-color: #121717;
 }
 
 
@@ -173,11 +227,6 @@
     .client-page-title {
         font-size: 1.6rem;
         text-align: center;
-    }
-
-    .calendar-section {
-        max-width: 90%;
-        padding: 15px;
     }
 
     .create-content-links {
@@ -202,11 +251,6 @@
     .client-page-title {
         font-size: 1.8rem;
         margin-bottom: 25px;
-    }
-
-    .calendar-section {
-        max-width: 80%;
-        padding: 20px;
     }
 
     .create-content-links {
@@ -234,11 +278,6 @@
         margin-bottom: 30px;
     }
 
-    .calendar-section {
-        max-width: 400px;
-        padding: 25px;
-    }
-
     .create-content-links {
         gap: 20px;
     }
@@ -255,7 +294,7 @@
         padding: 20px;
     }
 
-    .calendar-section, .quote-section {
+    .quote-section {
         max-width: 90%;
     }
 

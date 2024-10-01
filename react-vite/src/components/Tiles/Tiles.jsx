@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { thunkDeleteNote } from '../../redux/notes';
@@ -9,6 +9,7 @@ import './Tiles.css';
 
 const Tiles = ({ items, onTileClick, type }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { closeModal } = useModal();
     const user = useSelector(state => state.session.user);
 
@@ -57,20 +58,22 @@ const Tiles = ({ items, onTileClick, type }) => {
         )
     };
 
+    // handle edits
+    const handleEdit = (e, itemId) => {
+        e.stopPropagation();
+        if (type === 'note') {
+            navigate(`/client/${user.id}/note/edit/${itemId}`);
+        } else if (type === 'character') {
+            navigate(`/client/${user.id}/character/edit/${itemId}`);
+        }
+    };
+
     return (
         <div className="tiles-grid">
             {items.map((item, index) => (
                 <div className="tile"
                     key={`${type}-${item.id}-${index}`}
-                    onClick={() => {
-                        if (type === 'note') {
-                            onTileClick(item.id); // Pass the noteId
-                        } else if (type === 'character') {
-                            onTileClick(item.id); // Pass the characterId
-                        } else if (type === 'mixed') {
-                            onTileClick(item); // Handle mixed content, pass the entire object
-                        }
-                    }}
+                    onClick={() => onTileClick(item.id)}
                 >
                     {item.title ? (
                         <>
@@ -87,12 +90,16 @@ const Tiles = ({ items, onTileClick, type }) => {
                                     <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
                                 </div>
                                 <div className="tile-buttons">
-                                    <Link to={`/client/${user.id}/note/edit/${item.id}`}>
-                                        <button onClick={(e) => e.stopPropagation()}>Edit Note</button>
-                                    </Link>
+                                    <button onClick={(e) => handleEdit(e, item.id)}>
+                                        Edit {type === 'note' ? 'Note' : 'Character'}
+                                    </button>
                                     <OpenModalButton
-                                        modalComponent={<DeleteNoteConfirmationModal noteId={item.id} />}
-                                        buttonText="Delete Note"
+                                        modalComponent={
+                                            type === 'note'
+                                                ? <DeleteNoteConfirmationModal noteId={item.id} />
+                                                : <DeleteCharacterConfirmationModal characterId={item.id} />
+                                        }
+                                        buttonText={`Delete ${type === 'note' ? 'Note' : 'Character'}`}
                                         onButtonClick={(e) => e.stopPropagation()}
                                     />
                                 </div>
@@ -112,12 +119,16 @@ const Tiles = ({ items, onTileClick, type }) => {
                                     <p><em>last updated at: {new Date(item.updatedAt).toLocaleString()}</em></p>
                                 </div>
                                 <div className="tile-buttons">
-                                    <Link to={`/client/${user.id}/character/edit/${item.id}`}>
-                                        <button onClick={(e) => e.stopPropagation()}>Edit Character</button>
-                                    </Link>
+                                    <button onClick={(e) => handleEdit(e, item.id)}>
+                                        Edit {type === 'note' ? 'Note' : 'Character'}
+                                    </button>
                                     <OpenModalButton
-                                        modalComponent={<DeleteCharacterConfirmationModal characterId={item.id} />}
-                                        buttonText="Delete Character"
+                                        modalComponent={
+                                            type === 'note'
+                                                ? <DeleteNoteConfirmationModal noteId={item.id} />
+                                                : <DeleteCharacterConfirmationModal characterId={item.id} />
+                                        }
+                                        buttonText={`Delete ${type === 'note' ? 'Note' : 'Character'}`}
                                         onButtonClick={(e) => e.stopPropagation()}
                                     />
                                 </div>

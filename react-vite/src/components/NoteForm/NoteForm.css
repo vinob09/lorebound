@@ -4,37 +4,39 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #1e3a4c;
+    background-color: #AEAEAA;
+    overflow: hidden !important;
 }
 
 .note-form-container {
-    background-color: #2c3e50;
-    border-radius: 8px;
-    padding: 40px;
-    max-width: 600px;
-    width: 100%;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-    font-family: "Cormorant Upright", serif;
-    color: antiquewhite;
+    background-color: #0B3311;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    padding: 30px;
+    margin: 24px;
+    width: 650px;
 }
 
 .note-form-container h1 {
     text-align: center;
     margin-bottom: 30px;
-    font-size: 2.5rem;
+    font-size: 3rem;
+    color: #fffefe;
 }
 
 .form-group {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    max-width: 600px;
+
 }
 
 .form-group label {
     display: block;
-    font-size: 1.1rem;
+    font-size: 2rem !important;
     margin-bottom: 8px;
+    color: #ffffff !important;
 }
 
 .form-group input[type="text"],
@@ -43,7 +45,9 @@
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #bdc3c7;
-    font-size: 1rem;
+    font-size: 1.3rem;
+    background-color: #bec0aa;
+    color: #000000;
 }
 
 .input-error {
@@ -58,7 +62,7 @@
 
 .form-group.checkbox-group label {
     margin-bottom: 0;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
 }
 
 .form-group.checkbox-group input[type="checkbox"] {
@@ -80,35 +84,35 @@
 .btn-save,
 .btn-cancel {
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 1.6rem;
     border-radius: 4px;
     border: none;
     cursor: pointer;
 }
 
 .btn-save {
-    background-color: #3E1F47;
+    background-color: #41765A;
     color: white;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
 .btn-save:hover {
-    background-color: #52d0e1;
-    color: #2c3e50;
+    background-color: #AEAEAA;
+    color: #ffffff;
     font-weight: bold;
 }
 
 .btn-cancel {
-    background-color: #3E1F47;
+    background-color: #41765A;
     color: white;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
 .btn-cancel:hover {
-    background-color: #52d0e1;
-    color: #2c3e50;
+    background-color: #AEAEAA;
+    color: #ffffff;
 }
 
 @media screen and (max-width: 768px) {

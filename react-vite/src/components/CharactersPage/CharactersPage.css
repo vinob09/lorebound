@@ -10,7 +10,7 @@
 .characters-page h1 {
     text-align: center;
     margin-bottom: 20px;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .empty-create-button {
-    background-color: #3E1F47;
+    background-color: #0B3311;
     color: antiquewhite;
     border: none;
     padding: 10px 20px;
@@ -39,7 +39,7 @@
 }
 
 .empty-create-button:hover {
-    background-color: #4f5657;
+    background-color: #AEAEAA;
 }
 
 .empty-image {
@@ -51,10 +51,11 @@
 .characters-page a {
     font-size: 20px;
     color: antiquewhite;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
+    text-decoration: underline;
 }
 
 .characters-page a:hover {
-    color: #52d0e1;
+    color: #AEAEAA;
 }

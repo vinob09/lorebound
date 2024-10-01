@@ -57,9 +57,9 @@ const SearchBar = () => {
         <div>
             <label htmlFor="async-search"></label>
             <AsyncTypeahead
+                id="async-search"
                 ref={typeaheadRef}
                 filterBy={filterBy}
-                id="async-search"
                 inputProps={{ id: "search-bar-input", name: "search" }}
                 isLoading={isLoading}
                 minLength={3}

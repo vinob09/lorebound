@@ -66,7 +66,6 @@ const TopNav = ({ userId }) => {
 
             {!isMobileOrTablet && (
                 <div className='top-nav-links'>
-                    <Link to="/" className={location.pathname === "/" ? "active" : ""}>HOME</Link>
                     <Link to={`/client/${userId}`} className={location.pathname === `/client/${userId}` ? "active" : ""}>DASHBOARD</Link>
                     <Link to={`/client/${userId}/notes`} className={location.pathname === `/client/${userId}/notes` ? "active" : ""}>NOTES</Link>
                     <Link to={`/client/${userId}/characters`} className={location.pathname === `/client/${userId}/characters` ? "active" : ""}>CHARACTERS</Link>

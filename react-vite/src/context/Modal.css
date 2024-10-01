@@ -31,9 +31,9 @@
   border-radius: 10px;
   max-width: 900px;
   width: 90%;
-  background-color: #212F45;
+  background-color: #1e361a;
   color: #fff;
-  font-family: 'Cinzel', serif;
+  font-family: Arial, Helvetica, sans-serif;
   max-height: 80vh;
   overflow-y: auto;
 }
@@ -54,9 +54,9 @@
 }
 
 #modal-content input:focus {
-  border-color: #0066cc;
+  border-color: #3acc00;
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+  box-shadow: 0 0 5px rgba(102, 204, 0, 0.5);
 }
 
 

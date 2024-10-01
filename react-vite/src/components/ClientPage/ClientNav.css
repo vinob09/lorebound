@@ -6,9 +6,9 @@
     justify-content: flex-start;
     height: 100vh;
     width: 250px;
-    background-color: #0B525B;
+    background-color: #0B3311;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
@@ -20,7 +20,7 @@
     margin-bottom: 40px;
     border-bottom: 1px solid #626775;
     padding-bottom: 20px;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
@@ -35,12 +35,12 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
 .client-nav-dropdown:hover {
-    color: #52d0e1;
+    color: #AEAEAA;
 }
 
 .client-nav-search-bar {
@@ -57,8 +57,8 @@
     padding: 8px 10px;
     font-size: 1em;
     border-radius: 5px;
-    border: 1px solid #3E3A58;
-    font-family: "Cormorant Upright", serif;
+    border: 1px solid #41765A;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
@@ -67,7 +67,7 @@
     flex-direction: column;
     margin-bottom: 20px;
     padding-bottom: 40px;
-    border-bottom: 1px solid #626775;
+    border-bottom: 1px solid #41765A;
 }
 
 .client-nav-button {
@@ -75,18 +75,18 @@
     padding: 12px;
     width: 100%;
     font-size: 1em;
-    background-color: #3E1F47;
+    background-color: #41765A;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
 .client-nav-button:hover {
-    background-color: #4f5657;
+    background-color: #AEAEAA;
     transform: translateY(-3px);
 }
 
@@ -103,24 +103,32 @@
     display: flex;
     align-items: center;
     font-size: 1.2em;
-
     padding-left: 5px;
+}
+
+.client-nav-section a {
+    color: #FFFFFF;
+}
+
+.client-nav-section a:hover {
+    color: #AEAEAA;
 }
 
 .section-icon {
     margin-right: 8px;
-    color: #52d0e1;
+    color: #69ba8f;
 }
 
 .section-title {
     font-weight: bold;
-    text-decoration: none;
+    text-decoration: underline;
     color: #FFFFFF;
     transition: color 0.3s ease;
 }
 
+
 .section-title:hover {
-    color: #52d0e1;
+    color: #AEAEAA;
 }
 
 .client-nav-list {
@@ -142,13 +150,13 @@
 }
 
 .nav-link:hover {
-    color: #52d0e1;
+    color: #AEAEAA;
     transform: translateX(5px);
 }
 
 .client-nav-logout {
     padding: 10px;
-    background-color: #3E1F47;
+    background-color: #41765A;
     border: none;
     color: white;
     cursor: pointer;
@@ -160,12 +168,12 @@
     justify-content: center;
     margin-top: 20px;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: "Cormorant Upright", serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
 .client-nav-logout:hover {
-    background-color: #4f5657;
+    background-color: #AEAEAA;
     transform: translateY(-3px);
 }
 
