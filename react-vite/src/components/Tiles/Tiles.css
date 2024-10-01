@@ -11,7 +11,7 @@
 .tile {
     display: flex;
     flex-direction: column;
-    background-color: #f0f0f0;
+    background-color: #AEAEAA;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     padding: 20px;
@@ -23,7 +23,8 @@
 .tile:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    cursor: url('/icosahedron.png'), pointer;
+    /* cursor: url('/icosahedron.png'), pointer; */
+    cursor: pointer;
 }
 
 .tile-image {
@@ -88,7 +89,7 @@
 }
 
 .tile-buttons button:hover {
-    background-color: #AEAEAA;
+    background-color: #41765A;
 }
 
 

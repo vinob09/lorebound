@@ -342,7 +342,7 @@ const CharacterForm = () => {
                 navigate(`/client/${user.id}/characters/${characterId}`);
             } else {
                 setErrors(result.error);
-                setIsLoaded(true); 
+                setIsLoaded(true);
             }
         }
         setImageLoading(false);
@@ -832,7 +832,6 @@ const CharacterForm = () => {
                     <h2>Skills</h2>
                     {/* Skills */}
                     <div>
-                        <h3>Skills</h3>
                         {skills.length > 0 ? (
                             skills.map(skill => (
                                 <div key={skill.skillId} className="skill-entry">

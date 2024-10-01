@@ -85,13 +85,13 @@
     border: 2px solid #ddd;
     border-radius: 10px;
     transition: border-color 0.3s ease, background-color 0.3s ease;
-    background-color: #f0f8ff;
+    background-color: #cfcfcd;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .search-bar input:focus {
     border-color: #41765A;
-    background-color: #f0f8ff;
+    background-color: #ffffff;
     outline: none;
 }
 
