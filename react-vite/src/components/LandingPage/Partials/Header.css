@@ -7,39 +7,29 @@ html {
     height: 72px;
     background-color: #111111;
     position: fixed;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
     z-index: 501;
 }
 
 .header-logo {
-    position: absolute;
-    left: 40px;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    -webkit-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
     z-index: 501;
 }
 
 .header-logo a {
     display: block;
-    margin: 0;
-    padding: 0;
-    outline: 0;
-    border: none;
     width: 97px;
     height: 22px;
     background: url("/lorebound.png") no-repeat center;
-    background-size: 97px 22px;
+    background-size: contain;
     font: 0/0 a;
     text-shadow: none;
     color: transparent;
-    -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
 
@@ -96,65 +86,78 @@ html {
 }
 
 
-@media only screen and (max-width: 1230px) {
+/* Responsive styles */
+@media only screen and (max-width: 1024px) {
     #header {
-        max-width: none;
-    }
-}
-
-@media only screen and (max-width: 768px) {
-    .header-logo a {
-        width: 88px;
-        height: 20px;
-        background-size: 88px 20px;
-    }
-
-    #header-nav-wrap {
-        display: none;
-        height: auto;
-        width: 100%;
-        right: auto;
-        left: 0;
-        background-color: #111111;
-        padding: 120px 40px 54px;
-    }
-
-    #header-nav-wrap .header-main-nav {
-        display: block;
-        height: auto;
-        margin: 0 0 4.2rem 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    #header-nav-wrap .header-main-nav li {
-        display: block;
-        margin: 0;
-        padding: 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    #header-nav-wrap .header-main-nav li a {
-        padding: 18px 0;
-        line-height: 18px;
-    }
-
-    #header-nav-wrap .cta {
-        height: 42px;
-        line-height: calc(42px - .6rem);
-        padding: 0 30px;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    #header-nav-wrap .cta {
-        display: block;
         padding: 0 20px;
     }
 }
 
+@media only screen and (max-width: 768px) {
+    #header {
+        height: auto;
+        flex-direction: column;
+        padding: 20px;
+    }
 
-@media only screen and (min-width: 769px) {
+    .header-logo {
+        margin-bottom: 20px;
+    }
+
+    .header-logo a {
+        width: 88px;
+        height: 20px;
+    }
+
     #header-nav-wrap {
-        display: block !important;
+        width: 100%;
+    }
+
+    #header-nav-wrap .header-main-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #header-nav-wrap .header-main-nav li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    #header-nav-wrap .header-main-nav li a {
+        line-height: 1.5;
+    }
+
+    #header-nav-wrap .cta {
+        width: 100%;
+        text-align: center;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
+
+/* Mobile menu toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    #header-nav-wrap {
+        display: none;
+    }
+
+    #header-nav-wrap.active {
+        display: block;
     }
 }

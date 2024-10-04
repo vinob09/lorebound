@@ -317,7 +317,7 @@ html[data-useragent*='MSIE 10.0'] .home-scrolldown,
 
 @media only screen and (max-width: 1024px) {
     .home-content-left {
-        width: 60%;
+        width: 90%;
         padding: 18rem 6rem 12rem 4rem;
     }
 
@@ -334,9 +334,8 @@ html[data-useragent*='MSIE 10.0'] .home-scrolldown,
         padding-top: 120px;
     }
 
-    .home-image-right .rounded-video {
-        vertical-align: top;
-        width: 100%;
+    .rounded-video {
+        display: none;
     }
 }
 

@@ -9,6 +9,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.session.user);
     const [activeSection, setActiveSection] = useState('home');
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -30,6 +31,10 @@ const Header = () => {
         setActiveSection(currentSection);
     };
 
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+    };
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -42,6 +47,9 @@ const Header = () => {
             <div className="header-logo">
                 <a href="/">Lorebound</a>
             </div>
+            <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+                ☰
+            </button>
             <nav id="header-nav-wrap">
                 <ul className="header-main-nav">
                     <li className={activeSection === 'home' ? 'current' : ''}>
