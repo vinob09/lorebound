@@ -62,7 +62,7 @@ const TopNav = ({ userId }) => {
             <div className='menu-icon' onClick={toggleNav}>
                 <TiThMenu />
             </div>
-            <div className='search-bar'><SearchBar /></div>
+            <div className='search-bar'><SearchBar inputId='search-bar'/></div>
 
             {!isMobileOrTablet && (
                 <div className='top-nav-links'>
