@@ -136,16 +136,6 @@
     width: 100%;
     max-width: 300px;
 }
-/*
-.async-typeahead .rbt-menu.dropdown-item {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-    overflow-x: hidden;
-    padding: 10px;
-} */
 
 .rbt-loader {
     background-color: rgba(65, 118, 90, 0.8);

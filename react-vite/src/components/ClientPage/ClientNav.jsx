@@ -56,7 +56,7 @@ const ClientNav = ({ isMobileOrTablet }) => {
                     {user ? <p>{user.username}&apos;s Menu</p> : <p>Menu</p>}
                 </div>
                 <div className='client-nav-search-bar'>
-                    <SearchBar />
+                    <SearchBar inputId='client-nav-search'/>
                 </div>
 
                 {/* dropdown for TopNav links if on mobile/tablet */}

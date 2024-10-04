@@ -70,19 +70,21 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="home-image-right">
-                        <video
-                            className="rounded-video"
-                            playsInline
-                            autoPlay
-                            muted
-                            loop
-                        >
-                            <source
-                                src="/Adventures.mp4"
-                                type="video/mp4"
-                                data-aos="fade-up"
-                            />
-                        </video>
+                        <div className="video-container">
+                            <video
+                                className="rounded-video"
+                                playsInline
+                                autoPlay
+                                muted
+                                loop
+                            >
+                                <source
+                                    src="/wildlife-adventure.mp4"
+                                    type="video/mp4"
+                                    data-aos="fade-up"
+                                />
+                            </video>
+                        </div>
                     </div>
                 </div>
             </div>

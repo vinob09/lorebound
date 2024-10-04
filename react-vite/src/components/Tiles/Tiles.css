@@ -17,6 +17,8 @@
     padding: 25px 15px;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     width: 300px;
+    margin-top: 20px;
+    overflow: hidden !important;
 }
 
 .tile:hover {
@@ -81,10 +83,10 @@
     background-color: #0B3311;
     color: #f0f0f0;
     border: none;
-    padding: 10px;
+    padding: 12px;
     border-radius: 5px;
     transition: background-color 0.2s ease-in-out;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .tile-buttons button:hover {
@@ -92,31 +94,36 @@
 }
 
 
-.tiles-grid .delete-modal {
+.delete-modal {
     text-align: center;
     padding: 20px;
-    background-color: #2d3a4b !important;
+    background-color: #1e361a !important;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    max-width: 400px !important;
-    width: 90% !important;
-    margin: 0 auto !important;
-    position: relative !important;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    border-style: double;
 }
 
 .delete-modal p {
     font-size: 30px !important;
 }
 
-.delete-modal .modal-buttons {
+.modal-buttons {
     padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 150px;
 }
 
 
-.delete-confirmation-button {
-    background-color: #d9534f;
+.modal-buttons .delete-confirmation-button {
+    background-color: #6e1a17;
     color: #fff;
     border: none;
+    font-weight: bold;
     padding: 15px 20px;
     border-radius: 5px;
     margin-left: 150px;
@@ -130,10 +137,11 @@
 }
 
 
-.delete-cancel-button {
-    background-color: #f0f0f0;
-    color: #333;
+.modal-buttons .delete-cancel-button {
+    background-color: #787272;
+    color: #fff;
     border: none;
+    font-weight: bold;
     padding: 10px 20px;
     border-radius: 5px;
     margin-left: 10px;
@@ -144,4 +152,5 @@
 
 .delete-cancel-button:hover {
     background-color: #e0e0e0;
+    color: #222;
 }

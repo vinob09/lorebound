@@ -5,7 +5,7 @@ import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { csrfFetch } from '../../redux/csrf';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-const SearchBar = () => {
+const SearchBar = ({inputId}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
     const typeaheadRef = useRef(null);
@@ -55,12 +55,12 @@ const SearchBar = () => {
 
     return (
         <div>
-            <label htmlFor="async-search"></label>
+            <div className={inputId}></div>
             <AsyncTypeahead
                 id="async-search"
                 ref={typeaheadRef}
                 filterBy={filterBy}
-                inputProps={{ id: "search-bar-input", name: "search" }}
+                inputProps={{ id: "search-bar", name: "search" }}
                 isLoading={isLoading}
                 minLength={3}
                 onSearch={handleSearch}
