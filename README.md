@@ -22,6 +22,7 @@
    - [Clone the Repository](#clone-the-repository)
    - [Backend Setup](#backend-setup)
    - [Frontend Setup](#frontend-setup)
+5. [Upcoming Features](#upcoming-features)
 
 ---
 
@@ -33,6 +34,13 @@
 -   **Note-Taking**: Keep detailed campaign notes using a built-in rich text editor.
 -   **PDF Export**: Export character sheets to PDF format.
 -   **Real-time updates**: Save and update your work instantly.
+
+### Home Page
+![home](react-vite/public/lorebound-home.gif)
+### Demo Features
+![functions](react-vite/public/lorebound-functions.gif)
+### Demo Quote & Search
+![search](react-vite/public/lorebound-search.gif)
 
 ## Tech Stack
 **Backend**:
@@ -67,7 +75,7 @@ Follow these steps to clone and run Lorebound locally:
 
 ### Clone the Repository
 To clone the project:
-- `git clone https://github.com/vinob09/lorebound.git` 
+- `git clone https://github.com/vinob09/lorebound.git`
 - `cd lorebound`
 
 ### Backend Setup
@@ -75,10 +83,10 @@ To clone the project:
 	```bash
 	pipenv install -r requirements.txt
 	```
-2.  Create a __.env__ file with proper settings for your development environment, including any S3 keys if using. 
+2.  Create a __.env__ file with proper settings for your development environment, including any S3 keys if using.
 	```bash
 	SECRET_KEY={secret_key_here} (make sure to use snake_case convention here)
-	DATABASE_URL={sqlite:///dev.db} 
+	DATABASE_URL={sqlite:///dev.db}
 	SCHEMA={schema_name_here}
 	S3_BUCKET={bucket_name_here}
 	S3_KEY={key_here}
@@ -99,5 +107,9 @@ Flask app:
 	flask run
 	```
 ### Frontend Setup
-1.  To run the React frontend in development, `cd` into the __react-vite__ directory and run `npm i` to install dependencies. The Dockerfile has a `--watch` flag attached to the `dist` build, and will containerize the entire application, making it easier to set up and deploy. Then, run `npm run dev` to view a local version of the project on your browser. 
+1.  To run the React frontend in development, `cd` into the __react-vite__ directory and run `npm i` to install dependencies. The Dockerfile has a `--watch` flag attached to the `dist` build, and will containerize the entire application, making it easier to set up and deploy. Then, run `npm run dev` to view a local version of the project on your browser.
 
+## Upcoming Features
+* Live dice rolls 🎲
+* Chat functionality 🗣️
+* Map feature 🗺️
